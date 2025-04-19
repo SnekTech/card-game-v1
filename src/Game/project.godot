@@ -10,7 +10,7 @@ config_version=5
 
 [application]
 
-config/name="godot-pixel-art-template"
+config/name="CardGameV1"
 run/main_scene="uid://ddeqm380rgljy"
 config/features=PackedStringArray("4.4", "C#", "Forward Plus")
 config/icon="uid://bdohtig5mdd7l"
@@ -21,7 +21,7 @@ window/stretch/mode="viewport"
 
 [dotnet]
 
-project/assembly_name="GameTemplate"
+project/assembly_name="CardGameV1"
 project/solution_directory="../.."
 
 [editor]

@@ -1,6 +1,6 @@
 ﻿using Godot;
 
-namespace GameTemplate;
+namespace CardGameV1;
 
 public partial class Main: Node2D
 {
