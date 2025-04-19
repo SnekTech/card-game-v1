@@ -1,0 +1,15 @@
+﻿# Godot 4+ specific ignores
+nupkg/
+
+.godot/
+bin/
+obj/
+.generated/
+.vs/
+.DS_Store
+
+*.translation
+*.blend1
+
+**/.idea
+AssetsRaw/
