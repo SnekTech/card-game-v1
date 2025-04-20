@@ -1,0 +1,26 @@
+﻿@startuml
+'https://plantuml.com/state-diagram
+
+hide empty description
+
+state base
+state clicked
+state dragging
+state released
+
+
+[*] --> base
+
+base --> clicked : LMB
+
+clicked --> dragging : mouse motion
+
+dragging --> released : LMB pressed or released
+
+dragging --> base : RMB cancel
+
+released --> base : is outside DropArea
+
+released --> [*] : inside DropArea, played
+
+@enduml
