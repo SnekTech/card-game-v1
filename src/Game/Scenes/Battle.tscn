@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://ddeqm380rgljy"]
+[gd_scene load_steps=6 format=3 uid="uid://ddeqm380rgljy"]
 
 [ext_resource type="Script" uid="uid://bac43f1ymlhio" path="res://Scripts/Main.cs" id="1_vr6xi"]
 [ext_resource type="Texture2D" uid="uid://cp4iq5fd6j8be" path="res://art/background.png" id="2_2h7oj"]
+[ext_resource type="Script" uid="uid://6alav0l7l8ly" path="res://Scripts/CardUI/Hand.cs" id="3_1samx"]
 [ext_resource type="PackedScene" uid="uid://djmhd1i2e8j2h" path="res://Scenes/CardUI.tscn" id="3_2h7oj"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1samx"]
@@ -38,6 +39,7 @@ offset_right = 75.0
 grow_horizontal = 2
 grow_vertical = 0
 alignment = 1
+script = ExtResource("3_1samx")
 
 [node name="CardUI" parent="BattleUI/Hand" instance=ExtResource("3_2h7oj")]
 layout_mode = 2
