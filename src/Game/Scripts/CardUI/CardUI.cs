@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Godot;
 using GodotUtilities;
 
@@ -14,12 +15,15 @@ public partial class CardUI : Control
     [Node] private Area2D dropPointDetector = null!;
 
     private CardDragStateMachine _dragStateMachine = null!;
+    private readonly HashSet<Node> _targets = [];
 
     public bool MonitoringDrop
     {
         get => dropPointDetector.Monitoring;
         set => dropPointDetector.Monitoring = value;
     }
+
+    public IReadOnlySet<Node> Targets => _targets;
 
     public override void _Notification(int what)
     {
@@ -36,6 +40,9 @@ public partial class CardUI : Control
         
         dropPointDetector.MouseEntered += _dragStateMachine.OnMouseEntered;
         dropPointDetector.MouseExited += _dragStateMachine.OnMouseExited;
+
+        dropPointDetector.AreaEntered += OnDropPointDetectorAreaEntered;
+        dropPointDetector.AreaExited += OnDropPointDetectorAreaExited;
     }
 
     public override void _Input(InputEvent @event) => _dragStateMachine.OnInput(@event);
@@ -48,4 +55,8 @@ public partial class CardUI : Control
         colorRect.Color = color;
         stateLabel.Text = stateName;
     }
+
+    private void OnDropPointDetectorAreaEntered(Area2D area) => _targets.Add(area);
+
+    private void OnDropPointDetectorAreaExited(Area2D area) => _targets.Remove(area);
 }
