@@ -4,6 +4,9 @@ namespace CardGameV1.CardUI.CardStates;
 
 public class DraggingState(CardDragStateMachine cardDragStateMachine) : CardState(cardDragStateMachine)
 {
+    private const float DragThresholdMin = 0.05f;
+    private bool _minDragThresholdHasElapsed;
+    
     public override void OnEnter()
     {
         var newParent = CardUI.GetTree().GetFirstNodeInGroup("ui_layer");
@@ -11,6 +14,10 @@ public class DraggingState(CardDragStateMachine cardDragStateMachine) : CardStat
             CardUI.Reparent(newParent);
         
         CardUI.SetDebugInfo(Colors.NavyBlue, nameof(DraggingState));
+
+        _minDragThresholdHasElapsed = false;
+        var timer = CardUI.GetTree().CreateTimer(DragThresholdMin, false);
+        timer.Timeout += () => _minDragThresholdHasElapsed = true;
     }
 
     public override void OnInput(InputEvent inputEvent)
@@ -26,7 +33,7 @@ public class DraggingState(CardDragStateMachine cardDragStateMachine) : CardStat
         {
             ChangeState<BaseState>();
         }
-        else if (confirm)
+        else if (_minDragThresholdHasElapsed && confirm)
         {
             CardUI.GetViewport().SetInputAsHandled();
             ChangeState<ReleasedState>();
