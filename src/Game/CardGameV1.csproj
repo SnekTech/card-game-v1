@@ -4,5 +4,12 @@
     <EnableDynamicLoading>true</EnableDynamicLoading>
     <AssemblyName>CardGameV1</AssemblyName>
     <RootNamespace>CardGameV1</RootNamespace>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Firebelley.GodotUtilities" Version="5.0.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="diagrams\*.puml" />
+  </ItemGroup>
 </Project>

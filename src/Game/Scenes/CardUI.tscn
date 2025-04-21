@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://djmhd1i2e8j2h"]
+[gd_scene load_steps=4 format=3 uid="uid://djmhd1i2e8j2h"]
 
 [ext_resource type="Theme" uid="uid://c306wkaelrn2q" path="res://main_theme.tres" id="1_obeoo"]
+[ext_resource type="Script" uid="uid://dueur1nl3yajm" path="res://Scripts/CardUI/CardUI.cs" id="2_hcufj"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_obeoo"]
 size = Vector2(25, 30)
@@ -16,17 +17,21 @@ offset_bottom = -114.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_obeoo")
+script = ExtResource("2_hcufj")
 
-[node name="Color" type="ColorRect" parent="."]
+[node name="ColorRect" type="ColorRect" parent="."]
+unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 color = Color(0.0866009, 0.223295, 0.101715, 1)
 
-[node name="State" type="Label" parent="."]
+[node name="StateLabel" type="Label" parent="."]
+unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -38,6 +43,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="DropPointDetector" type="Area2D" parent="."]
+unique_name_in_owner = true
 collision_mask = 2
 monitorable = false
 
