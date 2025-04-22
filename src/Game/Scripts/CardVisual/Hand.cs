@@ -8,10 +8,10 @@ public partial class Hand : HBoxContainer
     {
         foreach (var child in GetChildren())
         {
-            if (child is CardUI cardUI)
-            {
-                cardUI.ReparentRequested += OnCardUIReparentRequested;
-            }
+            if (child is not CardUI cardUI) continue;
+
+            cardUI.ReparentRequested += OnCardUIReparentRequested;
+            cardUI.Parent = this;
         }
     }
 

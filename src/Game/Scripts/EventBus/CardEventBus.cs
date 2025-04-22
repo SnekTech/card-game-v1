@@ -3,7 +3,7 @@ using CardGameV1.CardVisual;
 
 namespace CardGameV1.EventBus;
 
-public class BasicEventBus
+public class CardEventBus
 {
     public event Action<CardUI>? CardAimStarted;
     public event Action<CardUI>? CardAimEnded;

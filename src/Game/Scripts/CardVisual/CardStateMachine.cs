@@ -14,6 +14,7 @@ public class CardStateMachine(CardUI cardUI) : StateMachine<CardState>
         StateInstances[typeof(ClickedState)] = new ClickedState(this);
         StateInstances[typeof(DraggingState)] = new DraggingState(this);
         StateInstances[typeof(ReleasedState)] = new ReleasedState(this);
+        StateInstances[typeof(AimingState)] = new AimingState(this);
     }
 
     public void OnInput(InputEvent inputEvent) => CurrentState?.OnInput(inputEvent);

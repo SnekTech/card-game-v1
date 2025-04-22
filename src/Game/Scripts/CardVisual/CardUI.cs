@@ -26,7 +26,10 @@ public partial class CardUI : Control
         set => dropPointDetector.Monitoring = value;
     }
 
-    public IReadOnlySet<Node> Targets => _targets;
+    public ISet<Node> Targets => _targets;
+    public Card Card => card;
+
+    public Control Parent { get; set; } = null!;
 
     public override void _Notification(int what)
     {
@@ -57,6 +60,12 @@ public partial class CardUI : Control
     {
         colorRect.Color = color;
         stateLabel.Text = stateName;
+    }
+
+    public void AnimateToPosition(Vector2 destination, float duration)
+    {
+        var tween = CreateTween().SetTrans(Tween.TransitionType.Circ).SetEase(Tween.EaseType.Out);
+        tween.TweenProperty(this, new NodePath(Control.PropertyName.GlobalPosition), destination, duration);
     }
 
     private void OnDropPointDetectorAreaEntered(Area2D area) => _targets.Add(area);

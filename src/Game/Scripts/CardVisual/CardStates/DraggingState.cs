@@ -22,18 +22,27 @@ public class DraggingState(CardStateMachine cardStateMachine) : CardState(cardSt
 
     public override void OnInput(InputEvent inputEvent)
     {
-        if (inputEvent is InputEventMouseMotion mouseMotion)
+        var isCardSingleTargeted = CardUI.Card.IsSingleTargeted;
+        var mouseMoved = inputEvent is InputEventMouseMotion;
+        var shouldCancel = inputEvent.IsActionPressed("right_mouse");
+        var playConfirmed = inputEvent.IsActionPressed("left_mouse") || inputEvent.IsActionReleased("left_mouse");
+
+        if (isCardSingleTargeted && mouseMoved && CardUI.Targets.Count > 0)
         {
-            CardUI.GlobalPosition = mouseMotion.GlobalPosition - CardUI.PivotOffset;
+            ChangeState<AimingState>();
+            return;
+        }
+        
+        if (mouseMoved)
+        {
+            CardUI.GlobalPosition = CardUI.GetGlobalMousePosition() - CardUI.PivotOffset;
         }
 
-        var cancel = inputEvent.IsActionPressed("right_mouse");
-        var confirm = inputEvent.IsActionPressed("left_mouse") || inputEvent.IsActionReleased("left_mouse");
-        if (cancel)
+        if (shouldCancel)
         {
             ChangeState<BaseState>();
         }
-        else if (_minDragThresholdHasElapsed && confirm)
+        else if (_minDragThresholdHasElapsed && playConfirmed)
         {
             CardUI.GetViewport().SetInputAsHandled();
             ChangeState<ReleasedState>();

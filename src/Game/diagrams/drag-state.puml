@@ -7,6 +7,7 @@ state base
 state clicked
 state dragging
 state released
+state aiming
 
 
 [*] --> base
@@ -21,6 +22,19 @@ dragging --> base : RMB cancel
 
 released --> base : is outside DropArea
 
-released --> [*] : inside DropArea, played
+released --> [*] : inside DropArea
+
+dragging --> aiming
+note on link
+single target card
+|| on drop area
+end note
+
+aiming --> released : card play confirmed
+
+aiming --> base
+note on link
+RMB || mouse too low
+end note
 
 @enduml

@@ -2,5 +2,5 @@
 
 public static class EventBusOwner
 {
-    public static readonly BasicEventBus BasicEventBus = new();
+    public static readonly CardEventBus CardEventBus = new();
 }
