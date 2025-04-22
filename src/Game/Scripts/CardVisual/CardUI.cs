@@ -4,7 +4,7 @@ using CardGameV1.CustomResources;
 using Godot;
 using GodotUtilities;
 
-namespace CardGameV1.CardUI;
+namespace CardGameV1.CardVisual;
 
 [Scene]
 public partial class CardUI : Control

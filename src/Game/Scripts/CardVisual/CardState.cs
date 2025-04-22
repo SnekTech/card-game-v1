@@ -1,7 +1,7 @@
 ﻿using CardGameV1.FSM;
 using Godot;
 
-namespace CardGameV1.CardUI;
+namespace CardGameV1.CardVisual;
 
 public abstract class CardState(CardDragStateMachine cardDragStateMachine) : IState
 {

@@ -1,8 +1,8 @@
-﻿using CardGameV1.CardUI.CardStates;
+﻿using CardGameV1.CardVisual.CardStates;
 using CardGameV1.FSM;
 using Godot;
 
-namespace CardGameV1.CardUI;
+namespace CardGameV1.CardVisual;
 
 public class CardDragStateMachine(CardUI cardUI) : StateMachine<CardState>
 {

@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://djmhd1i2e8j2h"]
 
 [ext_resource type="Theme" uid="uid://c306wkaelrn2q" path="res://main_theme.tres" id="1_obeoo"]
-[ext_resource type="Script" uid="uid://dueur1nl3yajm" path="res://Scripts/CardUI/CardUI.cs" id="2_hcufj"]
+[ext_resource type="Script" uid="uid://dueur1nl3yajm" path="res://Scripts/CardVisual/CardUI.cs" id="2_hcufj"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_obeoo"]
 size = Vector2(25, 30)

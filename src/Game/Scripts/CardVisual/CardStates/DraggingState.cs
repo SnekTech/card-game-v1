@@ -1,6 +1,6 @@
 ﻿using Godot;
 
-namespace CardGameV1.CardUI.CardStates;
+namespace CardGameV1.CardVisual.CardStates;
 
 public class DraggingState(CardDragStateMachine cardDragStateMachine) : CardState(cardDragStateMachine)
 {

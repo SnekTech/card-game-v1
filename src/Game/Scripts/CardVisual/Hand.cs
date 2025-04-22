@@ -1,6 +1,6 @@
 ﻿using Godot;
 
-namespace CardGameV1.CardUI;
+namespace CardGameV1.CardVisual;
 
 public partial class Hand : HBoxContainer
 {
