@@ -2,7 +2,7 @@
 
 namespace CardGameV1.CardVisual.CardStates;
 
-public class ReleasedState(CardDragStateMachine cardDragStateMachine) : CardState(cardDragStateMachine)
+public class ReleasedState(CardStateMachine cardStateMachine) : CardState(cardStateMachine)
 {
     private bool _played;
     

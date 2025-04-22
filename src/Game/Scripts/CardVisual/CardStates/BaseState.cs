@@ -2,7 +2,7 @@
 
 namespace CardGameV1.CardVisual.CardStates;
 
-public class BaseState(CardDragStateMachine cardDragStateMachine) : CardState(cardDragStateMachine)
+public class BaseState(CardStateMachine cardStateMachine) : CardState(cardStateMachine)
 {
     public override void OnEnter()
     {

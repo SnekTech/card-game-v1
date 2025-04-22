@@ -4,7 +4,7 @@ using Godot;
 
 namespace CardGameV1.CardVisual;
 
-public class CardDragStateMachine(CardUI cardUI) : StateMachine<CardState>
+public class CardStateMachine(CardUI cardUI) : StateMachine<CardState>
 {
     public readonly CardUI CardUI = cardUI;
 

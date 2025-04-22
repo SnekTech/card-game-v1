@@ -17,7 +17,7 @@ public partial class CardUI : Control
     [Node] private Label stateLabel = null!;
     [Node] private Area2D dropPointDetector = null!;
 
-    private CardDragStateMachine _dragStateMachine = null!;
+    private CardStateMachine _stateMachine = null!;
     private readonly HashSet<Node> _targets = [];
 
     public bool MonitoringDrop
@@ -38,18 +38,18 @@ public partial class CardUI : Control
 
     public override void _Ready()
     {
-        _dragStateMachine = new CardDragStateMachine(this);
-        _dragStateMachine.Init<CardStates.BaseState>();
+        _stateMachine = new CardStateMachine(this);
+        _stateMachine.Init<CardStates.BaseState>();
         
-        dropPointDetector.MouseEntered += _dragStateMachine.OnMouseEntered;
-        dropPointDetector.MouseExited += _dragStateMachine.OnMouseExited;
+        dropPointDetector.MouseEntered += _stateMachine.OnMouseEntered;
+        dropPointDetector.MouseExited += _stateMachine.OnMouseExited;
 
         dropPointDetector.AreaEntered += OnDropPointDetectorAreaEntered;
         dropPointDetector.AreaExited += OnDropPointDetectorAreaExited;
     }
 
-    public override void _Input(InputEvent @event) => _dragStateMachine.OnInput(@event);
-    public override void _GuiInput(InputEvent @event) => _dragStateMachine.OnGuiInput(@event);
+    public override void _Input(InputEvent @event) => _stateMachine.OnInput(@event);
+    public override void _GuiInput(InputEvent @event) => _stateMachine.OnGuiInput(@event);
 
     public void EmitReparentRequested() => ReparentRequested?.Invoke(this);
 

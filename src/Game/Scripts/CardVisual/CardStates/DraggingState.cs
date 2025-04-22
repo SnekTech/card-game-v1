@@ -2,7 +2,7 @@
 
 namespace CardGameV1.CardVisual.CardStates;
 
-public class DraggingState(CardDragStateMachine cardDragStateMachine) : CardState(cardDragStateMachine)
+public class DraggingState(CardStateMachine cardStateMachine) : CardState(cardStateMachine)
 {
     private const float DragThresholdMin = 0.05f;
     private bool _minDragThresholdHasElapsed;

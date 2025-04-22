@@ -3,9 +3,9 @@ using Godot;
 
 namespace CardGameV1.CardVisual;
 
-public abstract class CardState(CardDragStateMachine cardDragStateMachine) : IState
+public abstract class CardState(CardStateMachine cardStateMachine) : IState
 {
-    protected CardUI CardUI => cardDragStateMachine.CardUI;
+    protected CardUI CardUI => cardStateMachine.CardUI;
 
     public virtual void OnEnter()
     {
@@ -33,6 +33,6 @@ public abstract class CardState(CardDragStateMachine cardDragStateMachine) : ISt
 
     protected void ChangeState<T>() where T : CardState
     {
-        cardDragStateMachine.ChangeState<T>();
+        cardStateMachine.ChangeState<T>();
     }
 }
