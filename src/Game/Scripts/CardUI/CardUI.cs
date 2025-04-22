@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using CardGameV1.CustomResources;
 using Godot;
 using GodotUtilities;
 
@@ -9,6 +10,8 @@ namespace CardGameV1.CardUI;
 public partial class CardUI : Control
 {
     public event Action<CardUI>? ReparentRequested;
+
+    [Export] private Card card = null!;
 
     [Node] private ColorRect colorRect = null!;
     [Node] private Label stateLabel = null!;
