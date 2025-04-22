@@ -1,4 +1,5 @@
-﻿using Godot;
+﻿using CardGameV1.Constants;
+using Godot;
 
 namespace CardGameV1.CardVisual.CardStates;
 
@@ -9,7 +10,7 @@ public class DraggingState(CardStateMachine cardStateMachine) : CardState(cardSt
     
     public override void OnEnter()
     {
-        var newParent = CardUI.GetTree().GetFirstNodeInGroup("ui_layer");
+        var newParent = CardUI.GetTree().GetFirstNodeInGroup(GroupNames.UILayer);
         if (newParent != null)
             CardUI.Reparent(newParent);
         
@@ -24,8 +25,8 @@ public class DraggingState(CardStateMachine cardStateMachine) : CardState(cardSt
     {
         var isCardSingleTargeted = CardUI.Card.IsSingleTargeted;
         var mouseMoved = inputEvent is InputEventMouseMotion;
-        var shouldCancel = inputEvent.IsActionPressed("right_mouse");
-        var playConfirmed = inputEvent.IsActionPressed("left_mouse") || inputEvent.IsActionReleased("left_mouse");
+        var shouldCancel = inputEvent.IsActionPressed(InputActionNames.RightMouse);
+        var playConfirmed = inputEvent.IsActionPressed(InputActionNames.LeftMouse) || inputEvent.IsActionReleased(InputActionNames.LeftMouse);
 
         if (isCardSingleTargeted && mouseMoved && CardUI.Targets.Count > 0)
         {

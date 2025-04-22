@@ -1,4 +1,5 @@
-﻿using CardGameV1.EventBus;
+﻿using CardGameV1.Constants;
+using CardGameV1.EventBus;
 using Godot;
 
 namespace CardGameV1.CardVisual.CardStates;
@@ -30,8 +31,8 @@ public class AimingState(CardStateMachine cardDragStateMachine) : CardState(card
         var mouseMoved = inputEvent is InputEventMouseMotion;
         var mouseTooLow = CardUI.GetGlobalMousePosition().Y > MouseSnapbackThresholdY;
         
-        var shouldCancel = (mouseMoved && mouseTooLow) || inputEvent.IsActionPressed("right_mouse");
-        var playConfirmed = inputEvent.IsActionPressed("left_mouse") || inputEvent.IsActionReleased("left_mouse");
+        var shouldCancel = (mouseMoved && mouseTooLow) || inputEvent.IsActionPressed(InputActionNames.RightMouse);
+        var playConfirmed = inputEvent.IsActionPressed(InputActionNames.LeftMouse) || inputEvent.IsActionReleased(InputActionNames.LeftMouse);
 
         if (shouldCancel)
         {

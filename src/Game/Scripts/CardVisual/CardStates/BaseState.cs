@@ -1,4 +1,5 @@
-﻿using Godot;
+﻿using CardGameV1.Constants;
+using Godot;
 
 namespace CardGameV1.CardVisual.CardStates;
 
@@ -13,7 +14,7 @@ public class BaseState(CardStateMachine cardStateMachine) : CardState(cardStateM
 
     public override void OnGuiInput(InputEvent inputEvent)
     {
-        if (inputEvent.IsActionPressed("left_mouse"))
+        if (inputEvent.IsActionPressed(InputActionNames.LeftMouse))
         {
             CardUI.PivotOffset = CardUI.GetGlobalMousePosition() - CardUI.GlobalPosition;
             ChangeState<ClickedState>();
