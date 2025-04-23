@@ -19,6 +19,7 @@ public partial class CardUI : Control
 
     private CardStateMachine _stateMachine = null!;
     private readonly HashSet<Node> _targets = [];
+    private Tween? _tween;
 
     public bool MonitoringDrop
     {
@@ -64,8 +65,14 @@ public partial class CardUI : Control
 
     public void AnimateToPosition(Vector2 destination, float duration)
     {
-        var tween = CreateTween().SetTrans(Tween.TransitionType.Circ).SetEase(Tween.EaseType.Out);
-        tween.TweenProperty(this, new NodePath(Control.PropertyName.GlobalPosition), destination, duration);
+        _tween = CreateTween().SetTrans(Tween.TransitionType.Circ).SetEase(Tween.EaseType.Out);
+        _tween.TweenProperty(this, new NodePath(Control.PropertyName.GlobalPosition), destination, duration);
+    }
+
+    public void StopAnimation()
+    {
+        if (_tween != null && _tween.IsRunning())
+            _tween.KillIfValid();
     }
 
     private void OnDropPointDetectorAreaEntered(Area2D area) => _targets.Add(area);

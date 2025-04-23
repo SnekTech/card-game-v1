@@ -7,6 +7,8 @@ public class BaseState(CardStateMachine cardStateMachine) : CardState(cardStateM
 {
     public override void OnEnter()
     {
+        CardUI.StopAnimation();
+        
         CardUI.EmitReparentRequested();
         CardUI.SetDebugInfo(Colors.WebGreen, nameof(BaseState));
         CardUI.PivotOffset = Vector2.Zero;
