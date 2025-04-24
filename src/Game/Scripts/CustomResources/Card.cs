@@ -5,15 +5,13 @@ namespace CardGameV1.CustomResources;
 [GlobalClass]
 public partial class Card : Resource
 {
-    [ExportGroup("Card Attributes")]
-    [Export]
-    public string Id { get; private set; } = "default";
+    [Export] public string Id { get; private set; } = "default";
 
-    [Export]
-    public CardType Type { get; private set; }
+    [Export] public int Cost { get; private set; } = 1;
 
-    [Export]
-    public TargetType Target { get; private set; }
+    [Export] public CardType Type { get; private set; }
+
+    [Export] public TargetType Target { get; private set; }
 
     public bool IsSingleTargeted => Target == TargetType.SingleEnemy;
 
