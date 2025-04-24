@@ -4,7 +4,7 @@
 
 [resource]
 script = ExtResource("1_wba1x")
-id = "warrior_axe_attack"
-type = 0
-target = 1
+Id = "warrior_axe_attack"
+Type = 0
+Target = 1
 metadata/_custom_type_script = "uid://lggtvlpuxsee"

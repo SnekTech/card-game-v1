@@ -7,13 +7,15 @@ public partial class Card : Resource
 {
     [ExportGroup("Card Attributes")]
     [Export]
-    private string id = "default";
+    public string Id { get; private set; } = "default";
 
-    [Export] private CardType type;
+    [Export]
+    public CardType Type { get; private set; }
 
-    [Export] private TargetType target;
+    [Export]
+    public TargetType Target { get; private set; }
 
-    public bool IsSingleTargeted => target == TargetType.SingleEnemy;
+    public bool IsSingleTargeted => Target == TargetType.SingleEnemy;
 
     #region card enums
 
