@@ -5,6 +5,7 @@
 [resource]
 script = ExtResource("1_ti8q0")
 Id = "warrior_block"
+Cost = 1
 Type = 1
 Target = 0
 metadata/_custom_type_script = "uid://lggtvlpuxsee"

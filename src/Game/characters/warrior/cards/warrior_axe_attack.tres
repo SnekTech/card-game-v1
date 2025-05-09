@@ -5,6 +5,7 @@
 [resource]
 script = ExtResource("1_wba1x")
 Id = "warrior_axe_attack"
+Cost = 1
 Type = 0
 Target = 1
 metadata/_custom_type_script = "uid://lggtvlpuxsee"
