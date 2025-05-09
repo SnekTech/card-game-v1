@@ -34,7 +34,7 @@ public partial class StatsUI : HBoxContainer
         blockLabel.Text = block.ToString();
         healthLabel.Text = health.ToString();
 
-        blockLabel.Visible = block > 0;
-        healthLabel.Visible = health > 0;
+        blockContainer.Visible = block > 0;
+        healthContainer.Visible = health > 0;
     }
 }
