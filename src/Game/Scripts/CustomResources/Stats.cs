@@ -14,6 +14,8 @@ public partial class Stats : Resource
     private int _health;
     private int _block;
 
+    public Texture2D Art => art;
+
     public int Health
     {
         get => _health;

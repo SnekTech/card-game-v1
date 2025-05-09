@@ -1,9 +1,10 @@
-[gd_scene load_steps=11 format=3 uid="uid://ddeqm380rgljy"]
+[gd_scene load_steps=12 format=3 uid="uid://ddeqm380rgljy"]
 
 [ext_resource type="Script" uid="uid://bac43f1ymlhio" path="res://Scripts/Main.cs" id="1_vr6xi"]
 [ext_resource type="Texture2D" uid="uid://cp4iq5fd6j8be" path="res://art/background.png" id="2_2h7oj"]
 [ext_resource type="PackedScene" uid="uid://djmhd1i2e8j2h" path="res://Scenes/CardUI.tscn" id="3_2h7oj"]
 [ext_resource type="Texture2D" uid="uid://1u3b3hwqd8yh" path="res://art/tile_0110.png" id="3_c5ef4"]
+[ext_resource type="PackedScene" uid="uid://dhri3662tt0n7" path="res://Scenes/Player/Player.tscn" id="4_qxnh6"]
 [ext_resource type="PackedScene" uid="uid://b1af48bdyphyk" path="res://Scenes/CardTargetSelector/CardTargetSelector.tscn" id="4_u22qb"]
 [ext_resource type="Script" uid="uid://6alav0l7l8ly" path="res://Scripts/CardVisual/Hand.cs" id="5_u22qb"]
 [ext_resource type="Resource" uid="uid://b8cv04kd1groj" path="res://characters/warrior/cards/warrior_axe_attack.tres" id="6_u22qb"]
@@ -42,6 +43,9 @@ texture = ExtResource("3_c5ef4")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Enemy"]
 shape = SubResource("RectangleShape2D_qxnh6")
+
+[node name="Player" parent="." instance=ExtResource("4_qxnh6")]
+position = Vector2(57, 72)
 
 [node name="CardTargetSelector" parent="." instance=ExtResource("4_u22qb")]
 
