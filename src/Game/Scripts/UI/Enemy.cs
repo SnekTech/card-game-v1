@@ -46,6 +46,15 @@ public partial class Enemy : Area2D
     public override void _Ready()
     {
         Stats = originalEnemyStats;
+
+        AreaEntered += OnAreaEntered;
+        AreaExited += OnAreaExited;
+    }
+
+    public override void _ExitTree()
+    {
+        AreaEntered -= OnAreaEntered;
+        AreaExited -= OnAreaExited;
     }
 
     private void SubscribeStatsChanged()
@@ -71,7 +80,7 @@ public partial class Enemy : Area2D
 
     private void UpdateStats() => statsUI.UpdateStats(Stats);
 
-    public void TakeDamage(int damage)
+    private void TakeDamage(int damage)
     {
         if (Stats.Health <= 0)
             return;
@@ -82,5 +91,15 @@ public partial class Enemy : Area2D
         {
             QueueFree();
         }
+    }
+
+    private void OnAreaEntered(Area2D area2D)
+    {
+        arrow.Show();
+    }
+
+    private void OnAreaExited(Area2D area2D)
+    {
+        arrow.Hide();
     }
 }
