@@ -1,5 +1,6 @@
-[gd_resource type="Resource" script_class="Card" load_steps=2 format=3 uid="uid://b8cv04kd1groj"]
+[gd_resource type="Resource" script_class="Card" load_steps=3 format=3 uid="uid://b8cv04kd1groj"]
 
+[ext_resource type="Texture2D" uid="uid://ck1t4hdip6xrl" path="res://art/tile_0119.png" id="1_ungqh"]
 [ext_resource type="Script" uid="uid://lggtvlpuxsee" path="res://Scripts/CustomResources/Card.cs" id="1_wba1x"]
 
 [resource]
@@ -8,4 +9,6 @@ Id = "warrior_axe_attack"
 Cost = 1
 Type = 0
 Target = 1
+Icon = ExtResource("1_ungqh")
+TooltipText = "default tooltip"
 metadata/_custom_type_script = "uid://lggtvlpuxsee"

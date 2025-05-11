@@ -8,8 +8,6 @@ public class ReleasedState(CardStateMachine cardStateMachine) : CardState(cardSt
     
     public override void OnEnter()
     {
-        CardUI.SetDebugInfo(Colors.DarkViolet, nameof(ReleasedState));
-
         _played = false;
 
         if (CardUI.Targets.Count > 0)

@@ -5,13 +5,25 @@ namespace CardGameV1.CustomResources;
 [GlobalClass]
 public partial class Card : Resource
 {
-    [Export] public string Id { get; private set; } = "default";
+    [ExportGroup("Card Attribute")]
+    [Export]
+    public string Id { get; private set; } = "default";
 
-    [Export] public int Cost { get; private set; } = 1;
+    [Export]
+    public int Cost { get; private set; } = 1;
 
-    [Export] public CardType Type { get; private set; }
+    [Export]
+    public CardType Type { get; private set; }
 
-    [Export] public TargetType Target { get; private set; }
+    [Export]
+    public TargetType Target { get; private set; }
+
+    [ExportGroup("Card Visual")]
+    [Export]
+    public Texture2D Icon { get; private set; } = null!;
+
+    [Export(PropertyHint.MultilineText)]
+    public string TooltipText { get; private set; } = "default tooltip";
 
     public bool IsSingleTargeted => Target == TargetType.SingleEnemy;
 

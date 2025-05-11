@@ -11,7 +11,6 @@ public class AimingState(CardStateMachine cardDragStateMachine) : CardState(card
 
     public override void OnEnter()
     {
-        CardUI.SetDebugInfo(Colors.WebPurple, nameof(AimingState));
         CardUI.Targets.Clear();
         var offset = new Vector2(CardUI.Parent.Size.X / 2, -CardUI.Size.Y / 2);
         offset.X -= CardUI.Size.X / 2;

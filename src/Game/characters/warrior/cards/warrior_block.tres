@@ -1,5 +1,6 @@
-[gd_resource type="Resource" script_class="Card" load_steps=2 format=3 uid="uid://bxutmrgg5ywiw"]
+[gd_resource type="Resource" script_class="Card" load_steps=3 format=3 uid="uid://bxutmrgg5ywiw"]
 
+[ext_resource type="Texture2D" uid="uid://oe7v35ii8vrs" path="res://art/tile_0102.png" id="1_5nea4"]
 [ext_resource type="Script" uid="uid://lggtvlpuxsee" path="res://Scripts/CustomResources/Card.cs" id="1_ti8q0"]
 
 [resource]
@@ -8,4 +9,6 @@ Id = "warrior_block"
 Cost = 1
 Type = 1
 Target = 0
+Icon = ExtResource("1_5nea4")
+TooltipText = "default tooltip"
 metadata/_custom_type_script = "uid://lggtvlpuxsee"

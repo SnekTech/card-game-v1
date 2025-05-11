@@ -14,8 +14,6 @@ public class DraggingState(CardStateMachine cardStateMachine) : CardState(cardSt
         if (newParent != null)
             CardUI.Reparent(newParent);
         
-        CardUI.SetDebugInfo(Colors.NavyBlue, nameof(DraggingState));
-
         _minDragThresholdHasElapsed = false;
         var timer = CardUI.GetTree().CreateTimer(DragThresholdMin, false);
         timer.Timeout += () => _minDragThresholdHasElapsed = true;

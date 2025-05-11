@@ -10,7 +10,6 @@ public class BaseState(CardStateMachine cardStateMachine) : CardState(cardStateM
         CardUI.StopAnimation();
         
         CardUI.EmitReparentRequested();
-        CardUI.SetDebugInfo(Colors.WebGreen, nameof(BaseState));
         CardUI.PivotOffset = Vector2.Zero;
     }
 

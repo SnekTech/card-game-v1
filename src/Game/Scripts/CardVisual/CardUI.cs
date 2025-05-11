@@ -11,11 +11,20 @@ public partial class CardUI : Control
 {
     public event Action<CardUI>? ReparentRequested;
 
-    [Export] private Card card = null!;
+    [Export]
+    private Card card = null!;
 
-    [Node] private ColorRect colorRect = null!;
-    [Node] private Label stateLabel = null!;
-    [Node] private Area2D dropPointDetector = null!;
+    [Node]
+    private Panel panel = null!;
+
+    [Node]
+    private TextureRect icon = null!;
+
+    [Node]
+    private Label cost = null!;
+
+    [Node]
+    private Area2D dropPointDetector = null!;
 
     private CardStateMachine _stateMachine = null!;
     private readonly HashSet<Node> _targets = [];
@@ -28,7 +37,19 @@ public partial class CardUI : Control
     }
 
     public ISet<Node> Targets => _targets;
-    public Card Card => card;
+
+    public Card Card
+    {
+        get => card;
+        set
+        {
+            card = value;
+            if (IsInsideTree())
+            {
+                UpdateCardVisual(value);
+            }
+        }
+    }
 
     public Control Parent { get; set; } = null!;
 
@@ -42,9 +63,11 @@ public partial class CardUI : Control
 
     public override void _Ready()
     {
+        UpdateCardVisual(Card);
+
         _stateMachine = new CardStateMachine(this);
         _stateMachine.Init<CardStates.BaseState>();
-        
+
         dropPointDetector.MouseEntered += _stateMachine.OnMouseEntered;
         dropPointDetector.MouseExited += _stateMachine.OnMouseExited;
 
@@ -57,12 +80,6 @@ public partial class CardUI : Control
 
     public void EmitReparentRequested() => ReparentRequested?.Invoke(this);
 
-    public void SetDebugInfo(Color color, string stateName)
-    {
-        colorRect.Color = color;
-        stateLabel.Text = stateName;
-    }
-
     public void AnimateToPosition(Vector2 destination, float duration)
     {
         _tween = CreateTween().SetTrans(Tween.TransitionType.Circ).SetEase(Tween.EaseType.Out);
@@ -73,6 +90,12 @@ public partial class CardUI : Control
     {
         if (_tween != null && _tween.IsRunning())
             _tween.KillIfValid();
+    }
+
+    private void UpdateCardVisual(Card cardDefinition)
+    {
+        cost.Text = cardDefinition.Cost.ToString();
+        icon.Texture = cardDefinition.Icon;
     }
 
     private void OnDropPointDetectorAreaEntered(Area2D area) => _targets.Add(area);

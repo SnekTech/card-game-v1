@@ -6,7 +6,6 @@ public class ClickedState(CardStateMachine cardStateMachine) : CardState(cardSta
 {
     public override void OnEnter()
     {
-        CardUI.SetDebugInfo(Colors.Orange, nameof(ClickedState));
         CardUI.MonitoringDrop = true;
     }
 
