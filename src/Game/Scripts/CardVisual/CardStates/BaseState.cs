@@ -8,7 +8,8 @@ public class BaseState(CardStateMachine cardStateMachine) : CardState(cardStateM
     public override void OnEnter()
     {
         CardUI.StopAnimation();
-        
+
+        CardUI.SetPanelStyleBox(CardUI.BaseStyleBox);
         CardUI.EmitReparentRequested();
         CardUI.PivotOffset = Vector2.Zero;
     }
@@ -20,5 +21,15 @@ public class BaseState(CardStateMachine cardStateMachine) : CardState(cardStateM
             CardUI.PivotOffset = CardUI.GetGlobalMousePosition() - CardUI.GlobalPosition;
             ChangeState<ClickedState>();
         }
+    }
+
+    public override void OnMouseEntered()
+    {
+        CardUI.SetPanelStyleBox(CardUI.HoverStyleBox);
+    }
+
+    public override void OnMouseExited()
+    {
+        CardUI.SetPanelStyleBox(CardUI.BaseStyleBox);
     }
 }

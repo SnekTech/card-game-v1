@@ -26,6 +26,15 @@ public partial class CardUI : Control
     [Node]
     private Area2D dropPointDetector = null!;
 
+    public static readonly StyleBoxFlat BaseStyleBox =
+        GD.Load<StyleBoxFlat>("res://Scenes/CardVisual/card_base_stylebox.tres");
+
+    public static readonly StyleBoxFlat HoverStyleBox =
+        GD.Load<StyleBoxFlat>("res://Scenes/CardVisual/card_hover_stylebox.tres");
+
+    public static readonly StyleBoxFlat DraggingStyleBox =
+        GD.Load<StyleBoxFlat>("res://Scenes/CardVisual/card_dragging_stylebox.tres");
+
     private CardStateMachine _stateMachine = null!;
     private readonly HashSet<Node> _targets = [];
     private Tween? _tween;
@@ -46,7 +55,7 @@ public partial class CardUI : Control
             card = value;
             if (IsInsideTree())
             {
-                UpdateCardVisual(value);
+                InitWithCard(value);
             }
         }
     }
@@ -63,7 +72,7 @@ public partial class CardUI : Control
 
     public override void _Ready()
     {
-        UpdateCardVisual(Card);
+        InitWithCard(Card);
 
         _stateMachine = new CardStateMachine(this);
         _stateMachine.Init<CardStates.BaseState>();
@@ -92,7 +101,13 @@ public partial class CardUI : Control
             _tween.KillIfValid();
     }
 
-    private void UpdateCardVisual(Card cardDefinition)
+    public void SetPanelStyleBox(StyleBox styleBox)
+    {
+        const string panelStylePath = "theme_override_styles/panel";
+        panel.Set(panelStylePath, styleBox);
+    }
+
+    private void InitWithCard(Card cardDefinition)
     {
         cost.Text = cardDefinition.Cost.ToString();
         icon.Texture = cardDefinition.Icon;

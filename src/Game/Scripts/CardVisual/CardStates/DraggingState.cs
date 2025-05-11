@@ -7,13 +7,14 @@ public class DraggingState(CardStateMachine cardStateMachine) : CardState(cardSt
 {
     private const float DragThresholdMin = 0.05f;
     private bool _minDragThresholdHasElapsed;
-    
+
     public override void OnEnter()
     {
         var newParent = CardUI.GetTree().GetFirstNodeInGroup(GroupNames.UILayer);
         if (newParent != null)
             CardUI.Reparent(newParent);
-        
+
+        CardUI.SetPanelStyleBox(CardUI.DraggingStyleBox);
         _minDragThresholdHasElapsed = false;
         var timer = CardUI.GetTree().CreateTimer(DragThresholdMin, false);
         timer.Timeout += () => _minDragThresholdHasElapsed = true;
@@ -24,14 +25,15 @@ public class DraggingState(CardStateMachine cardStateMachine) : CardState(cardSt
         var isCardSingleTargeted = CardUI.Card.IsSingleTargeted;
         var mouseMoved = inputEvent is InputEventMouseMotion;
         var shouldCancel = inputEvent.IsActionPressed(InputActionNames.RightMouse);
-        var playConfirmed = inputEvent.IsActionPressed(InputActionNames.LeftMouse) || inputEvent.IsActionReleased(InputActionNames.LeftMouse);
+        var playConfirmed = inputEvent.IsActionPressed(InputActionNames.LeftMouse) ||
+                            inputEvent.IsActionReleased(InputActionNames.LeftMouse);
 
         if (isCardSingleTargeted && mouseMoved && CardUI.Targets.Count > 0)
         {
             ChangeState<AimingState>();
             return;
         }
-        
+
         if (mouseMoved)
         {
             CardUI.GlobalPosition = CardUI.GetGlobalMousePosition() - CardUI.PivotOffset;
