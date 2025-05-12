@@ -1,11 +1,13 @@
 ﻿using CardGameV1.CustomResources;
+using CardGameV1.EffectSystem;
+using CardGameV1.UI;
 using Godot;
 using GodotUtilities;
 
-namespace CardGameV1.UI;
+namespace CardGameV1.Character;
 
 [Scene]
-public partial class Enemy : Area2D
+public partial class Enemy : Area2D, ITarget
 {
     private const int ArrowOffset = 5;
 
@@ -80,7 +82,7 @@ public partial class Enemy : Area2D
 
     private void UpdateStats() => statsUI.UpdateStats(Stats);
 
-    private void TakeDamage(int damage)
+    public void TakeDamage(int damage)
     {
         if (Stats.Health <= 0)
             return;

@@ -1,11 +1,13 @@
 ﻿using CardGameV1.CustomResources;
+using CardGameV1.EffectSystem;
+using CardGameV1.UI;
 using Godot;
 using GodotUtilities;
 
-namespace CardGameV1.UI;
+namespace CardGameV1.Character;
 
 [Scene]
-public partial class Player : Node2D
+public partial class Player : Node2D, ITarget
 {
     [Export]
     private CharacterStats originalPlayerStats = null!;
@@ -19,7 +21,7 @@ public partial class Player : Node2D
     private bool _hasSubscribedStatsChanged;
     private CharacterStats _stats = null!;
 
-    public CharacterStats Stats
+    public CharacterStats CharacterStats
     {
         get => _stats;
         set
@@ -30,24 +32,18 @@ public partial class Player : Node2D
         }
     }
 
-    public override void _Notification(int what)
-    {
-        if (what == NotificationSceneInstantiated)
-        {
-            WireNodes();
-        }
-    }
+    public Stats Stats => _stats;
 
     public override void _Ready()
     {
-        Stats = originalPlayerStats;
+        CharacterStats = originalPlayerStats;
     }
 
     private void SubscribeStatsChanged()
     {
         if (_hasSubscribedStatsChanged == false)
         {
-            Stats.StatsChanged += UpdateStats;
+            CharacterStats.StatsChanged += UpdateCharacterStats;
         }
 
         _hasSubscribedStatsChanged = true;
@@ -58,22 +54,30 @@ public partial class Player : Node2D
         if (IsInsideTree() == false)
             return;
 
-        sprite2D.Texture = Stats.Art;
-        UpdateStats();
+        sprite2D.Texture = CharacterStats.Art;
+        UpdateCharacterStats();
     }
 
-    private void UpdateStats() => statsUI.UpdateStats(Stats);
+    private void UpdateCharacterStats() => statsUI.UpdateStats(CharacterStats);
 
     public void TakeDamage(int damage)
     {
-        if (Stats.Health <= 0)
+        if (CharacterStats.Health <= 0)
             return;
-        
-        Stats.TakeDamage(damage);
 
-        if (Stats.Health <= 0)
+        CharacterStats.TakeDamage(damage);
+
+        if (CharacterStats.Health <= 0)
         {
             QueueFree();
+        }
+    }
+
+    public override void _Notification(int what)
+    {
+        if (what == NotificationSceneInstantiated)
+        {
+            WireNodes();
         }
     }
 }
