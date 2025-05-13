@@ -1,18 +1,14 @@
 ﻿using System.Collections.Generic;
-using Godot;
 
 namespace CardGameV1.EffectSystem;
 
 public class BlockEffect(int amount) : IEffect
 {
-    public void Execute(IEnumerable<Node> targetNodes)
+    public void Execute(IEnumerable<ITarget> targets)
     {
-        foreach (var node in targetNodes)
+        foreach (var target in targets)
         {
-            if (node is ITarget target)
-            {
-                target.Stats.Block += amount;
-            }
+            target.Stats.Block += amount;
         }
     }
 }

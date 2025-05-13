@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://djmhd1i2e8j2h"]
+[gd_scene load_steps=7 format=3 uid="uid://djmhd1i2e8j2h"]
 
 [ext_resource type="Theme" uid="uid://c306wkaelrn2q" path="res://main_theme.tres" id="1_obeoo"]
 [ext_resource type="Script" uid="uid://dueur1nl3yajm" path="res://Scripts/CardVisual/CardUI.cs" id="2_hcufj"]
 [ext_resource type="StyleBox" uid="uid://cukj3q5ygqlsx" path="res://Scenes/CardVisual/card_base_stylebox.tres" id="3_af8jv"]
+[ext_resource type="Resource" uid="uid://dytmcwc3cmib3" path="res://characters/warrior/warrior.tres" id="3_vypdv"]
 [ext_resource type="Texture2D" uid="uid://c6rme2o6dyaoj" path="res://art/tile_0104.png" id="4_vypdv"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_obeoo"]
@@ -21,6 +22,7 @@ grow_vertical = 2
 mouse_filter = 1
 theme = ExtResource("1_obeoo")
 script = ExtResource("2_hcufj")
+characterStats = ExtResource("3_vypdv")
 
 [node name="Panel" type="Panel" parent="."]
 layout_mode = 1

@@ -1,18 +1,14 @@
 ﻿using System.Collections.Generic;
-using Godot;
 
 namespace CardGameV1.EffectSystem;
 
 public class DamageEffect(int amount) : IEffect
 {
-    public void Execute(IEnumerable<Node> targetNodes)
+    public void Execute(IEnumerable<ITarget> targets)
     {
-        foreach (var node in targetNodes)
+        foreach (var target in targets)
         {
-            if (node is ITarget target)
-            {
-                target.TakeDamage(amount);
-            }
+            target.TakeDamage(amount);
         }
     }
 }

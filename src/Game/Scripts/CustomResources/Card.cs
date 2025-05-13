@@ -1,9 +1,14 @@
-﻿using Godot;
+﻿using System.Collections.Generic;
+using System.Linq;
+using CardGameV1.Constants;
+using CardGameV1.EffectSystem;
+using CardGameV1.EventBus;
+using Godot;
+using Godot.Collections;
 
 namespace CardGameV1.CustomResources;
 
-[GlobalClass]
-public partial class Card : Resource
+public abstract partial class Card : Resource
 {
     [ExportGroup("Card Attribute")]
     [Export]
@@ -26,6 +31,37 @@ public partial class Card : Resource
     public string TooltipText { get; private set; } = "default tooltip";
 
     public bool IsSingleTargeted => Target == TargetType.SingleEnemy;
+
+    private IEnumerable<ITarget> GetTargets(SceneTree tree)
+    {
+        var targets = Target switch
+        {
+            TargetType.Self => tree.GetNodesInGroup(GroupNames.Player),
+            TargetType.AllEnemies => tree.GetNodesInGroup(GroupNames.Enemy),
+            TargetType.Everyone => tree.GetNodesInGroup(GroupNames.Player)
+                .Concat(tree.GetNodesInGroup(GroupNames.Enemy)),
+            _ => new Array<Node>()
+        };
+        return targets.Where(target => target is ITarget).Cast<ITarget>();
+    }
+
+    public void Play(IEnumerable<Node> targetNodes, CharacterStats characterStats)
+    {
+        EventBusOwner.CardEventBus.EmitCardPlayed(this);
+        characterStats.Mana -= Cost;
+
+
+        if (IsSingleTargeted)
+        {
+            ApplyEffects(targetNodes.Where(node => node is ITarget).Cast<ITarget>());
+        }
+        else
+        {
+            ApplyEffects(GetTargets(targetNodes.First().GetTree()));
+        }
+    }
+
+    protected abstract void ApplyEffects(IEnumerable<ITarget> targets);
 
     #region card enums
 

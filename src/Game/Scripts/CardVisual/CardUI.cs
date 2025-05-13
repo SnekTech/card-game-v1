@@ -14,6 +14,11 @@ public partial class CardUI : Control
     [Export]
     private Card card = null!;
 
+    // temporary inject character stats here,
+    // todo: replace this with real implementation
+    [Export]
+    private CharacterStats characterStats = null!;
+
     [Node]
     private Panel panel = null!;
 
@@ -62,14 +67,6 @@ public partial class CardUI : Control
 
     public Control Parent { get; set; } = null!;
 
-    public override void _Notification(int what)
-    {
-        if (what == NotificationSceneInstantiated)
-        {
-            WireNodes();
-        }
-    }
-
     public override void _Ready()
     {
         InitWithCard(Card);
@@ -107,6 +104,12 @@ public partial class CardUI : Control
         panel.Set(panelStylePath, styleBox);
     }
 
+    public void Play()
+    {
+        Card.Play(Targets, characterStats);
+        QueueFree();
+    }
+
     private void InitWithCard(Card cardDefinition)
     {
         cost.Text = cardDefinition.Cost.ToString();
@@ -116,4 +119,12 @@ public partial class CardUI : Control
     private void OnDropPointDetectorAreaEntered(Area2D area) => _targets.Add(area);
 
     private void OnDropPointDetectorAreaExited(Area2D area) => _targets.Remove(area);
+
+    public override void _Notification(int what)
+    {
+        if (what == NotificationSceneInstantiated)
+        {
+            WireNodes();
+        }
+    }
 }

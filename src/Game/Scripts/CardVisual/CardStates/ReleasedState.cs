@@ -13,7 +13,7 @@ public class ReleasedState(CardStateMachine cardStateMachine) : CardState(cardSt
         if (CardUI.Targets.Count > 0)
         {
             _played = true;
-            GD.Print($"play card for target(s) {CardUI.Targets}");
+            CardUI.Play();
         }
     }
 

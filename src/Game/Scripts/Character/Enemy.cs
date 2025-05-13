@@ -37,14 +37,6 @@ public partial class Enemy : Area2D, ITarget
         }
     }
 
-    public override void _Notification(int what)
-    {
-        if (what == NotificationSceneInstantiated)
-        {
-            WireNodes();
-        }
-    }
-
     public override void _Ready()
     {
         Stats = originalEnemyStats;
@@ -103,5 +95,13 @@ public partial class Enemy : Area2D, ITarget
     private void OnAreaExited(Area2D area2D)
     {
         arrow.Hide();
+    }
+
+    public override void _Notification(int what)
+    {
+        if (what == NotificationSceneInstantiated)
+        {
+            WireNodes();
+        }
     }
 }
