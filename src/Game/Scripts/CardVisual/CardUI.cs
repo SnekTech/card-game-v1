@@ -157,26 +157,24 @@ public partial class CardUI : Control
         Card.Play(Targets, CharacterStats);
         ClearSubscriptions();
         QueueFree();
-        return;
-
-        void ClearSubscriptions()
-        {
-            var cardEventBus = EventBusOwner.CardEventBus;
-            cardEventBus.CardDragStarted -= OnCardDragOrAimingStarted;
-            cardEventBus.CardDragEnded -= OnCardDragOrAimingEnded;
-            cardEventBus.CardAimStarted -= OnCardDragOrAimingStarted;
-            cardEventBus.CardAimEnded -= OnCardDragOrAimingEnded;
-
-            defaultCharacterStats.StatsChanged -= OnCharacterStatsChanged;
-
-            dropPointDetector.MouseEntered -= _stateMachine.OnMouseEntered;
-            dropPointDetector.MouseExited -= _stateMachine.OnMouseExited;
-
-            dropPointDetector.AreaEntered -= OnDropPointDetectorAreaEntered;
-            dropPointDetector.AreaExited -= OnDropPointDetectorAreaExited;
-        }
     }
 
+    private void ClearSubscriptions()
+    {
+        var cardEventBus = EventBusOwner.CardEventBus;
+        cardEventBus.CardDragStarted -= OnCardDragOrAimingStarted;
+        cardEventBus.CardDragEnded -= OnCardDragOrAimingEnded;
+        cardEventBus.CardAimStarted -= OnCardDragOrAimingStarted;
+        cardEventBus.CardAimEnded -= OnCardDragOrAimingEnded;
+
+        defaultCharacterStats.StatsChanged -= OnCharacterStatsChanged;
+
+        dropPointDetector.MouseEntered -= _stateMachine.OnMouseEntered;
+        dropPointDetector.MouseExited -= _stateMachine.OnMouseExited;
+
+        dropPointDetector.AreaEntered -= OnDropPointDetectorAreaEntered;
+        dropPointDetector.AreaExited -= OnDropPointDetectorAreaExited;
+    }
 
     private void InitWithCard(Card cardDefinition)
     {
