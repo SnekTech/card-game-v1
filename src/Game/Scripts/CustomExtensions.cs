@@ -31,9 +31,15 @@ public static class CustomExtensions
         }
     }
 
-    public static async Task DelayGd(this Node node, double timeSec, bool processAlways = true, bool processInPhysics = false, bool ignoreTimeScale = false)
+    public static async Task DelayGd(this Node node, double timeSec, bool processAlways = true,
+        bool processInPhysics = false, bool ignoreTimeScale = false)
     {
         var timer = node.GetTree().CreateTimer(timeSec, processAlways, processInPhysics, ignoreTimeScale);
         await timer.ToSignal(timer, Timer.SignalName.Timeout);
+    }
+
+    public static void SetModulateAlpha(this CanvasItem canvasItem, float alpha)
+    {
+        canvasItem.Modulate = canvasItem.Modulate with { A = alpha };
     }
 }

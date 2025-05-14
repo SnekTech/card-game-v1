@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using CardGameV1.CustomResources;
+using CardGameV1.EventBus;
 using Godot;
 using GodotUtilities;
 
@@ -14,10 +15,8 @@ public partial class CardUI : Control
     [Export]
     private Card card = null!;
 
-    // temporary inject character stats here,
-    // todo: replace this with real implementation
     [Export]
-    private CharacterStats characterStats = null!;
+    private CharacterStats defaultCharacterStats = null!;
 
     [Node]
     private Panel panel = null!;
@@ -43,6 +42,7 @@ public partial class CardUI : Control
     private CardStateMachine _stateMachine = null!;
     private readonly HashSet<Node> _targets = [];
     private Tween? _tween;
+    private CharacterStats? _characterStats;
 
     public bool MonitoringDrop
     {
@@ -55,7 +55,7 @@ public partial class CardUI : Control
     public Card Card
     {
         get => card;
-        set
+        private set
         {
             card = value;
             if (IsInsideTree())
@@ -65,10 +65,55 @@ public partial class CardUI : Control
         }
     }
 
+    public CharacterStats CharacterStats
+    {
+        get => _characterStats ?? defaultCharacterStats;
+        set
+        {
+            if (_characterStats != null)
+            {
+                _characterStats.StatsChanged -= OnCharacterStatsChanged;
+            }
+            _characterStats = value;
+            _characterStats.StatsChanged += OnCharacterStatsChanged;
+        }
+    }
+
     public Control Parent { get; set; } = null!;
+
+    private bool _playable = true;
+
+    public bool Playable
+    {
+        get => _playable;
+        private set
+        {
+            _playable = value;
+            var fontColorName = new StringName("font_color");
+            if (_playable == false)
+            {
+                cost.AddThemeColorOverride(fontColorName, Colors.Red);
+                icon.SetModulateAlpha(0.5f);
+            }
+            else
+            {
+                cost.RemoveThemeColorOverride(fontColorName);
+                icon.SetModulateAlpha(1);
+            }
+        }
+    }
+
+    public bool Disabled { get; private set; }
 
     public override void _Ready()
     {
+        CharacterStats = defaultCharacterStats;
+        var cardEventBus = EventBusOwner.CardEventBus;
+        cardEventBus.CardDragStarted += OnCardDragOrAimingStarted;
+        cardEventBus.CardDragEnded += OnCardDragOrAimingEnded;
+        cardEventBus.CardAimStarted += OnCardDragOrAimingStarted;
+        cardEventBus.CardAimEnded += OnCardDragOrAimingEnded;
+
         InitWithCard(Card);
 
         _stateMachine = new CardStateMachine(this);
@@ -106,9 +151,29 @@ public partial class CardUI : Control
 
     public void Play()
     {
-        Card.Play(Targets, characterStats);
+        Card.Play(Targets, CharacterStats);
+        ClearSubscriptions();
         QueueFree();
+        return;
+
+        void ClearSubscriptions()
+        {
+            var cardEventBus = EventBusOwner.CardEventBus;
+            cardEventBus.CardDragStarted -= OnCardDragOrAimingStarted;
+            cardEventBus.CardDragEnded -= OnCardDragOrAimingEnded;
+            cardEventBus.CardAimStarted -= OnCardDragOrAimingStarted;
+            cardEventBus.CardAimEnded -= OnCardDragOrAimingEnded;
+
+            defaultCharacterStats.StatsChanged -= OnCharacterStatsChanged;
+
+            dropPointDetector.MouseEntered -= _stateMachine.OnMouseEntered;
+            dropPointDetector.MouseExited -= _stateMachine.OnMouseExited;
+
+            dropPointDetector.AreaEntered -= OnDropPointDetectorAreaEntered;
+            dropPointDetector.AreaExited -= OnDropPointDetectorAreaExited;
+        }
     }
+
 
     private void InitWithCard(Card cardDefinition)
     {
@@ -119,6 +184,26 @@ public partial class CardUI : Control
     private void OnDropPointDetectorAreaEntered(Area2D area) => _targets.Add(area);
 
     private void OnDropPointDetectorAreaExited(Area2D area) => _targets.Remove(area);
+
+    private void OnCardDragOrAimingStarted(CardUI cardUI)
+    {
+        if (cardUI != this)
+            return;
+
+        Disabled = true;
+    }
+
+    private void OnCardDragOrAimingEnded(CardUI cardUI)
+    {
+        Disabled = false;
+        Playable = CharacterStats.CanPlayCard(card);
+    }
+
+    private void OnCharacterStatsChanged()
+    {
+        Playable = CharacterStats.CanPlayCard(card);
+        GD.Print("set playable");
+    }
 
     public override void _Notification(int what)
     {

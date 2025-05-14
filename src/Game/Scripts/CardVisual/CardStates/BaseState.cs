@@ -16,6 +16,9 @@ public class BaseState(CardStateMachine cardStateMachine) : CardState(cardStateM
 
     public override void OnGuiInput(InputEvent inputEvent)
     {
+        if (CardUI.Playable == false || CardUI.Disabled)
+            return;
+
         if (inputEvent.IsActionPressed(InputActionNames.LeftMouse))
         {
             CardUI.PivotOffset = CardUI.GetGlobalMousePosition() - CardUI.GlobalPosition;
@@ -25,11 +28,17 @@ public class BaseState(CardStateMachine cardStateMachine) : CardState(cardStateM
 
     public override void OnMouseEntered()
     {
+        if (CardUI.Playable == false || CardUI.Disabled)
+            return;
+
         CardUI.SetPanelStyleBox(CardUI.HoverStyleBox);
     }
 
     public override void OnMouseExited()
     {
+        if (CardUI.Playable == false || CardUI.Disabled)
+            return;
+
         CardUI.SetPanelStyleBox(CardUI.BaseStyleBox);
     }
 }

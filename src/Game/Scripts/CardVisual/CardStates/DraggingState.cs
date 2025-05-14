@@ -1,4 +1,5 @@
 ﻿using CardGameV1.Constants;
+using CardGameV1.EventBus;
 using Godot;
 
 namespace CardGameV1.CardVisual.CardStates;
@@ -15,9 +16,16 @@ public class DraggingState(CardStateMachine cardStateMachine) : CardState(cardSt
             CardUI.Reparent(newParent);
 
         CardUI.SetPanelStyleBox(CardUI.DraggingStyleBox);
+        EventBusOwner.CardEventBus.EmitCardDragStared(CardUI);
+        
         _minDragThresholdHasElapsed = false;
         var timer = CardUI.GetTree().CreateTimer(DragThresholdMin, false);
         timer.Timeout += () => _minDragThresholdHasElapsed = true;
+    }
+
+    public override void OnExit()
+    {
+        EventBusOwner.CardEventBus.EmitCardDragEnded(CardUI);
     }
 
     public override void OnInput(InputEvent inputEvent)
