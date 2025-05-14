@@ -44,6 +44,8 @@ public partial class CardUI : Control
     private Tween? _tween;
     private CharacterStats? _characterStats;
 
+    public int OriginalIndex { get; private set; }
+
     public bool MonitoringDrop
     {
         get => dropPointDetector.Monitoring;
@@ -107,6 +109,7 @@ public partial class CardUI : Control
 
     public override void _Ready()
     {
+        OriginalIndex = GetIndex();
         CharacterStats = defaultCharacterStats;
         var cardEventBus = EventBusOwner.CardEventBus;
         cardEventBus.CardDragStarted += OnCardDragOrAimingStarted;

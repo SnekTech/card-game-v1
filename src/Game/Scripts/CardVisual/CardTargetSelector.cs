@@ -26,6 +26,7 @@ public partial class CardTargetSelector : Node2D
 
     public override void _Ready()
     {
+        
         _eventBus.CardAimStarted += OnCardAimStarted;
         _eventBus.CardAimEnded += OnCardAimEnded;
 

@@ -30,6 +30,13 @@ public partial class ManaUI : Panel
     public override void _Ready()
     {
         Stats = originalStats;
+        Test().Fire();
+
+        async Task Test()
+        {
+            await this.DelayGd(1);
+            Stats.Mana = 2;
+        }
     }
 
     private void SubscribeStatsChanged()
