@@ -15,6 +15,7 @@ public partial class Tooltip : PanelContainer
     private RichTextLabel tooltipText = null!;
 
     private Tween? _tween;
+    private bool _isVisible;
 
     public override void _Ready()
     {
@@ -26,8 +27,9 @@ public partial class Tooltip : PanelContainer
         Hide();
     }
 
-    public void ShowTooltip(Texture2D icon, string text)
+    private void ShowTooltip(Texture2D icon, string text)
     {
+        _isVisible = true;
         _tween?.KillIfValid();
 
         tooltipIcon.Texture = icon;
@@ -36,11 +38,13 @@ public partial class Tooltip : PanelContainer
         ShowAnimation();
     }
 
-    public void HideTooltip()
+    private void HideTooltip()
     {
+        _isVisible = false;
         _tween?.KillIfValid();
 
-        HideAnimation();
+        var timer = this.CreateSceneTreeTimer(FadeSeconds);
+        timer.Timeout += HideAnimation;
     }
 
     private void ShowAnimation()
@@ -52,6 +56,9 @@ public partial class Tooltip : PanelContainer
 
     private void HideAnimation()
     {
+        if (_isVisible)
+            return;
+        
         _tween = CreateTween().SetEase(Tween.EaseType.Out).SetTrans(Tween.TransitionType.Cubic);
         _tween.TweenProperty(this, "modulate", Colors.Transparent, FadeSeconds);
         _tween.TweenCallback(Callable.From(Hide));

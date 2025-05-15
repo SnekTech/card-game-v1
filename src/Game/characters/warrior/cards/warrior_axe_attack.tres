@@ -10,5 +10,5 @@ Cost = 1
 Type = 0
 Target = 1
 Icon = ExtResource("1_ungqh")
-TooltipText = "default tooltip"
+TooltipText = "[center]Deal [color=\"ff0000\"]6[/color] damage.[/center]"
 metadata/_custom_type_script = "uid://lggtvlpuxsee"

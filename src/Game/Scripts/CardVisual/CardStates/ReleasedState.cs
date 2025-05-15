@@ -12,6 +12,7 @@ public class ReleasedState(CardStateMachine cardStateMachine) : CardState(cardSt
 
         if (CardUI.Targets.Count > 0)
         {
+            EventBus.EventBusOwner.CardEventBus.EmitTooltipHideRequested();
             _played = true;
             CardUI.Play();
         }

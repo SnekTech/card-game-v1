@@ -10,5 +10,5 @@ Cost = 1
 Type = 1
 Target = 0
 Icon = ExtResource("1_5nea4")
-TooltipText = "default tooltip"
+TooltipText = "[center]Gain [color=\"0044ff\"]5[/color] block.[/center]"
 metadata/_custom_type_script = "uid://lggtvlpuxsee"

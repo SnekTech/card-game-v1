@@ -31,10 +31,17 @@ public static class CustomExtensions
         }
     }
 
-    public static async Task DelayGd(this Node node, double timeSec, bool processAlways = true,
+    public static SceneTreeTimer CreateSceneTreeTimer(this Node node, double timeSec, bool processAlways = true,
         bool processInPhysics = false, bool ignoreTimeScale = false)
     {
         var timer = node.GetTree().CreateTimer(timeSec, processAlways, processInPhysics, ignoreTimeScale);
+        return timer;
+    }
+
+    public static async Task DelayGd(this Node node, double timeSec, bool processAlways = true,
+        bool processInPhysics = false, bool ignoreTimeScale = false)
+    {
+        var timer = node.CreateSceneTreeTimer(timeSec, processAlways, processInPhysics, ignoreTimeScale);
         await timer.ToSignal(timer, Timer.SignalName.Timeout);
     }
 
