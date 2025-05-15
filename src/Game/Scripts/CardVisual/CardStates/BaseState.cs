@@ -1,10 +1,13 @@
 ﻿using CardGameV1.Constants;
+using CardGameV1.EventBus;
 using Godot;
 
 namespace CardGameV1.CardVisual.CardStates;
 
 public class BaseState(CardStateMachine cardStateMachine) : CardState(cardStateMachine)
 {
+    private static readonly CardEventBus CardEventBus = EventBusOwner.CardEventBus;
+    
     public override void OnEnter()
     {
         CardUI.StopAnimation();
@@ -12,6 +15,7 @@ public class BaseState(CardStateMachine cardStateMachine) : CardState(cardStateM
         CardUI.SetPanelStyleBox(CardUI.BaseStyleBox);
         CardUI.EmitReparentRequested();
         CardUI.PivotOffset = Vector2.Zero;
+        CardEventBus.EmitTooltipHideRequested();
     }
 
     public override void OnGuiInput(InputEvent inputEvent)
@@ -32,6 +36,9 @@ public class BaseState(CardStateMachine cardStateMachine) : CardState(cardStateM
             return;
 
         CardUI.SetPanelStyleBox(CardUI.HoverStyleBox);
+        var icon = CardUI.Card.Icon;
+        var tooltipText = CardUI.Card.TooltipText;
+        CardEventBus.EmitCardTooltipRequested(icon, tooltipText);
     }
 
     public override void OnMouseExited()
@@ -40,5 +47,6 @@ public class BaseState(CardStateMachine cardStateMachine) : CardState(cardStateM
             return;
 
         CardUI.SetPanelStyleBox(CardUI.BaseStyleBox);
+        CardEventBus.EmitTooltipHideRequested();
     }
 }

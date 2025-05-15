@@ -18,6 +18,10 @@ public partial class Tooltip : PanelContainer
 
     public override void _Ready()
     {
+        var eventBus = EventBus.EventBusOwner.CardEventBus;
+        eventBus.CardTooltipRequested += ShowTooltip;
+        eventBus.TooltipHideRequested += HideTooltip;
+        
         this.SetModulateAlpha(0);
         Hide();
     }
