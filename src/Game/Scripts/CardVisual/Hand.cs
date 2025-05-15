@@ -27,8 +27,17 @@ public partial class Hand : HBoxContainer
 
     private void OnCardUIReparentRequested(CardUI cardUI)
     {
+        cardUI.Disabled = true;
         cardUI.Reparent(this);
         var newIndex = Mathf.Clamp(cardUI.OriginalIndex - CardsPlayedThisTurn, 0, GetChildCount());
-        Callable.From(() => MoveChild(cardUI, newIndex)).CallDeferred();
+
+        Callable.From(DeferredWork).CallDeferred();
+        return;
+
+        void DeferredWork()
+        {
+            MoveChild(cardUI, newIndex);
+            cardUI.Disabled = false;
+        }
     }
 }

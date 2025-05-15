@@ -105,7 +105,7 @@ public partial class CardUI : Control
         }
     }
 
-    public bool Disabled { get; private set; }
+    public bool Disabled { get; set; }
 
     public override void _Ready()
     {
