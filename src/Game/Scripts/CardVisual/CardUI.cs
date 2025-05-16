@@ -12,12 +12,6 @@ public partial class CardUI : Control
 {
     public event Action<CardUI>? ReparentRequested;
 
-    [Export]
-    private Card card = null!;
-
-    [Export]
-    private CharacterStats defaultCharacterStats = null!;
-
     [Node]
     private Panel panel = null!;
 
@@ -42,7 +36,8 @@ public partial class CardUI : Control
     private CardStateMachine _stateMachine = null!;
     private readonly HashSet<Node> _targets = [];
     private Tween? _tween;
-    private CharacterStats? _characterStats;
+    private CharacterStats _characterStats = null!;
+    private Card card = null!;
 
     public int OriginalIndex { get; private set; }
 
@@ -57,7 +52,7 @@ public partial class CardUI : Control
     public Card Card
     {
         get => card;
-        private set
+        set
         {
             card = value;
             if (IsInsideTree())
@@ -69,13 +64,9 @@ public partial class CardUI : Control
 
     public CharacterStats CharacterStats
     {
-        get => _characterStats ?? defaultCharacterStats;
+        get => _characterStats;
         set
         {
-            if (_characterStats != null)
-            {
-                _characterStats.StatsChanged -= OnCharacterStatsChanged;
-            }
             _characterStats = value;
             _characterStats.StatsChanged += OnCharacterStatsChanged;
         }
@@ -110,14 +101,11 @@ public partial class CardUI : Control
     public override void _Ready()
     {
         OriginalIndex = GetIndex();
-        CharacterStats = defaultCharacterStats;
         var cardEventBus = EventBusOwner.CardEventBus;
         cardEventBus.CardDragStarted += OnCardDragOrAimingStarted;
         cardEventBus.CardDragEnded += OnCardDragOrAimingEnded;
         cardEventBus.CardAimStarted += OnCardDragOrAimingStarted;
         cardEventBus.CardAimEnded += OnCardDragOrAimingEnded;
-
-        InitWithCard(Card);
 
         _stateMachine = new CardStateMachine(this);
         _stateMachine.Init<CardStates.BaseState>();
@@ -167,13 +155,13 @@ public partial class CardUI : Control
         cardEventBus.CardAimStarted -= OnCardDragOrAimingStarted;
         cardEventBus.CardAimEnded -= OnCardDragOrAimingEnded;
 
-        defaultCharacterStats.StatsChanged -= OnCharacterStatsChanged;
-
         dropPointDetector.MouseEntered -= _stateMachine.OnMouseEntered;
         dropPointDetector.MouseExited -= _stateMachine.OnMouseExited;
 
         dropPointDetector.AreaEntered -= OnDropPointDetectorAreaEntered;
         dropPointDetector.AreaExited -= OnDropPointDetectorAreaExited;
+
+        CharacterStats.StatsChanged -= OnCharacterStatsChanged;
     }
 
     private void InitWithCard(Card cardDefinition)

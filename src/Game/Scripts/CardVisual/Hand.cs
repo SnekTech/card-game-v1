@@ -5,19 +5,27 @@ namespace CardGameV1.CardVisual;
 
 public partial class Hand : HBoxContainer
 {
+    [Export]
+    private PackedScene cardUIScene = null!;
+
     public int CardsPlayedThisTurn { get; private set; }
+
+    public CharacterStats CharacterStats { get; set; } = null!;
 
     public override void _Ready()
     {
         EventBus.EventBusOwner.CardEventBus.CardPlayed += OnCardPlayed;
+    }
 
-        foreach (var child in GetChildren())
-        {
-            if (child is not CardUI cardUI) continue;
+    public void AddCard(Card card)
+    {
+        var newCardUI = cardUIScene.Instantiate<CardUI>();
+        AddChild(newCardUI);
 
-            cardUI.ReparentRequested += OnCardUIReparentRequested;
-            cardUI.Parent = this;
-        }
+        newCardUI.ReparentRequested += OnCardUIReparentRequested;
+        newCardUI.Card = card;
+        newCardUI.Parent = this;
+        newCardUI.CharacterStats = CharacterStats;
     }
 
     private void OnCardPlayed(Card card)

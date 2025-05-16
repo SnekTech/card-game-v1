@@ -10,9 +10,9 @@ public partial class CharacterStats : Stats
     [Export] public int MaxMana { get; private set; } = 3;
 
     private int _mana;
-    private CardPile _deck = new();
-    private CardPile _drawPile = new();
-    private CardPile _discardPile = new();
+    public CardPile Deck { get; set; } = new();
+    public CardPile DrawPile { get; set; } = new();
+    public CardPile DiscardPile { get; set; } = new();
     
     public int Mana
     {
@@ -32,9 +32,9 @@ public partial class CharacterStats : Stats
     {
         var instance = (CharacterStats)base.CreateInstance();
         instance.ResetMana();
-        instance._deck = StartingDeck;
-        instance._drawPile = new CardPile();
-        instance._discardPile = new CardPile();
+        instance.Deck = StartingDeck;
+        instance.DrawPile = new CardPile();
+        instance.DiscardPile = new CardPile();
         return instance;
     }
 }

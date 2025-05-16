@@ -1,14 +1,18 @@
-﻿using CardGameV1.CustomResources;
+﻿using CardGameV1.CardVisual;
+using CardGameV1.CustomResources;
 using Godot;
 using GodotUtilities;
 
 namespace CardGameV1.UI;
 
 [Scene]
-public partial class ManaUI : Panel
+public partial class BattleUI : CanvasLayer
 {
     [Node]
-    private Label manaLabel = null!;
+    private Hand hand = null!;
+
+    [Node]
+    private ManaUI manaUI = null!;
 
     private CharacterStats _characterStats = null!;
 
@@ -18,14 +22,9 @@ public partial class ManaUI : Panel
         set
         {
             _characterStats = value;
-            _characterStats.StatsChanged += UpdateManaLabel;
+            manaUI.CharacterStats = _characterStats;
+            hand.CharacterStats = _characterStats;
         }
-    }
-
-    private void UpdateManaLabel()
-    {
-        var (mana, maxMana) = (CharacterStats.Mana, CharacterStats.MaxMana);
-        manaLabel.Text = $"{mana}/{maxMana}";
     }
 
     public override void _Notification(int what)
