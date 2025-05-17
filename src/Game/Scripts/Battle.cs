@@ -1,4 +1,5 @@
-﻿using CardGameV1.CustomResources;
+﻿using CardGameV1.Character;
+using CardGameV1.CustomResources;
 using CardGameV1.EventBus;
 using CardGameV1.TurnManagement;
 using CardGameV1.UI;
@@ -17,6 +18,9 @@ public partial class Battle : Node2D
     private BattleUI battleUI = null!;
 
     [Node]
+    private Player player = null!;
+
+    [Node]
     private PlayerHandler playerHandler = null!;
 
     private readonly PlayerEventBus playerEventBus = EventBusOwner.PlayerEventBus;
@@ -29,6 +33,7 @@ public partial class Battle : Node2D
          */
         var newStats = characterStats.CreateInstance();
         battleUI.CharacterStats = newStats;
+        player.CharacterStats = newStats;
 
         playerEventBus.PlayerTurnEnded += playerHandler.EndTurn;
         playerEventBus.PlayerHandDiscarded += playerHandler.StartTurn; // temporary

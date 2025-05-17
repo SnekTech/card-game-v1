@@ -18,7 +18,6 @@ public partial class Player : Node2D, ITarget
     [Node]
     private StatsUI statsUI = null!;
 
-    private bool _hasSubscribedStatsChanged;
     private CharacterStats _stats = null!;
 
     public CharacterStats CharacterStats
@@ -26,8 +25,8 @@ public partial class Player : Node2D, ITarget
         get => _stats;
         set
         {
-            _stats = value.CreateInstance();
-            SubscribeStatsChanged();
+            _stats = value;
+            _stats.StatsChanged += UpdateCharacterStats;
             UpdatePlayer();
         }
     }
@@ -37,16 +36,6 @@ public partial class Player : Node2D, ITarget
     public override void _Ready()
     {
         CharacterStats = originalPlayerStats;
-    }
-
-    private void SubscribeStatsChanged()
-    {
-        if (_hasSubscribedStatsChanged == false)
-        {
-            CharacterStats.StatsChanged += UpdateCharacterStats;
-        }
-
-        _hasSubscribedStatsChanged = true;
     }
 
     private void UpdatePlayer()
