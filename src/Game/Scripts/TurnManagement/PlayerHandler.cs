@@ -15,7 +15,13 @@ public partial class PlayerHandler : Node
     private Hand hand = null!;
 
     private readonly PlayerEventBus playerEventBus = EventBusOwner.PlayerEventBus;
+    private readonly CardEventBus cardEventBus = EventBusOwner.CardEventBus;
     private CharacterStats _characterStats = null!;
+
+    public override void _Ready()
+    {
+        cardEventBus.CardPlayed += OnCardPlayed;
+    }
 
     public void StartBattle(CharacterStats stats)
     {
@@ -83,5 +89,10 @@ public partial class PlayerHandler : Node
         }
         
         _characterStats.DrawPile.Shuffle();
+    }
+
+    private void OnCardPlayed(Card card)
+    {
+        _characterStats.DiscardPile.AddCard(card);
     }
 }
