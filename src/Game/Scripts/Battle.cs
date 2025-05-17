@@ -1,4 +1,5 @@
 ﻿using CardGameV1.CustomResources;
+using CardGameV1.EventBus;
 using CardGameV1.TurnManagement;
 using CardGameV1.UI;
 using Godot;
@@ -17,7 +18,8 @@ public partial class Battle : Node2D
 
     [Node]
     private PlayerHandler playerHandler = null!;
-    
+
+    private readonly PlayerEventBus playerEventBus = EventBusOwner.PlayerEventBus;
 
     public override void _Ready()
     {
@@ -27,6 +29,9 @@ public partial class Battle : Node2D
          */
         var newStats = characterStats.CreateInstance();
         battleUI.CharacterStats = newStats;
+
+        playerEventBus.PlayerTurnEnded += playerHandler.EndTurn;
+        playerEventBus.PlayerHandDiscarded += playerHandler.StartTurn; // temporary
         
         StartBattle(newStats);
     }

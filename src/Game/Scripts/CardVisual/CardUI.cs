@@ -143,6 +143,11 @@ public partial class CardUI : Control
     public void Play()
     {
         Card.Play(Targets, CharacterStats);
+        CleanupAndQueueFree();
+    }
+
+    public void CleanupAndQueueFree()
+    {
         ClearSubscriptions();
         QueueFree();
     }
@@ -191,7 +196,6 @@ public partial class CardUI : Control
     private void OnCharacterStatsChanged()
     {
         Playable = CharacterStats.CanPlayCard(card);
-        GD.Print("set playable");
     }
 
     public override void _Notification(int what)

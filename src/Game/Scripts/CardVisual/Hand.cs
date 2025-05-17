@@ -28,6 +28,22 @@ public partial class Hand : HBoxContainer
         newCardUI.CharacterStats = CharacterStats;
     }
 
+    public void DiscardCard(CardUI card)
+    {
+        card.CleanupAndQueueFree();
+    }
+
+    public void DisableHand()
+    {
+        foreach (var child in GetChildren())
+        {
+            if (child is CardUI cardUI)
+            {
+                cardUI.Disabled = true;
+            }
+        }
+    }
+
     private void OnCardPlayed(Card card)
     {
         CardsPlayedThisTurn++;

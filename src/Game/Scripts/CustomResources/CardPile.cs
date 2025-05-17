@@ -10,7 +10,8 @@ public partial class CardPile : Resource
 {
     public event Action<int>? CardPileSizeChanged;
 
-    [Export] private Array<Card> cards = null!;
+    [Export]
+    private Array<Card> cards = [];
 
     public bool IsEmpty => cards.Count == 0;
 
