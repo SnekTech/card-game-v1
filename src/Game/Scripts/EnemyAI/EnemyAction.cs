@@ -1,14 +1,18 @@
-﻿using CardGameV1.Character;
-using Godot;
+﻿using System.Threading.Tasks;
+using CardGameV1.Character;
+using CardGameV1.EffectSystem;
+using CardGameV1.EventBus;
 
 namespace CardGameV1.EnemyAI;
 
 public abstract class EnemyAction
 {
     public Enemy? Enemy { get; set; }
-    public Node2D? Target { get; set; }
+    public ITarget? Target { get; set; }
 
-    public abstract void PerformAction();
+    protected static readonly EnemyEventBus EventBus = EventBusOwner.EnemyEventBus;
+
+    public abstract Task PerformActionAsync();
 }
 
 public abstract class EnemyConditionalAction : EnemyAction

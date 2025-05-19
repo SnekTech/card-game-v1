@@ -2,14 +2,18 @@
 using System.Linq;
 using CardGameV1.Character;
 using CardGameV1.Constants;
+using CardGameV1.EffectSystem;
 using Godot;
-using GodotUtilities;
 
 namespace CardGameV1.EnemyAI;
 
-[GlobalClass]
-public partial class EnemyActionPicker : Node
+public class EnemyActionPicker
 {
+    public EnemyActionPicker()
+    {
+        SetupChances();
+    }
+
     public Enemy? Enemy
     {
         get => _enemy;
@@ -20,7 +24,7 @@ public partial class EnemyActionPicker : Node
         }
     }
 
-    public Node2D Target
+    public ITarget? Target
     {
         get => _target;
         set
@@ -30,24 +34,17 @@ public partial class EnemyActionPicker : Node
         }
     }
 
-    public List<EnemyConditionalAction> ConditionalActions { get; set; } = [];
-    public List<EnemyChanceBasedAction> ChanceBasedActions { get; set; } = [];
+    private List<EnemyConditionalAction> ConditionalActions { get; } = [];
+
+    private List<EnemyChanceBasedAction> ChanceBasedActions { get; } =
+    [
+        new CrabAttackAction { ChanceWeight = 1, Damage = 7 },
+        new CrabBlockAction { ChanceWeight = 1, Block = 6 }
+    ];
 
     private float _totalWeight;
     private Enemy? _enemy;
-    private Node2D _target = null!;
-
-    public override void _Ready()
-    {
-        Target = GetTree().GetFirstNodeInGroup<Node2D>(GroupNames.Player);
-        var crabAttackAction = new CrabAttackAction();
-        var crabBlockAction = new CrabBlockAction();
-
-        ChanceBasedActions.Add(crabAttackAction);
-        ChanceBasedActions.Add(crabBlockAction);
-
-        SetupChances();
-    }
+    private ITarget? _target;
 
     public EnemyAction GetAction()
     {
@@ -60,7 +57,7 @@ public partial class EnemyActionPicker : Node
         return GetChanceBasedAction();
     }
 
-    private EnemyConditionalAction? GetFirstConditionalAction()
+    public EnemyConditionalAction? GetFirstConditionalAction()
     {
         return ConditionalActions.FirstOrDefault(conditionalAction => conditionalAction.IsPerformable());
     }
@@ -94,7 +91,7 @@ public partial class EnemyActionPicker : Node
         ChanceBasedActions.ForEach(action => action.Enemy = enemy);
     }
 
-    private void SetActionTarget(Node2D target)
+    private void SetActionTarget(ITarget? target)
     {
         ConditionalActions.ForEach(action => action.Target = target);
         ChanceBasedActions.ForEach(action => action.Target = target);

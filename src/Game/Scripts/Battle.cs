@@ -13,7 +13,7 @@ public partial class Battle : Node2D
 {
     [Export]
     private CharacterStats characterStats = null!;
-    
+
     [Node]
     private BattleUI battleUI = null!;
 
@@ -23,7 +23,11 @@ public partial class Battle : Node2D
     [Node]
     private PlayerHandler playerHandler = null!;
 
-    private readonly PlayerEventBus playerEventBus = EventBusOwner.PlayerEventBus;
+    [Node]
+    private EnemyHandler enemyHandler = null!;
+
+    private static readonly PlayerEventBus PlayerEventBus = EventBusOwner.PlayerEventBus;
+    private static readonly EnemyEventBus EnemyEventBus = EventBusOwner.EnemyEventBus;
 
     public override void _Ready()
     {
@@ -35,15 +39,24 @@ public partial class Battle : Node2D
         battleUI.CharacterStats = newStats;
         player.CharacterStats = newStats;
 
-        playerEventBus.PlayerTurnEnded += playerHandler.EndTurn;
-        playerEventBus.PlayerHandDiscarded += playerHandler.StartTurn; // temporary
-        
+        EnemyEventBus.EnemyTurnEnded += OnEnemyTurnEnded;
+
+        PlayerEventBus.PlayerTurnEnded += playerHandler.EndTurn;
+        PlayerEventBus.PlayerHandDiscarded += enemyHandler.StartTurn;
+
         StartBattle(newStats);
     }
 
     private void StartBattle(CharacterStats stats)
     {
+        enemyHandler.ResetEnemyActions();
         playerHandler.StartBattle(stats);
+    }
+
+    private void OnEnemyTurnEnded()
+    {
+        playerHandler.StartTurn();
+        enemyHandler.ResetEnemyActions();
     }
 
     public override void _Notification(int what)

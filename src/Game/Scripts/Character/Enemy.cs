@@ -1,5 +1,7 @@
-﻿using CardGameV1.CustomResources;
+﻿using CardGameV1.Constants;
+using CardGameV1.CustomResources;
 using CardGameV1.EffectSystem;
+using CardGameV1.EnemyAI;
 using CardGameV1.UI;
 using Godot;
 using GodotUtilities;
@@ -23,16 +25,26 @@ public partial class Enemy : Area2D, ITarget
     [Node]
     private StatsUI statsUI = null!;
 
-    private bool _hasSubscribedStatsChanged;
     private Stats _stats = null!;
+
+    private EnemyActionPicker _enemyActionPicker = null!;
+    private EnemyAction? _currentAction;
+
+    public EnemyAction? CurrentAction
+    {
+        get => _currentAction;
+        set => _currentAction = value;
+    }
+
 
     public Stats Stats
     {
         get => _stats;
-        set
+        private set
         {
             _stats = value.CreateInstance();
-            SubscribeStatsChanged();
+            _stats.StatsChanged += UpdateStats;
+            _stats.StatsChanged += UpdateAction;
             UpdateEnemy();
         }
     }
@@ -40,6 +52,12 @@ public partial class Enemy : Area2D, ITarget
     public override void _Ready()
     {
         Stats = originalEnemyStats;
+        var target = (ITarget)GetTree().GetFirstNodeInGroup(GroupNames.Player);
+        _enemyActionPicker = new EnemyActionPicker
+        {
+            Target = target,
+            Enemy = this
+        };
 
         AreaEntered += OnAreaEntered;
         AreaExited += OnAreaExited;
@@ -51,14 +69,23 @@ public partial class Enemy : Area2D, ITarget
         AreaExited -= OnAreaExited;
     }
 
-    private void SubscribeStatsChanged()
+    public void DoTurn()
     {
-        if (_hasSubscribedStatsChanged == false)
-        {
-            Stats.StatsChanged += UpdateStats;
-        }
+        Stats.Block = 0;
+        CurrentAction?.PerformActionAsync().Fire();
+    }
 
-        _hasSubscribedStatsChanged = true;
+    public void TakeDamage(int damage)
+    {
+        if (Stats.Health <= 0)
+            return;
+
+        Stats.TakeDamage(damage);
+
+        if (Stats.Health <= 0)
+        {
+            QueueFree();
+        }
     }
 
     private void UpdateEnemy()
@@ -74,16 +101,18 @@ public partial class Enemy : Area2D, ITarget
 
     private void UpdateStats() => statsUI.UpdateStats(Stats);
 
-    public void TakeDamage(int damage)
+    public void UpdateAction()
     {
-        if (Stats.Health <= 0)
-            return;
-
-        Stats.TakeDamage(damage);
-
-        if (Stats.Health <= 0)
+        if (CurrentAction == null)
         {
-            QueueFree();
+            CurrentAction = _enemyActionPicker.GetAction();
+            return;
+        }
+
+        var newConditionalAction = _enemyActionPicker.GetFirstConditionalAction();
+        if (newConditionalAction != null && CurrentAction != newConditionalAction)
+        {
+            CurrentAction = newConditionalAction;
         }
     }
 
