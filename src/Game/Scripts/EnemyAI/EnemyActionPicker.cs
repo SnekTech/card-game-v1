@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using CardGameV1.Character;
-using CardGameV1.Constants;
 using CardGameV1.EffectSystem;
 using Godot;
 
@@ -34,7 +33,9 @@ public class EnemyActionPicker
         }
     }
 
-    private List<EnemyConditionalAction> ConditionalActions { get; } = [];
+    private List<EnemyConditionalAction> ConditionalActions { get; } = [
+        new CrabMegaBlockAction()
+    ];
 
     private List<EnemyChanceBasedAction> ChanceBasedActions { get; } =
     [
