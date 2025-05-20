@@ -39,7 +39,7 @@ public partial class CardUI : Control
     private CharacterStats _characterStats = null!;
     private Card card = null!;
 
-    public int OriginalIndex { get; private set; }
+    public int OriginalIndex { get; set; }
 
     public bool MonitoringDrop
     {
@@ -100,7 +100,6 @@ public partial class CardUI : Control
 
     public override void _Ready()
     {
-        OriginalIndex = GetIndex();
         var cardEventBus = EventBusOwner.CardEventBus;
         cardEventBus.CardDragStarted += OnCardDragOrAimingStarted;
         cardEventBus.CardDragEnded += OnCardDragOrAimingEnded;

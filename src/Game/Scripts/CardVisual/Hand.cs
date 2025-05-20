@@ -8,14 +8,7 @@ public partial class Hand : HBoxContainer
     [Export]
     private PackedScene cardUIScene = null!;
 
-    public int CardsPlayedThisTurn { get; private set; }
-
     public CharacterStats CharacterStats { get; set; } = null!;
-
-    public override void _Ready()
-    {
-        EventBus.EventBusOwner.CardEventBus.CardPlayed += OnCardPlayed;
-    }
 
     public void AddCard(Card card)
     {
@@ -44,16 +37,11 @@ public partial class Hand : HBoxContainer
         }
     }
 
-    private void OnCardPlayed(Card card)
-    {
-        CardsPlayedThisTurn++;
-    }
-
     private void OnCardUIReparentRequested(CardUI cardUI)
     {
         cardUI.Disabled = true;
         cardUI.Reparent(this);
-        var newIndex = Mathf.Clamp(cardUI.OriginalIndex - CardsPlayedThisTurn, 0, GetChildCount());
+        var newIndex = Mathf.Clamp(cardUI.OriginalIndex, 0, GetChildCount());
 
         Callable.From(DeferredWork).CallDeferred();
         return;

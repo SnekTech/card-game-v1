@@ -7,6 +7,7 @@ public class ClickedState(CardStateMachine cardStateMachine) : CardState(cardSta
     public override void OnEnter()
     {
         CardUI.MonitoringDrop = true;
+        CardUI.OriginalIndex = CardUI.GetIndex();
     }
 
     public override void OnInput(InputEvent inputEvent)
