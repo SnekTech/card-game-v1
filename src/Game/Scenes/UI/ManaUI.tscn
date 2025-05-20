@@ -1,6 +1,5 @@
-[gd_scene load_steps=3 format=3 uid="uid://b52j2y5jnu2bi"]
+[gd_scene load_steps=2 format=3 uid="uid://b52j2y5jnu2bi"]
 
-[ext_resource type="Theme" uid="uid://c306wkaelrn2q" path="res://main_theme.tres" id="1_fx0ik"]
 [ext_resource type="Script" uid="uid://doqa33u3nfobi" path="res://Scripts/UI/ManaUI.cs" id="2_mwkl5"]
 
 [node name="ManaUI" type="Panel"]
@@ -12,7 +11,6 @@ offset_top = -25.0
 offset_right = 25.0
 offset_bottom = -7.0
 grow_vertical = 0
-theme = ExtResource("1_fx0ik")
 script = ExtResource("2_mwkl5")
 
 [node name="ManaLabel" type="Label" parent="."]

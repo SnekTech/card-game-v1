@@ -1,6 +1,5 @@
-[gd_scene load_steps=5 format=3 uid="uid://cxy4ik6w7yg57"]
+[gd_scene load_steps=4 format=3 uid="uid://cxy4ik6w7yg57"]
 
-[ext_resource type="Theme" uid="uid://c306wkaelrn2q" path="res://main_theme.tres" id="1_um4r8"]
 [ext_resource type="Texture2D" uid="uid://oe7v35ii8vrs" path="res://art/tile_0102.png" id="2_4w0m6"]
 [ext_resource type="Script" uid="uid://ct85v306lfwvk" path="res://Scripts/UI/StatsUI.cs" id="2_kntte"]
 [ext_resource type="Texture2D" uid="uid://d0edy7thj8ce6" path="res://art/heart.png" id="3_kntte"]
@@ -13,7 +12,6 @@ offset_left = -45.0
 offset_right = 45.0
 offset_bottom = 23.0
 grow_horizontal = 2
-theme = ExtResource("1_um4r8")
 alignment = 1
 script = ExtResource("2_kntte")
 
