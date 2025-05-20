@@ -14,7 +14,7 @@ public class ReleasedState(CardStateMachine cardStateMachine) : CardState(cardSt
         {
             EventBus.EventBusOwner.CardEventBus.EmitTooltipHideRequested();
             _played = true;
-            CardUI.Play();
+            CardUI.PlayAsync().Fire();
         }
     }
 

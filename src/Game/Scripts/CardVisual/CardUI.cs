@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using CardGameV1.CardVisual.CardStates;
 using CardGameV1.CustomResources;
 using CardGameV1.EventBus;
 using Godot;
@@ -107,7 +109,7 @@ public partial class CardUI : Control
         cardEventBus.CardAimEnded += OnCardDragOrAimingEnded;
 
         _stateMachine = new CardStateMachine(this);
-        _stateMachine.Init<CardStates.BaseState>();
+        _stateMachine.Init<BaseState>();
 
         dropPointDetector.MouseEntered += _stateMachine.OnMouseEntered;
         dropPointDetector.MouseExited += _stateMachine.OnMouseExited;
@@ -139,9 +141,9 @@ public partial class CardUI : Control
         panel.Set(panelStylePath, styleBox);
     }
 
-    public void Play()
+    public async Task PlayAsync()
     {
-        Card.Play(Targets, CharacterStats);
+        await Card.PlayAsync(Targets, CharacterStats);
         CleanupAndQueueFree();
     }
 

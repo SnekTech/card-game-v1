@@ -1,4 +1,5 @@
-﻿using CardGameV1.CustomResources;
+﻿using System.Threading.Tasks;
+using CardGameV1.CustomResources;
 using CardGameV1.EffectSystem;
 using CardGameV1.UI;
 using Godot;
@@ -54,11 +55,12 @@ public partial class Player : Node2D, ITarget
 
     private void UpdateCharacterStats() => statsUI.UpdateStats(CharacterStats);
 
-    public void TakeDamage(int damage)
+    public async Task TakeDamageAsync(int damage)
     {
         if (CharacterStats.Health <= 0)
             return;
 
+        await this.ShakeAsync(16, 0.15f);
         CharacterStats.TakeDamage(damage);
 
         if (CharacterStats.Health <= 0)

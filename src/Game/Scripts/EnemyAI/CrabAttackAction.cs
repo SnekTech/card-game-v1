@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using CardGameV1.EffectSystem;
 using Godot;
-using GTweens.Builders;
 using GTweens.Easings;
 using GTweensGodot.Extensions;
 
@@ -27,13 +26,10 @@ public partial class CrabAttackAction : EnemyChanceBasedAction
         var endPosition = Target.GlobalPosition + Vector2.Right * AttackOffset;
         var damageEffect = new DamageEffect(Damage);
 
-        var tween = GTweenSequenceBuilder.New()
-            .Append(Enemy.TweenGlobalPosition(endPosition, 0.4f))
-            .AppendCallback(() => damageEffect.Execute([Target]))
-            .AppendTime(0.25f)
-            .Append(Enemy.TweenGlobalPosition(startPosition, 0.4f))
-            .Build();
-        tween.SetEasing(Easing.OutQuint);
-        await tween.PlayAsync(CancellationToken.None);
+        await Enemy.TweenGlobalPosition(endPosition, 0.4f).SetEasing(Easing.OutQuint).PlayAsync(CancellationToken.None);
+        await damageEffect.ExecuteAllAsync([Target]);
+        await TaskUtility.DelayGd(0.25f);
+        await Enemy.TweenGlobalPosition(startPosition, 0.4f).SetEasing(Easing.OutQuint)
+            .PlayAsync(CancellationToken.None);
     }
 }

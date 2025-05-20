@@ -17,7 +17,7 @@ config/icon="uid://bdohtig5mdd7l"
 
 [autoload]
 
-GTweensGodotUpdater="*res://Scripts/GTweensGodotUpdater.cs"
+GTweensGodotUpdater="*res://Scripts/Autoload/GTweensGodotUpdater.cs"
 
 [display]
 

@@ -34,7 +34,7 @@ public partial class CrabMegaBlockAction : EnemyConditionalAction
         }
 
         var blockEffect = new BlockEffect(block);
-        blockEffect.Execute([Enemy]);
+        await blockEffect.ExecuteAllAsync([Enemy]);
 
         await TaskUtility.DelayGd(0.6f);
     }

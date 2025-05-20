@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace CardGameV1.EffectSystem;
 
 public interface IEffect
 {
-    void Execute(IEnumerable<ITarget> targets);
+    Task ExecuteAllAsync(IEnumerable<ITarget> targets);
 }

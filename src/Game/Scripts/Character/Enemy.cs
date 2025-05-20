@@ -90,11 +90,12 @@ public partial class Enemy : Area2D, ITarget
         await CurrentAction.PerformActionAsync();
     }
 
-    public void TakeDamage(int damage)
+    public async Task TakeDamageAsync(int damage)
     {
         if (Stats.Health <= 0)
             return;
 
+        await this.ShakeAsync(16, 0.15f);
         Stats.TakeDamage(damage);
 
         if (Stats.Health <= 0)

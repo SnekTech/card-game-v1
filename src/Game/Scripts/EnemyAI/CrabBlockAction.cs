@@ -18,7 +18,7 @@ public partial class CrabBlockAction : EnemyChanceBasedAction
         }
 
         var blockEffect = new BlockEffect(Block);
-        blockEffect.Execute([Enemy]);
+        await blockEffect.ExecuteAllAsync([Enemy]);
 
         await TaskUtility.DelayGd(0.6f);
     }

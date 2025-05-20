@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using CardGameV1.Constants;
 using CardGameV1.EffectSystem;
 using CardGameV1.EventBus;
@@ -45,7 +46,7 @@ public abstract partial class Card : Resource
         return targets.Where(target => target is ITarget).Cast<ITarget>();
     }
 
-    public void Play(IEnumerable<Node> targetNodes, CharacterStats characterStats)
+    public async Task PlayAsync(IEnumerable<Node> targetNodes, CharacterStats characterStats)
     {
         EventBusOwner.CardEventBus.EmitCardPlayed(this);
         characterStats.Mana -= Cost;
@@ -53,15 +54,15 @@ public abstract partial class Card : Resource
 
         if (IsSingleTargeted)
         {
-            ApplyEffects(targetNodes.Where(node => node is ITarget).Cast<ITarget>());
+            await ApplyEffectsAsync(targetNodes.Where(node => node is ITarget).Cast<ITarget>());
         }
         else
         {
-            ApplyEffects(GetTargets(targetNodes.First().GetTree()));
+            await ApplyEffectsAsync(GetTargets(targetNodes.First().GetTree()));
         }
     }
 
-    protected abstract void ApplyEffects(IEnumerable<ITarget> targets);
+    protected abstract Task ApplyEffectsAsync(IEnumerable<ITarget> targets);
 
     #region card enums
 
