@@ -39,6 +39,8 @@ public partial class Battle : Node2D
         battleUI.CharacterStats = newStats;
         player.CharacterStats = newStats;
 
+        enemyHandler.ChildOrderChanged += OnEnemiesChildOrderChanged;
+
         EnemyEventBus.EnemyTurnEnded += OnEnemyTurnEnded;
 
         PlayerEventBus.PlayerTurnEnded += playerHandler.EndTurn;
@@ -51,6 +53,14 @@ public partial class Battle : Node2D
     {
         enemyHandler.ResetEnemyActions();
         playerHandler.StartBattle(stats);
+    }
+
+    private void OnEnemiesChildOrderChanged()
+    {
+        if (enemyHandler.GetChildCount() == 0)
+        {
+            GD.Print("Victory!");
+        }
     }
 
     private void OnEnemyTurnEnded()
