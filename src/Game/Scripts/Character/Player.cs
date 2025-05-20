@@ -63,6 +63,7 @@ public partial class Player : Node2D, ITarget
 
         if (CharacterStats.Health <= 0)
         {
+            EventBus.EventBusOwner.PlayerEventBus.EmitPlayerDied();
             QueueFree();
         }
     }

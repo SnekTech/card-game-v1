@@ -45,6 +45,7 @@ public partial class Battle : Node2D
 
         PlayerEventBus.PlayerTurnEnded += playerHandler.EndTurn;
         PlayerEventBus.PlayerHandDiscarded += enemyHandler.StartTurn;
+        PlayerEventBus.PlayerDied += OnPlayerDied;
 
         StartBattle(newStats);
     }
@@ -61,6 +62,11 @@ public partial class Battle : Node2D
         {
             GD.Print("Victory!");
         }
+    }
+
+    private void OnPlayerDied()
+    {
+        GD.Print("Game Over!");
     }
 
     private void OnEnemyTurnEnded()
