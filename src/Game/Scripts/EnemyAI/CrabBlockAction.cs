@@ -20,6 +20,5 @@ public class CrabBlockAction : EnemyChanceBasedAction
         blockEffect.Execute([Enemy]);
 
         await TaskUtility.DelayGd(0.6f);
-        EventBus.EmitEnemyActionCompleted(Enemy);
     }
 }

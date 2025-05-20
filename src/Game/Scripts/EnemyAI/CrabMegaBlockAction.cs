@@ -34,6 +34,5 @@ public class CrabMegaBlockAction : EnemyConditionalAction
         blockEffect.Execute([Enemy]);
 
         await TaskUtility.DelayGd(0.6f);
-        EventBus.EmitEnemyActionCompleted(Enemy);
     }
 }

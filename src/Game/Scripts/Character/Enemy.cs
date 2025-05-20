@@ -1,4 +1,5 @@
-﻿using CardGameV1.Constants;
+﻿using System.Threading.Tasks;
+using CardGameV1.Constants;
 using CardGameV1.CustomResources;
 using CardGameV1.EffectSystem;
 using CardGameV1.EnemyAI;
@@ -69,10 +70,13 @@ public partial class Enemy : Area2D, ITarget
         AreaExited -= OnAreaExited;
     }
 
-    public void DoTurn()
+    public async Task DoTurnAsync()
     {
         Stats.Block = 0;
-        CurrentAction?.PerformActionAsync().Fire();
+        if (CurrentAction == null)
+            return;
+
+        await CurrentAction.PerformActionAsync();
     }
 
     public void TakeDamage(int damage)

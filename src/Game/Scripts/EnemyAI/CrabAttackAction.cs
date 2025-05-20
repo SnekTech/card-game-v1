@@ -34,7 +34,5 @@ public class CrabAttackAction : EnemyChanceBasedAction
             .Build();
         tween.SetEasing(Easing.OutQuint);
         await tween.PlayAsync(CancellationToken.None);
-
-        EventBus.EmitEnemyActionCompleted(Enemy);
     }
 }

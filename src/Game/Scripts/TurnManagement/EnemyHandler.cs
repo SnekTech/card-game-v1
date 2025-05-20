@@ -1,4 +1,5 @@
-﻿using CardGameV1.Character;
+﻿using System.Threading.Tasks;
+using CardGameV1.Character;
 using CardGameV1.EventBus;
 using Godot;
 using GodotUtilities;
@@ -9,11 +10,6 @@ namespace CardGameV1.TurnManagement;
 public partial class EnemyHandler : Node2D
 {
     private static readonly EnemyEventBus EventBus = EventBusOwner.EnemyEventBus;
-
-    public override void _Ready()
-    {
-        EventBus.EnemyActionCompleted += OnEnemyActionCompleted;
-    }
 
     public void ResetEnemyActions()
     {
@@ -29,25 +25,17 @@ public partial class EnemyHandler : Node2D
 
     public void StartTurn()
     {
-        if (GetChildCount() == 0)
-            return;
-
-        var firstEnemy = GetChild<Enemy>(0);
-        firstEnemy.DoTurn();
+        EnemiesDoTurnAsync().Fire();
     }
 
-    private void OnEnemyActionCompleted(Enemy enemy)
+    private async Task EnemiesDoTurnAsync()
     {
-        var enemyIndex = enemy.GetIndex();
-        var isLastEnemy = enemyIndex == GetChildCount() - 1;
-        if (isLastEnemy)
+        foreach (var enemy in this.GetChildrenOfType<Enemy>())
         {
-            EventBus.EmitEnemyTurnEnded();
-            return;
+            await enemy.DoTurnAsync();
         }
 
-        var nextEnemy = GetChild<Enemy>(enemyIndex + 1);
-        nextEnemy.DoTurn();
+        EventBus.EmitEnemyTurnEnded();
     }
 
     public override void _Notification(int what)
