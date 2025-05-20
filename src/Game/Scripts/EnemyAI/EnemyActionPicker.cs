@@ -3,16 +3,12 @@ using System.Linq;
 using CardGameV1.Character;
 using CardGameV1.EffectSystem;
 using Godot;
+using GodotUtilities;
 
 namespace CardGameV1.EnemyAI;
 
-public class EnemyActionPicker
+public partial class EnemyActionPicker : Node
 {
-    public EnemyActionPicker()
-    {
-        SetupChances();
-    }
-
     public Enemy? Enemy
     {
         get => _enemy;
@@ -33,19 +29,24 @@ public class EnemyActionPicker
         }
     }
 
-    private List<EnemyConditionalAction> ConditionalActions { get; } = [
-        new CrabMegaBlockAction()
-    ];
+    private List<EnemyConditionalAction> ConditionalActions { get; } = [];
 
-    private List<EnemyChanceBasedAction> ChanceBasedActions { get; } =
-    [
-        new CrabAttackAction { ChanceWeight = 1, Damage = 7 },
-        new CrabBlockAction { ChanceWeight = 1, Block = 6 }
-    ];
+    private List<EnemyChanceBasedAction> ChanceBasedActions { get; } = [];
 
     private float _totalWeight;
     private Enemy? _enemy;
     private ITarget? _target;
+
+    public override void _Ready()
+    {
+        var conditionalActionChildren = this.GetChildrenOfType<EnemyConditionalAction>();
+        var chanceBasedActionChildren = this.GetChildrenOfType<EnemyChanceBasedAction>();
+        ConditionalActions.AddRange(conditionalActionChildren);
+        ChanceBasedActions.AddRange(chanceBasedActionChildren);
+        GD.Print($"{ConditionalActions}, {ChanceBasedActions}");
+
+        SetupChances();
+    }
 
     public EnemyAction GetAction()
     {

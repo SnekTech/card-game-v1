@@ -15,7 +15,7 @@ public partial class Enemy : Area2D, ITarget
     private const int ArrowOffset = 5;
 
     [Export]
-    private Stats originalEnemyStats = null!;
+    private EnemyStats originalEnemyStats = null!;
 
     [Node]
     private Sprite2D sprite2D = null!;
@@ -37,7 +37,6 @@ public partial class Enemy : Area2D, ITarget
         set => _currentAction = value;
     }
 
-
     public Stats Stats
     {
         get => _stats;
@@ -53,12 +52,12 @@ public partial class Enemy : Area2D, ITarget
     public override void _Ready()
     {
         Stats = originalEnemyStats;
+
         var target = (ITarget)GetTree().GetFirstNodeInGroup(GroupNames.Player);
-        _enemyActionPicker = new EnemyActionPicker
-        {
-            Target = target,
-            Enemy = this
-        };
+        _enemyActionPicker = originalEnemyStats.AIScene.Instantiate<EnemyActionPicker>();
+        AddChild(_enemyActionPicker);
+        _enemyActionPicker.Target = target;
+        _enemyActionPicker.Enemy = this;
 
         AreaEntered += OnAreaEntered;
         AreaExited += OnAreaExited;

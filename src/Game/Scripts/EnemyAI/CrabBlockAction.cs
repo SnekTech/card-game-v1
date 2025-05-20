@@ -4,9 +4,10 @@ using Godot;
 
 namespace CardGameV1.EnemyAI;
 
-public class CrabBlockAction : EnemyChanceBasedAction
+public partial class CrabBlockAction : EnemyChanceBasedAction
 {
-    public int Block { get; init; }
+    [Export]
+    public int Block { get; private set; } = 6;
     
     public override async Task PerformActionAsync()
     {

@@ -4,10 +4,13 @@ using Godot;
 
 namespace CardGameV1.EnemyAI;
 
-public class CrabMegaBlockAction : EnemyConditionalAction
+public partial class CrabMegaBlockAction : EnemyConditionalAction
 {
-    private const int Block = 15;
-    private const int Threshold = 6;
+    [Export]
+    private int block = 15;
+
+    [Export]
+    private int threshold = 6;
 
     private bool _alreadyUsed;
 
@@ -16,7 +19,7 @@ public class CrabMegaBlockAction : EnemyConditionalAction
         if (Enemy == null || _alreadyUsed)
             return false;
 
-        var healthIsLowEnough = Enemy.Stats.Health <= Threshold;
+        var healthIsLowEnough = Enemy.Stats.Health <= threshold;
 
         _alreadyUsed = healthIsLowEnough;
         return healthIsLowEnough;
@@ -30,7 +33,7 @@ public class CrabMegaBlockAction : EnemyConditionalAction
             return;
         }
 
-        var blockEffect = new BlockEffect(Block);
+        var blockEffect = new BlockEffect(block);
         blockEffect.Execute([Enemy]);
 
         await TaskUtility.DelayGd(0.6f);

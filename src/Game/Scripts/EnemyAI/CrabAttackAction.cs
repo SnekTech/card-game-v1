@@ -8,9 +8,10 @@ using GTweensGodot.Extensions;
 
 namespace CardGameV1.EnemyAI;
 
-public class CrabAttackAction : EnemyChanceBasedAction
+public partial class CrabAttackAction : EnemyChanceBasedAction
 {
-    public int Damage { get; init; }
+    [Export]
+    public int Damage { get; private set; } = 7;
 
     private const int AttackOffset = 32;
 

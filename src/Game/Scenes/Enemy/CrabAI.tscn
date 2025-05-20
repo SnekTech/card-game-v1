@@ -1,0 +1,20 @@
+[gd_scene load_steps=5 format=3 uid="uid://cu3sopr11vvln"]
+
+[ext_resource type="Script" uid="uid://dh86a6avlwqee" path="res://Scripts/EnemyAI/EnemyActionPicker.cs" id="1_24223"]
+[ext_resource type="Script" uid="uid://btxam1ahsrxyd" path="res://Scripts/EnemyAI/CrabAttackAction.cs" id="2_n0mu7"]
+[ext_resource type="Script" uid="uid://ci6a1kq57wcy0" path="res://Scripts/EnemyAI/CrabBlockAction.cs" id="3_hrkgk"]
+[ext_resource type="Script" uid="uid://dtk8bxmp4kygj" path="res://Scripts/EnemyAI/CrabMegaBlockAction.cs" id="4_jiecb"]
+
+[node name="EnemyActionPicker" type="Node"]
+script = ExtResource("1_24223")
+
+[node name="CrabAttackAction" type="Node" parent="."]
+script = ExtResource("2_n0mu7")
+ChanceWeight = 1.0
+
+[node name="CrabBlockAction" type="Node" parent="."]
+script = ExtResource("3_hrkgk")
+ChanceWeight = 1.0
+
+[node name="CrabMegaBlockAction" type="Node" parent="."]
+script = ExtResource("4_jiecb")
