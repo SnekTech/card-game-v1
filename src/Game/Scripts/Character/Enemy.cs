@@ -68,6 +68,8 @@ public partial class Enemy : Area2D, ITarget
     {
         AreaEntered -= OnAreaEntered;
         AreaExited -= OnAreaExited;
+        _stats.StatsChanged -= UpdateStats;
+        _stats.StatsChanged -= UpdateAction;
     }
 
     public async Task DoTurnAsync()

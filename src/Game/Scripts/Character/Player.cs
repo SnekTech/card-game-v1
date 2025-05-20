@@ -38,6 +38,11 @@ public partial class Player : Node2D, ITarget
         CharacterStats = originalPlayerStats;
     }
 
+    public override void _ExitTree()
+    {
+        _stats.StatsChanged -= UpdateCharacterStats;
+    }
+
     private void UpdatePlayer()
     {
         if (IsInsideTree() == false)
