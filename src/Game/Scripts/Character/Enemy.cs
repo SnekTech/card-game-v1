@@ -26,6 +26,9 @@ public partial class Enemy : Area2D, ITarget
     [Node]
     private StatsUI statsUI = null!;
 
+    [Node]
+    private IntentUI intentUI = null!;
+
     private Stats _stats = null!;
 
     private EnemyActionPicker _enemyActionPicker = null!;
@@ -34,7 +37,14 @@ public partial class Enemy : Area2D, ITarget
     public EnemyAction? CurrentAction
     {
         get => _currentAction;
-        set => _currentAction = value;
+        set
+        {
+            _currentAction = value;
+            if (_currentAction != null)
+            {
+                intentUI.UpdateIntent(_currentAction.Intent);
+            }
+        }
     }
 
     public Stats Stats

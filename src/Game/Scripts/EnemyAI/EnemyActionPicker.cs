@@ -43,7 +43,6 @@ public partial class EnemyActionPicker : Node
         var chanceBasedActionChildren = this.GetChildrenOfType<EnemyChanceBasedAction>();
         ConditionalActions.AddRange(conditionalActionChildren);
         ChanceBasedActions.AddRange(chanceBasedActionChildren);
-        GD.Print($"{ConditionalActions}, {ChanceBasedActions}");
 
         SetupChances();
     }

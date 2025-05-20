@@ -37,7 +37,7 @@ debug_color = Color(0, 0.6, 0.701961, 0.14902)
 script = ExtResource("4_6yjxy")
 
 [node name="Enemy" parent="EnemyHandler" instance=ExtResource("3_6yjxy")]
-position = Vector2(214, 72)
+position = Vector2(195, 72)
 
 [node name="Player" parent="." instance=ExtResource("4_qxnh6")]
 position = Vector2(57, 72)

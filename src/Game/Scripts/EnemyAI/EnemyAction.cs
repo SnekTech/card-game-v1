@@ -9,7 +9,7 @@ namespace CardGameV1.EnemyAI;
 public abstract partial class EnemyAction : Node
 {
     [Export]
-    public EnemyIntent Intent { get; private set; } = null!;
+    public Intent Intent { get; private set; } = null!;
 
     public Enemy? Enemy { get; set; }
     public ITarget? Target { get; set; }
