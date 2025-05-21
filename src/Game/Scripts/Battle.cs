@@ -1,4 +1,5 @@
-﻿using CardGameV1.Character;
+﻿using CardGameV1.Autoload;
+using CardGameV1.Character;
 using CardGameV1.CustomResources;
 using CardGameV1.EventBus;
 using CardGameV1.TurnManagement;
@@ -11,6 +12,9 @@ namespace CardGameV1;
 [Scene]
 public partial class Battle : Node2D
 {
+    [Export]
+    private AudioStream music = null!;
+
     [Export]
     private CharacterStats characterStats = null!;
 
@@ -52,6 +56,7 @@ public partial class Battle : Node2D
 
     private void StartBattle(CharacterStats stats)
     {
+        SoundPlayer.Instance.Play(music, true);
         enemyHandler.ResetEnemyActions();
         playerHandler.StartBattle(stats);
     }
