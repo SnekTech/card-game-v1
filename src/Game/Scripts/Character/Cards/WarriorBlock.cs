@@ -11,7 +11,10 @@ public partial class WarriorBlock : Card
 {
     protected override async Task ApplyEffectsAsync(IEnumerable<ITarget> targets)
     {
-        var blockEffect = new BlockEffect(5);
+        var blockEffect = new BlockEffect(5)
+        {
+            Sound = Sound
+        };
         await blockEffect.ExecuteAllAsync(targets);
     }
 }

@@ -6,7 +6,6 @@ using GodotUtilities;
 
 namespace CardGameV1.TurnManagement;
 
-[Scene]
 public partial class EnemyHandler : Node2D
 {
     private static readonly EnemyEventBus EventBus = EventBusOwner.EnemyEventBus;
@@ -36,13 +35,5 @@ public partial class EnemyHandler : Node2D
         }
 
         EventBus.EmitEnemyTurnEnded();
-    }
-
-    public override void _Notification(int what)
-    {
-        if (what == NotificationSceneInstantiated)
-        {
-            WireNodes();
-        }
     }
 }

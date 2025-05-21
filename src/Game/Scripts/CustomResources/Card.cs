@@ -31,6 +31,9 @@ public abstract partial class Card : Resource
     [Export(PropertyHint.MultilineText)]
     public string TooltipText { get; private set; } = "default tooltip";
 
+    [Export]
+    public AudioStream Sound { get; private set; } = null!;
+
     public bool IsSingleTargeted => Target == TargetType.SingleEnemy;
 
     private IEnumerable<ITarget> GetTargets(SceneTree tree)

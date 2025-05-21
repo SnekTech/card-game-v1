@@ -11,7 +11,10 @@ public partial class WarriorAxeAttack : Card
 {
     protected override async Task ApplyEffectsAsync(IEnumerable<ITarget> targets)
     {
-        var damageEffect = new DamageEffect(6);
+        var damageEffect = new DamageEffect(6)
+        {
+            Sound = Sound
+        };
         await damageEffect.ExecuteAllAsync(targets);
     }
 }

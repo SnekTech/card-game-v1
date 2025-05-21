@@ -11,6 +11,9 @@ public abstract partial class EnemyAction : Node
     [Export]
     public Intent Intent { get; private set; } = null!;
 
+    [Export]
+    public AudioStream Sound { get; private set; } = null!;
+
     public Enemy? Enemy { get; set; }
     public ITarget? Target { get; set; }
 

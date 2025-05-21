@@ -24,7 +24,7 @@ public partial class CrabAttackAction : EnemyChanceBasedAction
 
         var startPosition = Enemy.GlobalPosition;
         var endPosition = Target.GlobalPosition + Vector2.Right * AttackOffset;
-        var damageEffect = new DamageEffect(Damage);
+        var damageEffect = new DamageEffect(Damage) { Sound = Sound };
 
         await Enemy.TweenGlobalPosition(endPosition, 0.4f).SetEasing(Easing.OutQuint).PlayAsync(CancellationToken.None);
         await damageEffect.ExecuteAllAsync([Target]);

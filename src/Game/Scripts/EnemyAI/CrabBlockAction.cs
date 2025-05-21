@@ -8,7 +8,7 @@ public partial class CrabBlockAction : EnemyChanceBasedAction
 {
     [Export]
     public int Block { get; private set; } = 6;
-    
+
     public override async Task PerformActionAsync()
     {
         if (Target == null || Enemy == null)
@@ -17,7 +17,7 @@ public partial class CrabBlockAction : EnemyChanceBasedAction
             return;
         }
 
-        var blockEffect = new BlockEffect(Block);
+        var blockEffect = new BlockEffect(Block) { Sound = Sound };
         await blockEffect.ExecuteAllAsync([Enemy]);
 
         await TaskUtility.DelayGd(0.6f);
