@@ -18,8 +18,7 @@ config/icon="uid://bdohtig5mdd7l"
 [autoload]
 
 GTweensGodotUpdater="*res://Scripts/Autoload/GTweensGodotUpdater.cs"
-MusicPlayer="*res://Scenes/Autoload/MusicPlayer.tscn"
-SfxPlayer="*res://Scenes/Autoload/SFXPlayer.tscn"
+SoundManager="*res://Scenes/Autoload/Audio/SoundManager.tscn"
 
 [display]
 

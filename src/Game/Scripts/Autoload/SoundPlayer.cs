@@ -3,7 +3,7 @@ using GodotUtilities;
 
 namespace CardGameV1.Autoload;
 
-public abstract partial class SoundPlayer : Node
+public partial class SoundPlayer : Node
 {
     public void Play(AudioStream audioStream, bool single = false)
     {

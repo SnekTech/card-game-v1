@@ -56,7 +56,7 @@ public partial class Battle : Node2D
 
     private void StartBattle(CharacterStats stats)
     {
-        MusicPlayer.Instance.Play(music, true);
+        SoundManager.MusicPlayer.Play(music, true);
         enemyHandler.ResetEnemyActions();
         playerHandler.StartBattle(stats);
     }
