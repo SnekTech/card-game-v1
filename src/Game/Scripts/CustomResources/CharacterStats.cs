@@ -26,6 +26,16 @@ public partial class CharacterStats : Stats
 
     public void ResetMana() => Mana = MaxMana;
 
+    public override void TakeDamage(int damage)
+    {
+        var initialHealth = Health;
+        base.TakeDamage(damage);
+        if (Health < initialHealth)
+        {
+            EventBus.EventBusOwner.PlayerEventBus.EmitPlayerHit();
+        }
+    }
+
     public bool CanPlayCard(Card card) => Mana >= card.Cost;
 
     public override CharacterStats CreateInstance()

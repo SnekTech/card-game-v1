@@ -36,7 +36,7 @@ public partial class Stats : Resource
         }
     }
 
-    public void TakeDamage(int damage)
+    public virtual void TakeDamage(int damage)
     {
         if (damage <= 0)
             return;

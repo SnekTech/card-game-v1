@@ -62,8 +62,8 @@ public partial class Player : Node2D, ITarget
             return;
 
         sprite2D.Material = WhiteSprite;
-        await this.ShakeAsync(16, 0.15f);
         CharacterStats.TakeDamage(damage);
+        await this.ShakeAsync(16, 0.15f);
         sprite2D.Material = null;
 
         if (CharacterStats.Health <= 0)
