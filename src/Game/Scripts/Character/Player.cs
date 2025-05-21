@@ -19,6 +19,7 @@ public partial class Player : Node2D, ITarget
     [Node]
     private StatsUI statsUI = null!;
 
+    private static readonly Material WhiteSprite = GD.Load<Material>("res://art/white_sprite_material.tres");
     private CharacterStats _stats = null!;
 
     public CharacterStats CharacterStats
@@ -60,8 +61,10 @@ public partial class Player : Node2D, ITarget
         if (CharacterStats.Health <= 0)
             return;
 
+        sprite2D.Material = WhiteSprite;
         await this.ShakeAsync(16, 0.15f);
         CharacterStats.TakeDamage(damage);
+        sprite2D.Material = null;
 
         if (CharacterStats.Health <= 0)
         {

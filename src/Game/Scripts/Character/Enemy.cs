@@ -29,6 +29,8 @@ public partial class Enemy : Area2D, ITarget
     [Node]
     private IntentUI intentUI = null!;
 
+    private static readonly Material WhiteSprite = GD.Load<Material>("res://art/white_sprite_material.tres");
+
     private Stats _stats = null!;
 
     private EnemyActionPicker _enemyActionPicker = null!;
@@ -95,8 +97,10 @@ public partial class Enemy : Area2D, ITarget
         if (Stats.Health <= 0)
             return;
 
+        sprite2D.Material = WhiteSprite;
         await this.ShakeAsync(16, 0.15f);
         Stats.TakeDamage(damage);
+        sprite2D.Material = null;
 
         if (Stats.Health <= 0)
         {
