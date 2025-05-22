@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://ddeqm380rgljy"]
+[gd_scene load_steps=14 format=3 uid="uid://ddeqm380rgljy"]
 
 [ext_resource type="Script" uid="uid://dcjpkniwxaq0p" path="res://Scripts/Battle.cs" id="1_8teo4"]
 [ext_resource type="Texture2D" uid="uid://cp4iq5fd6j8be" path="res://art/background.png" id="2_2h7oj"]
@@ -11,6 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://bxdkorsjy5k6g" path="res://Scenes/UI/BattleUI.tscn" id="6_8teo4"]
 [ext_resource type="Script" uid="uid://ldj8l4cpecn1" path="res://Scripts/TurnManagement/PlayerHandler.cs" id="7_u22qb"]
 [ext_resource type="PackedScene" uid="uid://dix6o2poewlna" path="res://Scenes/UI/RedFlash.tscn" id="10_qxnh6"]
+[ext_resource type="PackedScene" uid="uid://bqm3yb5vlbrpl" path="res://Scenes/UI/BattleOverPanel.tscn" id="12_l0uqe"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1samx"]
 size = Vector2(256, 100)
@@ -54,5 +55,11 @@ hand = NodePath("../BattleUI/Hand")
 [node name="BattleUI" parent="." instance=ExtResource("6_8teo4")]
 
 [node name="RedFlash" parent="." instance=ExtResource("10_qxnh6")]
+
+[node name="BattleOverLayer" type="CanvasLayer" parent="."]
+layer = 2
+
+[node name="BattleOverPanel" parent="BattleOverLayer" instance=ExtResource("12_l0uqe")]
+visible = false
 
 [editable path="BattleUI"]

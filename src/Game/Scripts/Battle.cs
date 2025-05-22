@@ -32,6 +32,7 @@ public partial class Battle : Node2D
 
     private static readonly PlayerEventBus PlayerEventBus = EventBusOwner.PlayerEventBus;
     private static readonly EnemyEventBus EnemyEventBus = EventBusOwner.EnemyEventBus;
+    private static readonly BattleEventBus BattleEvents = EventBusOwner.BattleEvents;
 
     public override void _Ready()
     {
@@ -56,6 +57,7 @@ public partial class Battle : Node2D
 
     private void StartBattle(CharacterStats stats)
     {
+        GetTree().Paused = false;
         SoundManager.MusicPlayer.Play(music, true);
         enemyHandler.ResetEnemyActions();
         playerHandler.StartBattle(stats);
@@ -65,13 +67,13 @@ public partial class Battle : Node2D
     {
         if (enemyHandler.GetChildCount() == 0)
         {
-            GD.Print("Victory!");
+            BattleEvents.EmitBattleOverScreenRequested("Victorious!", BattleOverPanel.PanelType.Win);
         }
     }
 
     private void OnPlayerDied()
     {
-        GD.Print("Game Over!");
+        BattleEvents.EmitBattleOverScreenRequested("Game Over!", BattleOverPanel.PanelType.Lose);
     }
 
     private void OnEnemyTurnEnded()
