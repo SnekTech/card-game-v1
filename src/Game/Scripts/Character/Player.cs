@@ -50,15 +50,10 @@ public partial class Player : Node2D, ITarget
 
     public async Task TakeDamageAsync(int damage)
     {
-        if (CharacterStats.Health <= 0)
-            return;
-
         sprite2D.Material = WhiteSprite;
         CharacterStats.TakeDamage(damage);
         await this.ShakeAsync(16, 0.15f);
         sprite2D.Material = null;
-
-
     }
 
     public override void _Notification(int what)

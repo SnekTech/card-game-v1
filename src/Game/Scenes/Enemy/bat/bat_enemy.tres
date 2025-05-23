@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="EnemyStats" load_steps=4 format=3 uid="uid://bky0dx2b3oms8"]
+
+[ext_resource type="Texture2D" uid="uid://con6y7mc74c5a" path="res://art/tile_0120.png" id="1_16ser"]
+[ext_resource type="Script" uid="uid://cuoyi4yac4lqn" path="res://Scripts/CustomResources/EnemyStats.cs" id="1_33wpy"]
+[ext_resource type="PackedScene" uid="uid://c4oatrl2t1fqv" path="res://Scenes/Enemy/bat/BatAI.tscn" id="1_ygnly"]
+
+[resource]
+script = ExtResource("1_33wpy")
+AIScene = ExtResource("1_ygnly")
+maxHealth = 8
+art = ExtResource("1_16ser")
+metadata/_custom_type_script = "uid://cuoyi4yac4lqn"
