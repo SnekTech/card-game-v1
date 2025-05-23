@@ -58,11 +58,7 @@ public partial class Player : Node2D, ITarget
         await this.ShakeAsync(16, 0.15f);
         sprite2D.Material = null;
 
-        if (CharacterStats.Health <= 0)
-        {
-            EventBus.EventBusOwner.PlayerEvents.EmitPlayerDied();
-            QueueFree();
-        }
+
     }
 
     public override void _Notification(int what)

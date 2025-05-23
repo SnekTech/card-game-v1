@@ -56,7 +56,6 @@ public partial class Battle : Node2D
 
         PlayerEvents.PlayerTurnEnded += playerHandler.EndTurn;
         PlayerEvents.PlayerHandDiscarded += enemyHandler.StartTurn;
-        PlayerEvents.PlayerDied += OnPlayerDied;
     }
 
     public override void _ExitTree()
@@ -67,7 +66,6 @@ public partial class Battle : Node2D
 
         PlayerEvents.PlayerTurnEnded -= playerHandler.EndTurn;
         PlayerEvents.PlayerHandDiscarded -= enemyHandler.StartTurn;
-        PlayerEvents.PlayerDied -= OnPlayerDied;
     }
 
     private void StartBattle(CharacterStats stats)
@@ -86,13 +84,16 @@ public partial class Battle : Node2D
         }
     }
 
-    private void OnPlayerDied()
-    {
-        BattleEvents.EmitBattleOverScreenRequested("Game Over!", BattleOverPanel.PanelType.Lose);
-    }
-
     private void OnEnemyTurnEnded()
     {
+        var playerDied = player.Stats.Health <= 0;
+        if (playerDied)
+        {
+            BattleEvents.EmitBattleOverScreenRequested("Game Over!", BattleOverPanel.PanelType.Lose);
+            player.QueueFree();
+            return;
+        }
+
         playerHandler.StartTurn();
         enemyHandler.ResetEnemyActions();
     }
