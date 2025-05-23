@@ -17,7 +17,7 @@ public partial class Tooltip : PanelContainer
 
     private Tween? _tween;
     private bool _isVisible;
-    private static readonly CardEventBus CardEvents = EventBusOwner.CardEvents;
+    private static readonly CardEvents CardEvents = EventBusOwner.CardEvents;
 
     public override void _Ready()
     {

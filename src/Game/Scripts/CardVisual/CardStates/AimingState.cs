@@ -1,5 +1,4 @@
 ﻿using CardGameV1.Constants;
-using CardGameV1.EventBus;
 using Godot;
 
 namespace CardGameV1.CardVisual.CardStates;
@@ -7,7 +6,6 @@ namespace CardGameV1.CardVisual.CardStates;
 public class AimingState(CardStateMachine cardDragStateMachine) : CardState(cardDragStateMachine)
 {
     private const int MouseSnapbackThresholdY = 138;
-    private readonly CardEventBus _eventBus = EventBusOwner.CardEvents;
 
     public override void OnEnter()
     {
@@ -17,12 +15,12 @@ public class AimingState(CardStateMachine cardDragStateMachine) : CardState(card
         CardUI.AnimateToPosition(CardUI.Parent.GlobalPosition + offset, 0.2f);
         CardUI.MonitoringDrop = false;
 
-        _eventBus.EmitCardAimStared(CardUI);
+        CardEvents.EmitCardAimStared(CardUI);
     }
 
     public override void OnExit()
     {
-        _eventBus.EmitCardAimEnded(CardUI);
+        CardEvents.EmitCardAimEnded(CardUI);
     }
 
     public override void OnInput(InputEvent inputEvent)

@@ -16,7 +16,7 @@ public partial class BattleOverPanel : Panel
     [Node]
     private Button restartButton = null!;
 
-    private static readonly BattleEventBus BattleEvents = EventBusOwner.BattleEvents;
+    private static readonly BattleEvents BattleEvents = EventBusOwner.BattleEvents;
 
     public override void _Ready()
     {

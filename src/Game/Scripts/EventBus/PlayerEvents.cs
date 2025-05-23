@@ -2,7 +2,7 @@
 
 namespace CardGameV1.EventBus;
 
-public class PlayerEventBus
+public class PlayerEvents
 {
     public event Action? PlayerHandDrawn;
     public event Action? PlayerHandDiscarded;

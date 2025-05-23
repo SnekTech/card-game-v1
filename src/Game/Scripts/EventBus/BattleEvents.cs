@@ -3,7 +3,7 @@ using CardGameV1.UI;
 
 namespace CardGameV1.EventBus;
 
-public class BattleEventBus
+public class BattleEvents
 {
     public event Action<string, BattleOverPanel.PanelType>? BattleOverScreenRequested;
 

@@ -16,13 +16,13 @@ public partial class CardTargetSelector : Node2D
     [Node]
     private Line2D cardArc = null!;
 
-    private readonly CardEventBus _eventBus = EventBusOwner.CardEvents;
+    private static readonly CardEvents CardEvents = EventBusOwner.CardEvents;
     private CardUI? _currentCardUI;
 
     public override void _EnterTree()
     {
-        _eventBus.CardAimStarted += OnCardAimStarted;
-        _eventBus.CardAimEnded += OnCardAimEnded;
+        CardEvents.CardAimStarted += OnCardAimStarted;
+        CardEvents.CardAimEnded += OnCardAimEnded;
 
         area2D.AreaEntered += OnAreaEntered;
         area2D.AreaExited += OnAreaExited;
@@ -30,8 +30,8 @@ public partial class CardTargetSelector : Node2D
 
     public override void _ExitTree()
     {
-        _eventBus.CardAimStarted -= OnCardAimStarted;
-        _eventBus.CardAimEnded -= OnCardAimEnded;
+        CardEvents.CardAimStarted -= OnCardAimStarted;
+        CardEvents.CardAimEnded -= OnCardAimEnded;
 
         area2D.AreaEntered -= OnAreaEntered;
         area2D.AreaExited -= OnAreaExited;

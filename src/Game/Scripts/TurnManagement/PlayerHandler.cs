@@ -14,13 +14,13 @@ public partial class PlayerHandler : Node
     [Export]
     private Hand hand = null!;
 
-    private readonly PlayerEventBus playerEvents = EventBusOwner.PlayerEvents;
-    private readonly CardEventBus cardEvents = EventBusOwner.CardEvents;
+    private static readonly PlayerEvents PlayerEvents = EventBusOwner.PlayerEvents;
+    private static readonly CardEvents CardEvents = EventBusOwner.CardEvents;
     private CharacterStats _characterStats = null!;
 
     public override void _Ready()
     {
-        cardEvents.CardPlayed += OnCardPlayed;
+        CardEvents.CardPlayed += OnCardPlayed;
     }
 
     public void StartBattle(CharacterStats stats)
@@ -60,7 +60,7 @@ public partial class PlayerHandler : Node
             await this.DelayGd(HandDrawInterval);
         }
 
-        playerEvents.EmitPlayerHandDrawn();
+        PlayerEvents.EmitPlayerHandDrawn();
     }
 
     private async Task DiscardCardsAsync()
@@ -75,7 +75,7 @@ public partial class PlayerHandler : Node
             }
         }
         
-        playerEvents.EmitPlayerHandDiscarded();
+        PlayerEvents.EmitPlayerHandDiscarded();
     }
 
     private void ReshuffleDeckFromDiscard()

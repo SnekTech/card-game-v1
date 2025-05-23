@@ -8,7 +8,7 @@ namespace CardGameV1.TurnManagement;
 
 public partial class EnemyHandler : Node2D
 {
-    private static readonly EnemyEventBus EnemyEvents = EventBusOwner.EnemyEvents;
+    private static readonly EnemyEvents EnemyEvents = EventBusOwner.EnemyEvents;
 
     public void ResetEnemyActions()
     {

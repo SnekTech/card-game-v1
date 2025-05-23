@@ -2,8 +2,8 @@
 
 public static class EventBusOwner
 {
-    public static readonly CardEventBus CardEvents = new();
-    public static readonly PlayerEventBus PlayerEvents = new();
-    public static readonly EnemyEventBus EnemyEvents = new();
-    public static readonly BattleEventBus BattleEvents = new();
+    public static readonly CardEvents CardEvents = new();
+    public static readonly PlayerEvents PlayerEvents = new();
+    public static readonly EnemyEvents EnemyEvents = new();
+    public static readonly BattleEvents BattleEvents = new();
 }

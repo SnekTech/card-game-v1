@@ -30,9 +30,9 @@ public partial class Battle : Node2D
     [Node]
     private EnemyHandler enemyHandler = null!;
 
-    private static readonly PlayerEventBus PlayerEvents = EventBusOwner.PlayerEvents;
-    private static readonly EnemyEventBus EnemyEvents = EventBusOwner.EnemyEvents;
-    private static readonly BattleEventBus BattleEvents = EventBusOwner.BattleEvents;
+    private static readonly PlayerEvents PlayerEvents = EventBusOwner.PlayerEvents;
+    private static readonly EnemyEvents EnemyEvents = EventBusOwner.EnemyEvents;
+    private static readonly BattleEvents BattleEvents = EventBusOwner.BattleEvents;
 
     public override void _Ready()
     {

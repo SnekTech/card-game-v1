@@ -5,7 +5,7 @@ using Godot;
 
 namespace CardGameV1.EventBus;
 
-public class CardEventBus
+public class CardEvents
 {
     public event Action<CardUI>? CardDragStarted;
     public event Action<CardUI>? CardDragEnded;

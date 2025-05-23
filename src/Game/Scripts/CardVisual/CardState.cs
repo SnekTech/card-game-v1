@@ -1,4 +1,5 @@
-﻿using CardGameV1.FSM;
+﻿using CardGameV1.EventBus;
+using CardGameV1.FSM;
 using Godot;
 
 namespace CardGameV1.CardVisual;
@@ -6,6 +7,7 @@ namespace CardGameV1.CardVisual;
 public abstract class CardState(CardStateMachine cardStateMachine) : IState
 {
     protected CardUI CardUI => cardStateMachine.CardUI;
+    protected static readonly CardEvents CardEvents = EventBusOwner.CardEvents;
 
     public virtual void OnEnter()
     {

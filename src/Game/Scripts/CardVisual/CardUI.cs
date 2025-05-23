@@ -35,7 +35,7 @@ public partial class CardUI : Control
     public static readonly StyleBoxFlat DraggingStyleBox =
         GD.Load<StyleBoxFlat>("res://Scenes/CardVisual/card_dragging_stylebox.tres");
 
-    private static readonly CardEventBus CardEvents = EventBusOwner.CardEvents;
+    private static readonly CardEvents CardEvents = EventBusOwner.CardEvents;
 
     private CardStateMachine? _stateMachine;
     private readonly HashSet<Node> _targets = [];

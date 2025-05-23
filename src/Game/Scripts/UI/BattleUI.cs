@@ -19,7 +19,7 @@ public partial class BattleUI : CanvasLayer
     private Button endTurnButton = null!;
 
     private CharacterStats _characterStats = null!;
-    private readonly PlayerEventBus playerEvents = EventBusOwner.PlayerEvents;
+    private static readonly PlayerEvents PlayerEvents = EventBusOwner.PlayerEvents;
 
     public CharacterStats CharacterStats
     {
@@ -34,13 +34,13 @@ public partial class BattleUI : CanvasLayer
 
     public override void _EnterTree()
     {
-        playerEvents.PlayerHandDrawn += OnPlayerHandDrawn;
+        PlayerEvents.PlayerHandDrawn += OnPlayerHandDrawn;
         endTurnButton.Pressed += OnEndTurnButtonPressed;
     }
 
     public override void _ExitTree()
     {
-        playerEvents.PlayerHandDrawn -= OnPlayerHandDrawn;
+        PlayerEvents.PlayerHandDrawn -= OnPlayerHandDrawn;
         endTurnButton.Pressed -= OnEndTurnButtonPressed;
     }
 
@@ -52,7 +52,7 @@ public partial class BattleUI : CanvasLayer
     private void OnEndTurnButtonPressed()
     {
         endTurnButton.Disabled = true;
-        playerEvents.EmitPlayerTurnEnded();
+        PlayerEvents.EmitPlayerTurnEnded();
     }
 
     public override void _Notification(int what)

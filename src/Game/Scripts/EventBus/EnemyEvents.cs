@@ -2,7 +2,7 @@
 
 namespace CardGameV1.EventBus;
 
-public class EnemyEventBus
+public class EnemyEvents
 {
     public event Action? EnemyTurnEnded;
 
