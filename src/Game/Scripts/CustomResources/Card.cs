@@ -9,7 +9,8 @@ using Godot.Collections;
 
 namespace CardGameV1.CustomResources;
 
-public abstract partial class Card : Resource
+[GlobalClass]
+public partial class Card : Resource
 {
     [ExportGroup("Card Attribute")]
     [Export]
@@ -65,7 +66,10 @@ public abstract partial class Card : Resource
         }
     }
 
-    protected abstract Task ApplyEffectsAsync(IEnumerable<ITarget> targets);
+    protected virtual Task ApplyEffectsAsync(IEnumerable<ITarget> targets)
+    {
+        return Task.CompletedTask;
+    }
 
     #region card enums
 
