@@ -30,8 +30,8 @@ public partial class Battle : Node2D
     [Node]
     private EnemyHandler enemyHandler = null!;
 
-    private static readonly PlayerEventBus PlayerEventBus = EventBusOwner.PlayerEventBus;
-    private static readonly EnemyEventBus EnemyEventBus = EventBusOwner.EnemyEventBus;
+    private static readonly PlayerEventBus PlayerEvents = EventBusOwner.PlayerEvents;
+    private static readonly EnemyEventBus EnemyEvents = EventBusOwner.EnemyEvents;
     private static readonly BattleEventBus BattleEvents = EventBusOwner.BattleEvents;
 
     public override void _Ready()
@@ -44,15 +44,30 @@ public partial class Battle : Node2D
         battleUI.CharacterStats = newStats;
         player.CharacterStats = newStats;
 
-        enemyHandler.ChildOrderChanged += OnEnemiesChildOrderChanged;
-
-        EnemyEventBus.EnemyTurnEnded += OnEnemyTurnEnded;
-
-        PlayerEventBus.PlayerTurnEnded += playerHandler.EndTurn;
-        PlayerEventBus.PlayerHandDiscarded += enemyHandler.StartTurn;
-        PlayerEventBus.PlayerDied += OnPlayerDied;
 
         StartBattle(newStats);
+    }
+
+    public override void _EnterTree()
+    {
+        enemyHandler.ChildOrderChanged += OnEnemiesChildOrderChanged;
+
+        EnemyEvents.EnemyTurnEnded += OnEnemyTurnEnded;
+
+        PlayerEvents.PlayerTurnEnded += playerHandler.EndTurn;
+        PlayerEvents.PlayerHandDiscarded += enemyHandler.StartTurn;
+        PlayerEvents.PlayerDied += OnPlayerDied;
+    }
+
+    public override void _ExitTree()
+    {
+        enemyHandler.ChildOrderChanged -= OnEnemiesChildOrderChanged;
+
+        EnemyEvents.EnemyTurnEnded -= OnEnemyTurnEnded;
+
+        PlayerEvents.PlayerTurnEnded -= playerHandler.EndTurn;
+        PlayerEvents.PlayerHandDiscarded -= enemyHandler.StartTurn;
+        PlayerEvents.PlayerDied -= OnPlayerDied;
     }
 
     private void StartBattle(CharacterStats stats)

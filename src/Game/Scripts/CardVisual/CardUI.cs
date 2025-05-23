@@ -35,7 +35,9 @@ public partial class CardUI : Control
     public static readonly StyleBoxFlat DraggingStyleBox =
         GD.Load<StyleBoxFlat>("res://Scenes/CardVisual/card_dragging_stylebox.tres");
 
-    private CardStateMachine _stateMachine = null!;
+    private static readonly CardEventBus CardEvents = EventBusOwner.CardEvents;
+
+    private CardStateMachine? _stateMachine;
     private readonly HashSet<Node> _targets = [];
     private Tween? _tween;
     private CharacterStats _characterStats = null!;
@@ -102,24 +104,31 @@ public partial class CardUI : Control
 
     public override void _Ready()
     {
-        var cardEventBus = EventBusOwner.CardEventBus;
-        cardEventBus.CardDragStarted += OnCardDragOrAimingStarted;
-        cardEventBus.CardDragEnded += OnCardDragOrAimingEnded;
-        cardEventBus.CardAimStarted += OnCardDragOrAimingStarted;
-        cardEventBus.CardAimEnded += OnCardDragOrAimingEnded;
-
         _stateMachine = new CardStateMachine(this);
         _stateMachine.Init<BaseState>();
+    }
 
-        dropPointDetector.MouseEntered += _stateMachine.OnMouseEntered;
-        dropPointDetector.MouseExited += _stateMachine.OnMouseExited;
+    public override void _EnterTree()
+    {
+        CardEvents.CardDragStarted += OnCardDragOrAimingStarted;
+        CardEvents.CardDragEnded += OnCardDragOrAimingEnded;
+        CardEvents.CardAimStarted += OnCardDragOrAimingStarted;
+        CardEvents.CardAimEnded += OnCardDragOrAimingEnded;
+
+        dropPointDetector.MouseEntered += OnDropPointDetectorMouseEntered;
+        dropPointDetector.MouseExited += OnDropPointDetectorMouseExited;
 
         dropPointDetector.AreaEntered += OnDropPointDetectorAreaEntered;
         dropPointDetector.AreaExited += OnDropPointDetectorAreaExited;
     }
 
-    public override void _Input(InputEvent @event) => _stateMachine.OnInput(@event);
-    public override void _GuiInput(InputEvent @event) => _stateMachine.OnGuiInput(@event);
+    public override void _ExitTree()
+    {
+        ClearSubscriptions();
+    }
+
+    public override void _Input(InputEvent @event) => _stateMachine?.OnInput(@event);
+    public override void _GuiInput(InputEvent @event) => _stateMachine?.OnGuiInput(@event);
 
     public void EmitReparentRequested() => ReparentRequested?.Invoke(this);
 
@@ -144,25 +153,18 @@ public partial class CardUI : Control
     public async Task PlayAsync()
     {
         await Card.PlayAsync(Targets, CharacterStats);
-        CleanupAndQueueFree();
-    }
-
-    public void CleanupAndQueueFree()
-    {
-        ClearSubscriptions();
         QueueFree();
     }
 
     private void ClearSubscriptions()
     {
-        var cardEventBus = EventBusOwner.CardEventBus;
-        cardEventBus.CardDragStarted -= OnCardDragOrAimingStarted;
-        cardEventBus.CardDragEnded -= OnCardDragOrAimingEnded;
-        cardEventBus.CardAimStarted -= OnCardDragOrAimingStarted;
-        cardEventBus.CardAimEnded -= OnCardDragOrAimingEnded;
+        CardEvents.CardDragStarted -= OnCardDragOrAimingStarted;
+        CardEvents.CardDragEnded -= OnCardDragOrAimingEnded;
+        CardEvents.CardAimStarted -= OnCardDragOrAimingStarted;
+        CardEvents.CardAimEnded -= OnCardDragOrAimingEnded;
 
-        dropPointDetector.MouseEntered -= _stateMachine.OnMouseEntered;
-        dropPointDetector.MouseExited -= _stateMachine.OnMouseExited;
+        dropPointDetector.MouseEntered -= OnDropPointDetectorMouseEntered;
+        dropPointDetector.MouseExited -= OnDropPointDetectorMouseExited;
 
         dropPointDetector.AreaEntered -= OnDropPointDetectorAreaEntered;
         dropPointDetector.AreaExited -= OnDropPointDetectorAreaExited;
@@ -174,6 +176,16 @@ public partial class CardUI : Control
     {
         cost.Text = cardDefinition.Cost.ToString();
         icon.Texture = cardDefinition.Icon;
+    }
+
+    private void OnDropPointDetectorMouseEntered()
+    {
+        _stateMachine?.OnMouseEntered();
+    }
+
+    private void OnDropPointDetectorMouseExited()
+    {
+        _stateMachine?.OnMouseExited();
     }
 
     private void OnDropPointDetectorAreaEntered(Area2D area) => _targets.Add(area);

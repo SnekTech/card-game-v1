@@ -12,10 +12,16 @@ public partial class RedFlash : CanvasLayer
     [Node]
     private Timer timer = null!;
 
-    public override void _Ready()
+    public override void _EnterTree()
     {
-        EventBus.EventBusOwner.PlayerEventBus.PlayerHit += OnPlayerHit;
+        EventBus.EventBusOwner.PlayerEvents.PlayerHit += OnPlayerHit;
         timer.Timeout += OnTimerTimeout;
+    }
+
+    public override void _ExitTree()
+    {
+        EventBus.EventBusOwner.PlayerEvents.PlayerHit -= OnPlayerHit;
+        timer.Timeout -= OnTimerTimeout;
     }
 
     private void OnPlayerHit()

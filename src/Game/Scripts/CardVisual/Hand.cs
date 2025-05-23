@@ -23,7 +23,7 @@ public partial class Hand : HBoxContainer
 
     public void DiscardCard(CardUI card)
     {
-        card.CleanupAndQueueFree();
+        card.QueueFree();
     }
 
     public void DisableHand()

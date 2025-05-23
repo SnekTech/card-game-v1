@@ -51,7 +51,7 @@ public abstract partial class Card : Resource
 
     public async Task PlayAsync(IEnumerable<Node> targetNodes, CharacterStats characterStats)
     {
-        EventBusOwner.CardEventBus.EmitCardPlayed(this);
+        EventBusOwner.CardEvents.EmitCardPlayed(this);
         characterStats.Mana -= Cost;
 
 

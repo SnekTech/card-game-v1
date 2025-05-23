@@ -32,7 +32,7 @@ public partial class CharacterStats : Stats
         base.TakeDamage(damage);
         if (Health < initialHealth)
         {
-            EventBus.EventBusOwner.PlayerEventBus.EmitPlayerHit();
+            EventBus.EventBusOwner.PlayerEvents.EmitPlayerHit();
         }
     }
 

@@ -10,9 +10,6 @@ namespace CardGameV1.Character;
 [Scene]
 public partial class Player : Node2D, ITarget
 {
-    [Export]
-    private CharacterStats originalPlayerStats = null!;
-
     [Node]
     private Sprite2D sprite2D = null!;
 
@@ -34,11 +31,6 @@ public partial class Player : Node2D, ITarget
     }
 
     public Stats Stats => _stats;
-
-    public override void _Ready()
-    {
-        CharacterStats = originalPlayerStats;
-    }
 
     public override void _ExitTree()
     {
@@ -68,7 +60,7 @@ public partial class Player : Node2D, ITarget
 
         if (CharacterStats.Health <= 0)
         {
-            EventBus.EventBusOwner.PlayerEventBus.EmitPlayerDied();
+            EventBus.EventBusOwner.PlayerEvents.EmitPlayerDied();
             QueueFree();
         }
     }

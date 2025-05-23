@@ -7,7 +7,7 @@ namespace CardGameV1.CardVisual.CardStates;
 public class AimingState(CardStateMachine cardDragStateMachine) : CardState(cardDragStateMachine)
 {
     private const int MouseSnapbackThresholdY = 138;
-    private readonly CardEventBus _eventBus = EventBusOwner.CardEventBus;
+    private readonly CardEventBus _eventBus = EventBusOwner.CardEvents;
 
     public override void OnEnter()
     {

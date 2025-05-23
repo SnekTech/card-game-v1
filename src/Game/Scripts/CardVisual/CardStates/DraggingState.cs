@@ -16,7 +16,7 @@ public class DraggingState(CardStateMachine cardStateMachine) : CardState(cardSt
             CardUI.Reparent(newParent);
 
         CardUI.SetPanelStyleBox(CardUI.DraggingStyleBox);
-        EventBusOwner.CardEventBus.EmitCardDragStared(CardUI);
+        EventBusOwner.CardEvents.EmitCardDragStared(CardUI);
         
         _minDragThresholdHasElapsed = false;
         var timer = CardUI.GetTree().CreateTimer(DragThresholdMin, false);
@@ -25,7 +25,7 @@ public class DraggingState(CardStateMachine cardStateMachine) : CardState(cardSt
 
     public override void OnExit()
     {
-        EventBusOwner.CardEventBus.EmitCardDragEnded(CardUI);
+        EventBusOwner.CardEvents.EmitCardDragEnded(CardUI);
     }
 
     public override void OnInput(InputEvent inputEvent)

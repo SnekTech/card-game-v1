@@ -6,7 +6,7 @@ namespace CardGameV1.CardVisual.CardStates;
 
 public class BaseState(CardStateMachine cardStateMachine) : CardState(cardStateMachine)
 {
-    private static readonly CardEventBus CardEventBus = EventBusOwner.CardEventBus;
+    private static readonly CardEventBus CardEventBus = EventBusOwner.CardEvents;
     
     public override void OnEnter()
     {

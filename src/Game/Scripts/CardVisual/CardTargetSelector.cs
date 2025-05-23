@@ -10,28 +10,31 @@ public partial class CardTargetSelector : Node2D
 {
     private const int ArcPoints = 8;
 
-    [Node] private Area2D area2D = null!;
-    [Node] private Line2D cardArc = null!;
+    [Node]
+    private Area2D area2D = null!;
 
-    private readonly CardEventBus _eventBus = EventBusOwner.CardEventBus;
+    [Node]
+    private Line2D cardArc = null!;
+
+    private readonly CardEventBus _eventBus = EventBusOwner.CardEvents;
     private CardUI? _currentCardUI;
 
-    public override void _Notification(int what)
+    public override void _EnterTree()
     {
-        if (what == NotificationSceneInstantiated)
-        {
-            WireNodes();
-        }
-    }
-
-    public override void _Ready()
-    {
-        
         _eventBus.CardAimStarted += OnCardAimStarted;
         _eventBus.CardAimEnded += OnCardAimEnded;
 
         area2D.AreaEntered += OnAreaEntered;
         area2D.AreaExited += OnAreaExited;
+    }
+
+    public override void _ExitTree()
+    {
+        _eventBus.CardAimStarted -= OnCardAimStarted;
+        _eventBus.CardAimEnded -= OnCardAimEnded;
+
+        area2D.AreaEntered -= OnAreaEntered;
+        area2D.AreaExited -= OnAreaExited;
     }
 
     public override void _Process(double delta)
@@ -56,7 +59,7 @@ public partial class CardTargetSelector : Node2D
             var t = 1.0f / ArcPoints * i;
             var x = start.X + distance.X / ArcPoints * i;
             var y = start.Y + EaseOutCubic(t) * distance.Y;
-            points.Add(new Vector2(x,y));
+            points.Add(new Vector2(x, y));
         }
 
         return points.ToArray();
@@ -70,7 +73,7 @@ public partial class CardTargetSelector : Node2D
         area2D.Monitoring = true;
         area2D.Monitorable = true;
     }
-    
+
     private void OnCardAimEnded(CardUI cardUI)
     {
         _currentCardUI = null;
@@ -87,11 +90,20 @@ public partial class CardTargetSelector : Node2D
 
         _currentCardUI.Targets.Add(otherArea2D);
     }
+
     private void OnAreaExited(Area2D otherArea2D)
     {
         if (_currentCardUI == null)
             return;
 
         _currentCardUI.Targets.Remove(otherArea2D);
+    }
+
+    public override void _Notification(int what)
+    {
+        if (what == NotificationSceneInstantiated)
+        {
+            WireNodes();
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Godot;
+﻿using CardGameV1.EventBus;
+using Godot;
 using GodotUtilities;
 
 namespace CardGameV1.UI;
@@ -16,15 +17,24 @@ public partial class Tooltip : PanelContainer
 
     private Tween? _tween;
     private bool _isVisible;
+    private static readonly CardEventBus CardEvents = EventBusOwner.CardEvents;
 
     public override void _Ready()
     {
-        var eventBus = EventBus.EventBusOwner.CardEventBus;
-        eventBus.CardTooltipRequested += ShowTooltip;
-        eventBus.TooltipHideRequested += HideTooltip;
-        
         this.SetModulateAlpha(0);
         Hide();
+    }
+
+    public override void _EnterTree()
+    {
+        CardEvents.CardTooltipRequested += ShowTooltip;
+        CardEvents.TooltipHideRequested += HideTooltip;
+    }
+
+    public override void _ExitTree()
+    {
+        CardEvents.CardTooltipRequested -= ShowTooltip;
+        CardEvents.TooltipHideRequested -= HideTooltip;
     }
 
     private void ShowTooltip(Texture2D icon, string text)

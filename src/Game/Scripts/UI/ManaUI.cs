@@ -22,6 +22,11 @@ public partial class ManaUI : Panel
         }
     }
 
+    public override void _ExitTree()
+    {
+        _characterStats.StatsChanged -= UpdateManaLabel;
+    }
+
     private void UpdateManaLabel()
     {
         var (mana, maxMana) = (CharacterStats.Mana, CharacterStats.MaxMana);
