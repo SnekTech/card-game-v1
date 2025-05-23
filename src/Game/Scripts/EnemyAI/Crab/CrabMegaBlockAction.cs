@@ -2,7 +2,7 @@
 using CardGameV1.EffectSystem;
 using Godot;
 
-namespace CardGameV1.EnemyAI;
+namespace CardGameV1.EnemyAI.Crab;
 
 public partial class CrabMegaBlockAction : EnemyConditionalAction
 {

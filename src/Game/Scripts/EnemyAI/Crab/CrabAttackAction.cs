@@ -5,7 +5,7 @@ using Godot;
 using GTweens.Easings;
 using GTweensGodot.Extensions;
 
-namespace CardGameV1.EnemyAI;
+namespace CardGameV1.EnemyAI.Crab;
 
 public partial class CrabAttackAction : EnemyChanceBasedAction
 {
