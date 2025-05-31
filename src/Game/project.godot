@@ -13,7 +13,7 @@ config_version=5
 config/name="CardGameV1"
 run/main_scene="uid://ddeqm380rgljy"
 config/features=PackedStringArray("4.4", "C#", "Forward Plus")
-config/icon="uid://bdohtig5mdd7l"
+config/icon="uid://daap2op86ohp4"
 
 [autoload]
 
