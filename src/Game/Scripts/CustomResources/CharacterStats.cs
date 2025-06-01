@@ -5,15 +5,31 @@ namespace CardGameV1.CustomResources;
 [GlobalClass]
 public partial class CharacterStats : Stats
 {
-    [Export] public CardPile StartingDeck { get; private set; } = null!;
-    [Export] public int CardsPerTurn { get; private set; } = 5;
-    [Export] public int MaxMana { get; private set; } = 3;
+    [ExportGroup("Visuals")]
+    [Export]
+    public string CharacterName { get; private set; } = "default name";
+
+    [Export(PropertyHint.MultilineText)]
+    public string Description { get; private set; } = "default description";
+
+    [Export]
+    public Texture2D Portrait { get; private set; } = null!;
+
+    [ExportGroup("Gameplay Data")]
+    [Export]
+    public CardPile StartingDeck { get; private set; } = null!;
+
+    [Export]
+    public int CardsPerTurn { get; private set; } = 5;
+
+    [Export]
+    public int MaxMana { get; private set; } = 3;
 
     private int _mana;
     public CardPile Deck { get; set; } = new();
     public CardPile DrawPile { get; set; } = new();
     public CardPile DiscardPile { get; set; } = new();
-    
+
     public int Mana
     {
         get => _mana;
