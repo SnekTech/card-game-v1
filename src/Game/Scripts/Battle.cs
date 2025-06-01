@@ -14,19 +14,15 @@ public partial class Battle : Node2D
 {
     [Export]
     private AudioStream music = null!;
-
     [Export]
     private CharacterStats characterStats = null!;
 
     [Node]
     private BattleUI battleUI = null!;
-
     [Node]
     private Player player = null!;
-
     [Node]
     private PlayerHandler playerHandler = null!;
-
     [Node]
     private EnemyHandler enemyHandler = null!;
 
