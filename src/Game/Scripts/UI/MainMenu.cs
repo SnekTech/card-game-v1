@@ -13,6 +13,9 @@ public partial class MainMenu : Control
     [Node]
     private Button exitButton = null!;
 
+    private static readonly PackedScene CharacterSelectorScene =
+        GD.Load<PackedScene>("res://Scenes/UI/main_menu/CharacterSelector.tscn");
+
     public override void _Ready()
     {
         GetTree().Paused = false;
@@ -39,7 +42,7 @@ public partial class MainMenu : Control
 
     private void OnNewRunPressed()
     {
-        GD.Print("new run");
+        GetTree().ChangeSceneToPacked(CharacterSelectorScene);
     }
 
     private void OnExitPressed() => GetTree().Quit();
