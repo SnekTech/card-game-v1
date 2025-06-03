@@ -2,7 +2,7 @@
 using Godot;
 using GodotUtilities;
 
-namespace CardGameV1.UI;
+namespace CardGameV1.UI.BattleUIComponents;
 
 [Scene]
 public partial class IntentUI : HBoxContainer

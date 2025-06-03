@@ -8,11 +8,11 @@
 [ext_resource type="PackedScene" uid="uid://dhri3662tt0n7" path="res://Scenes/Player/Player.tscn" id="4_qxnh6"]
 [ext_resource type="PackedScene" uid="uid://b1af48bdyphyk" path="res://Scenes/CardTargetSelector/CardTargetSelector.tscn" id="4_u22qb"]
 [ext_resource type="Resource" uid="uid://dytmcwc3cmib3" path="res://characters/warrior/warrior.tres" id="5_262jj"]
-[ext_resource type="PackedScene" uid="uid://bxdkorsjy5k6g" path="res://Scenes/UI/BattleUI.tscn" id="6_8teo4"]
+[ext_resource type="PackedScene" uid="uid://bxdkorsjy5k6g" path="res://Scenes/UI/battle_ui_components/BattleUI.tscn" id="6_8teo4"]
 [ext_resource type="Script" uid="uid://ldj8l4cpecn1" path="res://Scripts/TurnManagement/PlayerHandler.cs" id="7_u22qb"]
 [ext_resource type="Resource" uid="uid://bky0dx2b3oms8" path="res://Scenes/Enemy/bat/bat_enemy.tres" id="7_xmk5i"]
-[ext_resource type="PackedScene" uid="uid://dix6o2poewlna" path="res://Scenes/UI/RedFlash.tscn" id="10_qxnh6"]
-[ext_resource type="PackedScene" uid="uid://bqm3yb5vlbrpl" path="res://Scenes/UI/BattleOverPanel.tscn" id="12_l0uqe"]
+[ext_resource type="PackedScene" uid="uid://dix6o2poewlna" path="res://Scenes/UI/battle_ui_components/RedFlash.tscn" id="10_qxnh6"]
+[ext_resource type="PackedScene" uid="uid://bqm3yb5vlbrpl" path="res://Scenes/UI/battle_ui_components/BattleOverPanel.tscn" id="12_l0uqe"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1samx"]
 size = Vector2(256, 100)

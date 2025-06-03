@@ -3,7 +3,7 @@ using CardGameV1.Character;
 using CardGameV1.CustomResources;
 using CardGameV1.EventBus;
 using CardGameV1.TurnManagement;
-using CardGameV1.UI;
+using CardGameV1.UI.BattleUIComponents;
 using Godot;
 using GodotUtilities;
 

@@ -3,7 +3,7 @@ using CardGameV1.Constants;
 using CardGameV1.CustomResources;
 using CardGameV1.EffectSystem;
 using CardGameV1.EnemyAI;
-using CardGameV1.UI;
+using CardGameV1.UI.BattleUIComponents;
 using Godot;
 using GodotUtilities;
 

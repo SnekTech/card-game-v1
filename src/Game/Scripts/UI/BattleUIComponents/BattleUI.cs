@@ -4,7 +4,7 @@ using CardGameV1.EventBus;
 using Godot;
 using GodotUtilities;
 
-namespace CardGameV1.UI;
+namespace CardGameV1.UI.BattleUIComponents;
 
 [Scene]
 public partial class BattleUI : CanvasLayer

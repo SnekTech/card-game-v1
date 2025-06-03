@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://dix6o2poewlna"]
 
-[ext_resource type="Script" uid="uid://cckrp7l7te1fk" path="res://Scripts/UI/RedFlash.cs" id="1_gl3cv"]
+[ext_resource type="Script" uid="uid://cckrp7l7te1fk" path="res://Scripts/UI/BattleUIComponents/RedFlash.cs" id="1_gl3cv"]
 
 [node name="RedFlash" type="CanvasLayer"]
 layer = 2

@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://b52j2y5jnu2bi"]
 
-[ext_resource type="Script" uid="uid://doqa33u3nfobi" path="res://Scripts/UI/ManaUI.cs" id="2_mwkl5"]
+[ext_resource type="Script" uid="uid://doqa33u3nfobi" path="res://Scripts/UI/BattleUIComponents/ManaUI.cs" id="2_mwkl5"]
 
 [node name="ManaUI" type="Panel"]
 anchors_preset = 2

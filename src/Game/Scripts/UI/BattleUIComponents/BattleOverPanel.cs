@@ -2,7 +2,7 @@
 using Godot;
 using GodotUtilities;
 
-namespace CardGameV1.UI;
+namespace CardGameV1.UI.BattleUIComponents;
 
 [Scene]
 public partial class BattleOverPanel : Panel
@@ -46,7 +46,8 @@ public partial class BattleOverPanel : Panel
         GetTree().Paused = true;
     }
 
-    private void OnContinuePressed() => GetTree().Quit();
+    private void OnContinuePressed() => BattleEvents.EmitWon();
+
     private void OnRestartPressed() => GetTree().ReloadCurrentScene();
 
     public override void _Notification(int what)

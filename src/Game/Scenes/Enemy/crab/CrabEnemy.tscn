@@ -4,8 +4,8 @@
 [ext_resource type="Texture2D" uid="uid://1u3b3hwqd8yh" path="res://art/tile_0110.png" id="1_i1u57"]
 [ext_resource type="Texture2D" uid="uid://bb3rcs5nqntir" path="res://art/arrow.png" id="2_e0oyi"]
 [ext_resource type="Resource" uid="uid://dhr0kajhhbp0o" path="res://Scenes/Enemy/crab/crab_enemy.tres" id="2_fw0yv"]
-[ext_resource type="PackedScene" uid="uid://cxy4ik6w7yg57" path="res://Scenes/UI/StatsUI.tscn" id="3_02vxf"]
-[ext_resource type="PackedScene" uid="uid://dmu5i71r5vqb" path="res://Scenes/UI/IntentUI.tscn" id="6_seemo"]
+[ext_resource type="PackedScene" uid="uid://cxy4ik6w7yg57" path="res://Scenes/UI/battle_ui_components/StatsUI.tscn" id="3_02vxf"]
+[ext_resource type="PackedScene" uid="uid://dmu5i71r5vqb" path="res://Scenes/UI/battle_ui_components/IntentUI.tscn" id="6_seemo"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qxnh6"]
 
