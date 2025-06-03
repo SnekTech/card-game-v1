@@ -4,6 +4,13 @@ namespace CardGameV1.EventBus;
 
 public class Events
 {
+    #region battle
+
+    public event Action? BattleWon;
+    public void EmitBattleWon() => BattleWon?.Invoke();
+
+    #endregion
+
     #region map
 
     public event Action? MapExited;

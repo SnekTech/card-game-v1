@@ -80,4 +80,9 @@ public static class CustomExtensions
             return new Vector2(GD.Randf() * 2 - 1, GD.Randf() * 2 - 1);
         }
     }
+
+    public static bool HasAnyChild(this Node node)
+    {
+        return node.GetChildCount() > 0;
+    }
 }

@@ -46,7 +46,7 @@ public partial class BattleOverPanel : Panel
         GetTree().Paused = true;
     }
 
-    private void OnContinuePressed() => BattleEvents.EmitWon();
+    private void OnContinuePressed() => EventBusOwner.Events.EmitBattleWon();
 
     private void OnRestartPressed() => GetTree().ReloadCurrentScene();
 
