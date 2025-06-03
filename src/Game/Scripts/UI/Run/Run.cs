@@ -1,4 +1,5 @@
-﻿using CardGameV1.CustomResources;
+﻿using System;
+using CardGameV1.CustomResources;
 using CardGameV1.EventBus;
 using Godot;
 using GodotUtilities;
@@ -8,19 +9,9 @@ namespace CardGameV1.UI.Run;
 [Scene]
 public partial class Run : Node
 {
-    #region packed scenes
-
-    private static readonly PackedScene BattleScene = GD.Load<PackedScene>("res://Scenes/Battle.tscn");
-    private static readonly PackedScene BattleRewardScene =
-        GD.Load<PackedScene>("res://Scenes/UI/battle_reward/BattleReward.tscn");
-    private static readonly PackedScene CampfireScene = GD.Load<PackedScene>("res://Scenes/UI/campfire/Campfire.tscn");
-    private static readonly PackedScene MapScene = GD.Load<PackedScene>("res://Scenes/UI/map/Map.tscn");
-    private static readonly PackedScene ShopScene = GD.Load<PackedScene>("res://Scenes/UI/shop/Shop.tscn");
-    private static readonly PackedScene TreasureRoomScene =
-        GD.Load<PackedScene>("res://Scenes/UI/treasure_room/TreasureRoom.tscn");
-
-    #endregion
-
+    [Export]
+    private RunStartup runStartup = null!;
+    
     [Node]
     private Node currentView = null!;
     [Node]
@@ -36,13 +27,36 @@ public partial class Run : Node
     [Node]
     private Button campfireButton = null!;
 
-    public CharacterStats Character { get; set; } = null!;
+    #region packed scenes
+
+    private static readonly PackedScene BattleScene = GD.Load<PackedScene>("res://Scenes/Battle.tscn");
+    private static readonly PackedScene BattleRewardScene =
+        GD.Load<PackedScene>("res://Scenes/UI/battle_reward/BattleReward.tscn");
+    private static readonly PackedScene CampfireScene = GD.Load<PackedScene>("res://Scenes/UI/campfire/Campfire.tscn");
+    private static readonly PackedScene MapScene = GD.Load<PackedScene>("res://Scenes/UI/map/Map.tscn");
+    private static readonly PackedScene ShopScene = GD.Load<PackedScene>("res://Scenes/UI/shop/Shop.tscn");
+    private static readonly PackedScene TreasureRoomScene =
+        GD.Load<PackedScene>("res://Scenes/UI/treasure_room/TreasureRoom.tscn");
+
+    #endregion
+
+    private CharacterStats Character { get; set; } = null!;
 
     public override void _Ready()
     {
-        // todo: remove this, set the character from a higher level
-        Character = GD.Load<CharacterStats>("res://characters/warrior/warrior.tres").CreateInstance();
-        StartRun();
+        switch (runStartup.Type)
+        {
+            case RunStartup.RunType.NewRun:
+                Character = runStartup.PickedCharacter.CreateInstance();
+                StartRun();
+                break;
+            case RunStartup.RunType.ContinuedRun:
+                // todo: load last run
+                GD.Print("load previous run");
+                break;
+            default:
+                throw new ArgumentOutOfRangeException();
+        }
     }
 
     private void StartRun()

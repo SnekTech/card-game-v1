@@ -7,6 +7,9 @@ namespace CardGameV1.UI;
 [Scene]
 public partial class CharacterSelector : Control
 {
+    [Export]
+    private RunStartup runStartup = null!;
+
     [Node]
     private Label title = null!;
     [Node]
@@ -22,6 +25,7 @@ public partial class CharacterSelector : Control
     [Node]
     private Button assassinButton = null!;
 
+    private static readonly PackedScene RunScene = GD.Load<PackedScene>("res://Scenes/run/Run.tscn");
     private static readonly CharacterStats WarriorStats =
         GD.Load<CharacterStats>("res://characters/warrior/warrior.tres");
     private static readonly CharacterStats WizardStats =
@@ -73,6 +77,9 @@ public partial class CharacterSelector : Control
     private void OnStartButtonPressed()
     {
         GD.Print($"Start new Run with {CurrentCharacter.CharacterName}");
+        runStartup.Type = RunStartup.RunType.NewRun;
+        runStartup.PickedCharacter = CurrentCharacter;
+        GetTree().ChangeSceneToPacked(RunScene);
     }
 
     private void OnWarriorButtonPressed() => CurrentCharacter = WarriorStats;

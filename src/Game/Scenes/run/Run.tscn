@@ -1,12 +1,14 @@
-[gd_scene load_steps=3 format=3 uid="uid://5tpnwq0wbbwe"]
+[gd_scene load_steps=4 format=3 uid="uid://5tpnwq0wbbwe"]
 
-[ext_resource type="PackedScene" uid="uid://cx3bnsa6yrnty" path="res://Scenes/UI/map/Map.tscn" id="1_38gpp"]
-[ext_resource type="Script" uid="uid://dnirq6j1k3v6b" path="res://Scripts/UI/Run/Run.cs" id="1_yq2fy"]
+[ext_resource type="Script" uid="uid://dnirq6j1k3v6b" path="res://Scripts/UI/Run/Run.cs" id="1_h4gtr"]
+[ext_resource type="Resource" uid="uid://o3w3lqaycokm" path="res://Scenes/run/run_startup.tres" id="2_3ply4"]
+[ext_resource type="PackedScene" uid="uid://cx3bnsa6yrnty" path="res://Scenes/UI/map/Map.tscn" id="2_7taag"]
 
 [node name="Run" type="Node"]
-script = ExtResource("1_yq2fy")
+script = ExtResource("1_h4gtr")
+runStartup = ExtResource("2_3ply4")
 
-[node name="Map" parent="." instance=ExtResource("1_38gpp")]
+[node name="Map" parent="." instance=ExtResource("2_7taag")]
 
 [node name="CurrentView" type="Node" parent="."]
 
