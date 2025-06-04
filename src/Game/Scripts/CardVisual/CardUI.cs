@@ -146,8 +146,7 @@ public partial class CardUI : Control
 
     public void SetPanelStyleBox(StyleBox styleBox)
     {
-        const string panelStylePath = "theme_override_styles/panel";
-        panel.Set(panelStylePath, styleBox);
+        panel.SetStyleBox(styleBox);
     }
 
     public async Task PlayAsync()

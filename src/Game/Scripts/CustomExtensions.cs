@@ -85,4 +85,10 @@ public static class CustomExtensions
     {
         return node.GetChildCount() > 0;
     }
+
+    public static void SetStyleBox(this Panel panel, StyleBox styleBox)
+    {
+        const string panelStylePath = "theme_override_styles/panel";
+        panel.Set(panelStylePath, styleBox);
+    }
 }
