@@ -20,7 +20,7 @@ public class BaseState(CardStateMachine cardStateMachine) : CardState(cardStateM
         if (CardUI.Playable == false || CardUI.Disabled)
             return;
 
-        if (inputEvent.IsActionPressed(InputActionNames.LeftMouse))
+        if (inputEvent.IsActionPressed(InputActions.LeftMouse))
         {
             CardUI.PivotOffset = CardUI.GetGlobalMousePosition() - CardUI.GlobalPosition;
             ChangeState<ClickedState>();

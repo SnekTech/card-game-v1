@@ -1,4 +1,5 @@
-﻿using CardGameV1.CustomResources;
+﻿using CardGameV1.Constants;
+using CardGameV1.CustomResources;
 using CardGameV1.MyExtensions;
 using CardGameV1.UI.CardPileView;
 using Godot;
@@ -15,7 +16,7 @@ public partial class CardTooltipPopup : Control
     private RichTextLabel cardDescription = null!;
 
     private static readonly PackedScene CardMenuUIScene =
-        GD.Load<PackedScene>("res://Scenes/UI/card_pile_view/CardMenuUI.tscn");
+        GD.Load<PackedScene>(ScenePath.CardMenuUI);
 
     public override void _Ready()
     {
@@ -24,13 +25,13 @@ public partial class CardTooltipPopup : Control
 
     public override void _GuiInput(InputEvent inputEvent)
     {
-        if (inputEvent.IsActionPressed("left_mouse"))
+        if (inputEvent.IsActionPressed(InputActions.LeftMouse))
         {
             HideTooltip();
         }
     }
 
-    private void ShowTooltip(Card card)
+    public void ShowTooltip(Card card)
     {
         var newCard = CardMenuUIScene.Instantiate<CardMenuUI>();
         tooltipCard.AddChild(newCard);
@@ -40,7 +41,7 @@ public partial class CardTooltipPopup : Control
         Show();
     }
 
-    private void HideTooltip()
+    public void HideTooltip()
     {
         if (Visible == false)
             return;

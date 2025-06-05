@@ -32,9 +32,9 @@ public class DraggingState(CardStateMachine cardStateMachine) : CardState(cardSt
     {
         var isCardSingleTargeted = CardUI.Card.IsSingleTargeted;
         var mouseMoved = inputEvent is InputEventMouseMotion;
-        var shouldCancel = inputEvent.IsActionPressed(InputActionNames.RightMouse);
-        var playConfirmed = inputEvent.IsActionPressed(InputActionNames.LeftMouse) ||
-                            inputEvent.IsActionReleased(InputActionNames.LeftMouse);
+        var shouldCancel = inputEvent.IsActionPressed(InputActions.RightMouse);
+        var playConfirmed = inputEvent.IsActionPressed(InputActions.LeftMouse) ||
+                            inputEvent.IsActionReleased(InputActions.LeftMouse);
 
         if (isCardSingleTargeted && mouseMoved && CardUI.Targets.Count > 0)
         {

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Godot;
 using Godot.Collections;
@@ -14,6 +15,7 @@ public partial class CardPile : Resource
     private Array<Card> cards = [];
 
     public bool IsEmpty => cards.Count == 0;
+    public Array<Card> Cards => cards.Duplicate();
 
 
     public Card DrawCard()

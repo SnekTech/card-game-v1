@@ -28,8 +28,8 @@ public class AimingState(CardStateMachine cardDragStateMachine) : CardState(card
         var mouseMoved = inputEvent is InputEventMouseMotion;
         var mouseTooLow = CardUI.GetGlobalMousePosition().Y > MouseSnapbackThresholdY;
         
-        var shouldCancel = (mouseMoved && mouseTooLow) || inputEvent.IsActionPressed(InputActionNames.RightMouse);
-        var playConfirmed = inputEvent.IsActionPressed(InputActionNames.LeftMouse) || inputEvent.IsActionReleased(InputActionNames.LeftMouse);
+        var shouldCancel = (mouseMoved && mouseTooLow) || inputEvent.IsActionPressed(InputActions.RightMouse);
+        var playConfirmed = inputEvent.IsActionPressed(InputActions.LeftMouse) || inputEvent.IsActionReleased(InputActions.LeftMouse);
 
         if (shouldCancel)
         {
