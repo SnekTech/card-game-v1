@@ -81,10 +81,6 @@ public static class CustomExtensions
         }
     }
 
-    public static bool HasAnyChild(this Node node)
-    {
-        return node.GetChildCount() > 0;
-    }
 
     public static void SetStyleBox(this Panel panel, StyleBox styleBox)
     {
