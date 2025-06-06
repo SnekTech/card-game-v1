@@ -1,7 +1,7 @@
 ﻿using CardGameV1.CustomResources;
 using Godot;
 
-namespace CardGameV1.UI.CardPileView;
+namespace CardGameV1.UI.CardPileDisplay;
 
 public partial class CardPileOpener : TextureButton
 {

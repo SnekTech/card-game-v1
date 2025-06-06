@@ -3,7 +3,7 @@ using CardGameV1.CustomResources;
 using Godot;
 using GodotUtilities;
 
-namespace CardGameV1.UI.CardPileView;
+namespace CardGameV1.UI.CardPileDisplay;
 
 [Scene]
 public partial class CardMenuUI : CenterContainer

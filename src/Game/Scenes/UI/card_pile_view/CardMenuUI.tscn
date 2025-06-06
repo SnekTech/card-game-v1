@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://cioihy11sscr0"]
 
-[ext_resource type="Script" uid="uid://dxrn8bdy43c8m" path="res://Scripts/UI/CardPileView/CardMenuUI.cs" id="1_0d0a2"]
+[ext_resource type="Script" uid="uid://dxrn8bdy43c8m" path="res://Scripts/UI/CardPileDisplay/CardMenuUI.cs" id="1_0d0a2"]
 [ext_resource type="StyleBox" uid="uid://cukj3q5ygqlsx" path="res://Scenes/CardVisual/card_base_stylebox.tres" id="1_g2p3l"]
 [ext_resource type="Resource" uid="uid://bxutmrgg5ywiw" path="res://characters/warrior/cards/warrior_block.tres" id="2_0d0a2"]
 [ext_resource type="Texture2D" uid="uid://c6rme2o6dyaoj" path="res://art/tile_0104.png" id="2_yc2wo"]

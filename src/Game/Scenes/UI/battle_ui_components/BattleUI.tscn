@@ -1,10 +1,12 @@
-[gd_scene load_steps=7 format=3 uid="uid://bxdkorsjy5k6g"]
+[gd_scene load_steps=9 format=3 uid="uid://bxdkorsjy5k6g"]
 
 [ext_resource type="Script" uid="uid://6pmisx6msu1n" path="res://Scripts/UI/BattleUIComponents/BattleUI.cs" id="1_5s6ks"]
 [ext_resource type="Script" uid="uid://6alav0l7l8ly" path="res://Scripts/CardVisual/Hand.cs" id="3_ijghn"]
 [ext_resource type="PackedScene" uid="uid://djmhd1i2e8j2h" path="res://Scenes/CardUI.tscn" id="4_qvr0f"]
 [ext_resource type="Theme" uid="uid://c306wkaelrn2q" path="res://main_theme.tres" id="6_h4kvj"]
 [ext_resource type="PackedScene" uid="uid://b52j2y5jnu2bi" path="res://Scenes/UI/battle_ui_components/ManaUI.tscn" id="7_iys2e"]
+[ext_resource type="PackedScene" uid="uid://bwnipcvvpfdqe" path="res://Scenes/UI/card_pile_view/CardPileOpener.tscn" id="7_nk3qv"]
+[ext_resource type="Texture2D" uid="uid://bw8k03iub5j50" path="res://art/discard.png" id="8_5ta5f"]
 [ext_resource type="PackedScene" uid="uid://bbavevxn7bcoj" path="res://Scenes/UI/battle_ui_components/Tooltip.tscn" id="8_t2vbu"]
 
 [node name="BattleUI" type="CanvasLayer" groups=["ui_layer"]]
@@ -26,6 +28,8 @@ script = ExtResource("3_ijghn")
 cardUIScene = ExtResource("4_qvr0f")
 
 [node name="ManaUI" parent="." instance=ExtResource("7_iys2e")]
+offset_top = -45.0
+offset_bottom = -27.0
 
 [node name="Tooltip" parent="." instance=ExtResource("8_t2vbu")]
 offset_top = 6.0
@@ -39,10 +43,56 @@ anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = -53.0
-offset_top = -22.0
+offset_top = -42.0
 offset_right = -8.0
-offset_bottom = -8.0
+offset_bottom = -28.0
 grow_horizontal = 0
 grow_vertical = 0
 theme = ExtResource("6_h4kvj")
 text = "End Turn"
+
+[node name="DrawPileButton" parent="." node_paths=PackedStringArray("counter") instance=ExtResource("7_nk3qv")]
+unique_name_in_owner = true
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = -23.0
+offset_right = 26.0
+offset_bottom = -7.0
+grow_vertical = 0
+counter = NodePath("Counter")
+
+[node name="Counter" type="Label" parent="DrawPileButton"]
+layout_mode = 0
+offset_left = 9.0
+offset_top = 12.0
+offset_right = 19.0
+offset_bottom = 18.0
+text = "99"
+horizontal_alignment = 1
+
+[node name="DiscardPileButton" parent="." node_paths=PackedStringArray("counter") instance=ExtResource("7_nk3qv")]
+unique_name_in_owner = true
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -24.0
+offset_top = -23.0
+offset_right = -8.0
+offset_bottom = -7.0
+grow_horizontal = 0
+grow_vertical = 0
+texture_normal = ExtResource("8_5ta5f")
+counter = NodePath("Counter")
+
+[node name="Counter" type="Label" parent="DiscardPileButton"]
+layout_mode = 0
+offset_left = -2.0
+offset_top = 12.0
+offset_right = 8.0
+offset_bottom = 18.0
+text = "99"
+horizontal_alignment = 1

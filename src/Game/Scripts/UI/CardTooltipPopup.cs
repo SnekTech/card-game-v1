@@ -1,7 +1,7 @@
 ﻿using CardGameV1.Constants;
 using CardGameV1.CustomResources;
 using CardGameV1.MyExtensions;
-using CardGameV1.UI.CardPileView;
+using CardGameV1.UI.CardPileDisplay;
 using Godot;
 using GodotUtilities;
 

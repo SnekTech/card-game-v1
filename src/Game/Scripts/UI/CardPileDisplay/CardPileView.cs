@@ -4,14 +4,11 @@ using CardGameV1.MyExtensions;
 using Godot;
 using GodotUtilities;
 
-namespace CardGameV1.UI.CardPileView;
+namespace CardGameV1.UI.CardPileDisplay;
 
 [Scene]
 public partial class CardPileView : Control
 {
-    [Export]
-    private CardPile defaultCardPile = null!;
-
     [Node]
     private Label title = null!;
     [Node]
@@ -22,6 +19,13 @@ public partial class CardPileView : Control
     private CardTooltipPopup cardTooltipPopup = null!;
 
     private static readonly PackedScene CardMenuUIScene = GD.Load<PackedScene>(ScenePath.CardMenuUI);
+
+    private CardPile? _cardPile;
+    
+    public CardPile CardPile
+    {
+        set => _cardPile = value;
+    }
 
     public override void _Ready()
     {
@@ -58,7 +62,7 @@ public partial class CardPileView : Control
         }
     }
 
-    private void ShowCurrentView(string newTitle, bool randomized = false)
+    public void ShowCurrentView(string newTitle, bool randomized = false)
     {
         cards.ClearChildren();
 
@@ -69,7 +73,10 @@ public partial class CardPileView : Control
 
     private void UpdateView(bool randomized)
     {
-        var allCards = defaultCardPile.Cards;
+        if (_cardPile == null)
+            return;
+        
+        var allCards = _cardPile.Cards;
         if (randomized)
         {
             allCards.Shuffle();

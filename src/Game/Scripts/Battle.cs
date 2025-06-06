@@ -42,6 +42,7 @@ public partial class Battle : Node2D
 
 
         StartBattle(newStats);
+        battleUI.InitCardPileUI();
     }
 
     public override void _EnterTree()

@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://b8mfae4j2xgiw"]
 
-[ext_resource type="Script" uid="uid://dqubh2vke1uds" path="res://Scripts/UI/CardPileView/CardPileView.cs" id="1_fn2tg"]
+[ext_resource type="Script" uid="uid://dqubh2vke1uds" path="res://Scripts/UI/CardPileDisplay/CardPileView.cs" id="1_fn2tg"]
 [ext_resource type="PackedScene" uid="uid://cioihy11sscr0" path="res://Scenes/UI/card_pile_view/CardMenuUI.tscn" id="1_n1tfx"]
 [ext_resource type="PackedScene" uid="uid://b3q1w1421uk6d" path="res://Scenes/UI/CardTooltipPopup.tscn" id="2_fwt5a"]
 [ext_resource type="Resource" uid="uid://iecbpq8c5qwo" path="res://characters/warrior/warrior_starting_deck.tres" id="2_wjq36"]

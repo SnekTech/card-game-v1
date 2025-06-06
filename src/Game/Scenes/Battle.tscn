@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://ddeqm380rgljy"]
+[gd_scene load_steps=16 format=3 uid="uid://ddeqm380rgljy"]
 
 [ext_resource type="Script" uid="uid://dcjpkniwxaq0p" path="res://Scripts/Battle.cs" id="1_8teo4"]
 [ext_resource type="Texture2D" uid="uid://cp4iq5fd6j8be" path="res://art/background.png" id="2_2h7oj"]
@@ -13,6 +13,7 @@
 [ext_resource type="Resource" uid="uid://bky0dx2b3oms8" path="res://Scenes/Enemy/bat/bat_enemy.tres" id="7_xmk5i"]
 [ext_resource type="PackedScene" uid="uid://dix6o2poewlna" path="res://Scenes/UI/battle_ui_components/RedFlash.tscn" id="10_qxnh6"]
 [ext_resource type="PackedScene" uid="uid://bqm3yb5vlbrpl" path="res://Scenes/UI/battle_ui_components/BattleOverPanel.tscn" id="12_l0uqe"]
+[ext_resource type="PackedScene" uid="uid://b8mfae4j2xgiw" path="res://Scenes/UI/card_pile_view/CardPileView.tscn" id="16_n5y6x"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1samx"]
 size = Vector2(256, 100)
@@ -61,7 +62,15 @@ position = Vector2(57, 72)
 script = ExtResource("7_u22qb")
 hand = NodePath("../BattleUI/Hand")
 
-[node name="BattleUI" parent="." instance=ExtResource("6_8teo4")]
+[node name="BattleUI" parent="." node_paths=PackedStringArray("drawPileView", "discardPileView") instance=ExtResource("6_8teo4")]
+drawPileView = NodePath("../CardPileViews/DrawPileView")
+discardPileView = NodePath("../CardPileViews/DiscardPileView")
+
+[node name="ManaUI" parent="BattleUI" index="1"]
+offset_left = 9.0
+offset_top = -43.0
+offset_right = 27.0
+offset_bottom = -25.0
 
 [node name="RedFlash" parent="." instance=ExtResource("10_qxnh6")]
 
@@ -69,6 +78,17 @@ hand = NodePath("../BattleUI/Hand")
 layer = 2
 
 [node name="BattleOverPanel" parent="BattleOverLayer" instance=ExtResource("12_l0uqe")]
+visible = false
+
+[node name="CardPileViews" type="CanvasLayer" parent="."]
+layer = 3
+
+[node name="DrawPileView" parent="CardPileViews" instance=ExtResource("16_n5y6x")]
+unique_name_in_owner = true
+visible = false
+
+[node name="DiscardPileView" parent="CardPileViews" instance=ExtResource("16_n5y6x")]
+unique_name_in_owner = true
 visible = false
 
 [editable path="BattleUI"]
