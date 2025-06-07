@@ -5,7 +5,6 @@ using CardGameV1.Constants;
 using CardGameV1.EffectSystem;
 using CardGameV1.EventBus;
 using Godot;
-using Godot.Collections;
 
 namespace CardGameV1.CustomResources;
 
@@ -23,6 +22,9 @@ public partial class Card : Resource
     public CardType Type { get; private set; }
 
     [Export]
+    public CardRarity Rarity { get; private set; }
+
+    [Export]
     public TargetType Target { get; private set; }
 
     [ExportGroup("Card Visual")]
@@ -37,6 +39,13 @@ public partial class Card : Resource
 
     public bool IsSingleTargeted => Target == TargetType.SingleEnemy;
 
+    private static readonly Dictionary<CardRarity, Color> RarityColors = new()
+    {
+        [CardRarity.Common] = Colors.Gray,
+        [CardRarity.Uncommon] = Colors.CornflowerBlue,
+        [CardRarity.Rare] = Colors.Gold
+    };
+
     private IEnumerable<ITarget> GetTargets(SceneTree tree)
     {
         var targets = Target switch
@@ -45,9 +54,9 @@ public partial class Card : Resource
             TargetType.AllEnemies => tree.GetNodesInGroup(GroupNames.Enemy),
             TargetType.Everyone => tree.GetNodesInGroup(GroupNames.Player)
                 .Concat(tree.GetNodesInGroup(GroupNames.Enemy)),
-            _ => new Array<Node>()
+            _ => new Godot.Collections.Array<Node>()
         };
-        return targets.Where(target => target is ITarget).Cast<ITarget>();
+        return targets.OfType<ITarget>();
     }
 
     public async Task PlayAsync(IEnumerable<Node> targetNodes, CharacterStats characterStats)
@@ -78,6 +87,13 @@ public partial class Card : Resource
         Attack,
         Skill,
         Power
+    }
+
+    public enum CardRarity
+    {
+        Common,
+        Uncommon,
+        Rare
     }
 
     public enum TargetType
