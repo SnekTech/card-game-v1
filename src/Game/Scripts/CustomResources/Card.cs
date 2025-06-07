@@ -46,6 +46,8 @@ public partial class Card : Resource
         [CardRarity.Rare] = Colors.Gold
     };
 
+    public Color RarityColor => RarityColors[Rarity];
+
     private IEnumerable<ITarget> GetTargets(SceneTree tree)
     {
         var targets = Target switch

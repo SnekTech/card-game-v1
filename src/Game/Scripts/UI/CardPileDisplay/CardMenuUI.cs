@@ -1,4 +1,5 @@
 ﻿using System;
+using CardGameV1.CardVisual;
 using CardGameV1.CustomResources;
 using Godot;
 using GodotUtilities;
@@ -14,28 +15,22 @@ public partial class CardMenuUI : CenterContainer
     private Card defaultCard = null!;
 
     [Node]
-    private Control visuals = null!;
-    [Node]
-    private Panel panel = null!;
-    [Node]
-    private Label cost = null!;
-    [Node]
-    private TextureRect icon = null!;
+    private CardVisuals visuals = null!;
 
     private static readonly StyleBoxFlat BaseStyle =
         GD.Load<StyleBoxFlat>("res://Scenes/CardVisual/card_base_stylebox.tres");
     private static readonly StyleBoxFlat HoverStyle =
         GD.Load<StyleBoxFlat>("res://Scenes/CardVisual/card_hover_stylebox.tres");
 
-    private Card _card = null!;
+    private Card? _card;
 
     public Card Card
     {
-        get => _card;
+        get => _card ?? defaultCard;
         set
         {
             _card = value;
-            UpdateContent(_card);
+            visuals.Card = _card;
         }
     }
 
@@ -58,12 +53,6 @@ public partial class CardMenuUI : CenterContainer
         visuals.GuiInput -= OnVisualsGuiInput;
     }
 
-    private void UpdateContent(Card card)
-    {
-        cost.Text = card.Cost.ToString();
-        icon.Texture = card.Icon;
-    }
-
     private void OnVisualsGuiInput(InputEvent @event)
     {
         if (@event.IsActionPressed("left_mouse"))
@@ -72,9 +61,9 @@ public partial class CardMenuUI : CenterContainer
         }
     }
 
-    private void OnVisualsMouseEntered() => panel.SetStyleBox(HoverStyle);
+    private void OnVisualsMouseEntered() => visuals.Panel.SetStyleBox(HoverStyle);
 
-    private void OnVisualsMouseExited() => panel.SetStyleBox(BaseStyle);
+    private void OnVisualsMouseExited() => visuals.Panel.SetStyleBox(BaseStyle);
 
     public override void _Notification(int what)
     {
