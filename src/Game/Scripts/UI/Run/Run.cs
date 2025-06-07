@@ -1,4 +1,5 @@
 ﻿using System;
+using CardGameV1.Constants;
 using CardGameV1.CustomResources;
 using CardGameV1.EventBus;
 using CardGameV1.MyExtensions;
@@ -38,18 +39,14 @@ public partial class Run : Node
 
     #endregion
 
-    // todo: move these to ScenePath constant
-
     #region packed scenes
 
-    private static readonly PackedScene BattleScene = GD.Load<PackedScene>("res://Scenes/Battle.tscn");
-    private static readonly PackedScene BattleRewardScene =
-        GD.Load<PackedScene>("res://Scenes/UI/battle_reward/BattleReward.tscn");
-    private static readonly PackedScene CampfireScene = GD.Load<PackedScene>("res://Scenes/UI/campfire/Campfire.tscn");
-    private static readonly PackedScene MapScene = GD.Load<PackedScene>("res://Scenes/UI/map/Map.tscn");
-    private static readonly PackedScene ShopScene = GD.Load<PackedScene>("res://Scenes/UI/shop/Shop.tscn");
-    private static readonly PackedScene TreasureRoomScene =
-        GD.Load<PackedScene>("res://Scenes/UI/treasure_room/TreasureRoom.tscn");
+    private static readonly PackedScene BattleScene = SnekUtility.LoadScene(ScenePath.Battle);
+    private static readonly PackedScene BattleRewardScene = SnekUtility.LoadScene(ScenePath.BattleReward);
+    private static readonly PackedScene CampfireScene = SnekUtility.LoadScene(ScenePath.Campfire);
+    private static readonly PackedScene MapScene = SnekUtility.LoadScene(ScenePath.Map);
+    private static readonly PackedScene ShopScene = SnekUtility.LoadScene(ScenePath.Shop);
+    private static readonly PackedScene TreasureRoomScene = SnekUtility.LoadScene(ScenePath.TreasureRoom);
 
     #endregion
 

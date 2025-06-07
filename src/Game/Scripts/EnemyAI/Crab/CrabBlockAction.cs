@@ -20,6 +20,6 @@ public partial class CrabBlockAction : EnemyChanceBasedAction
         var blockEffect = new BlockEffect(Block) { Sound = Sound };
         await blockEffect.ExecuteAllAsync([Enemy]);
 
-        await TaskUtility.DelayGd(0.6f);
+        await SnekUtility.DelayGd(0.6f);
     }
 }

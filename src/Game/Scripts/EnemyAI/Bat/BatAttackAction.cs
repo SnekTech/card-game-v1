@@ -28,9 +28,9 @@ public partial class BatAttackAction : EnemyChanceBasedAction
 
         await Enemy.TweenGlobalPosition(endPosition, 0.4f).SetEasing(Easing.OutQuint).PlayAsync(CancellationToken.None);
         await damageEffect.ExecuteAllAsync([Target]);
-        await TaskUtility.DelayGd(0.35f);
+        await SnekUtility.DelayGd(0.35f);
         await damageEffect.ExecuteAllAsync([Target]);
-        await TaskUtility.DelayGd(0.25f);
+        await SnekUtility.DelayGd(0.25f);
         await Enemy.TweenGlobalPosition(startPosition, 0.4f).SetEasing(Easing.OutQuint)
             .PlayAsync(CancellationToken.None);
     }

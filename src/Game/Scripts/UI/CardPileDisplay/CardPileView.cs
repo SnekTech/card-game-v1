@@ -18,7 +18,7 @@ public partial class CardPileView : Control
     [Node]
     private CardTooltipPopup cardTooltipPopup = null!;
 
-    private static readonly PackedScene CardMenuUIScene = GD.Load<PackedScene>(ScenePath.CardMenuUI);
+    private static readonly PackedScene CardMenuUIScene = SnekUtility.LoadScene(ScenePath.CardMenuUI);
 
     private CardPile? _cardPile;
     
