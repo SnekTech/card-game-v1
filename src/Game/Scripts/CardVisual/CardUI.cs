@@ -14,15 +14,11 @@ public partial class CardUI : Control
 {
     public event Action<CardUI>? ReparentRequested;
 
-    [Node]
-    private Panel panel = null!;
+    [Export]
+    private Card defaultCard = null!;
 
     [Node]
-    private TextureRect icon = null!;
-
-    [Node]
-    private Label cost = null!;
-
+    private CardVisuals cardVisuals = null!;
     [Node]
     private Area2D dropPointDetector = null!;
 
@@ -41,7 +37,7 @@ public partial class CardUI : Control
     private readonly HashSet<Node> _targets = [];
     private Tween? _tween;
     private CharacterStats _characterStats = null!;
-    private Card card = null!;
+    private Card? _card;
 
     public int OriginalIndex { get; set; }
 
@@ -55,14 +51,11 @@ public partial class CardUI : Control
 
     public Card Card
     {
-        get => card;
+        get => _card ?? defaultCard;
         set
         {
-            card = value;
-            if (IsInsideTree())
-            {
-                InitWithCard(value);
-            }
+            _card = value;
+            cardVisuals.Card = _card;
         }
     }
 
@@ -89,13 +82,13 @@ public partial class CardUI : Control
             var fontColorName = new StringName("font_color");
             if (_playable == false)
             {
-                cost.AddThemeColorOverride(fontColorName, Colors.Red);
-                icon.SetModulateAlpha(0.5f);
+                cardVisuals.Cost.AddThemeColorOverride(fontColorName, Colors.Red);
+                cardVisuals.Icon.SetModulateAlpha(0.5f);
             }
             else
             {
-                cost.RemoveThemeColorOverride(fontColorName);
-                icon.SetModulateAlpha(1);
+                cardVisuals.Cost.RemoveThemeColorOverride(fontColorName);
+                cardVisuals.Icon.SetModulateAlpha(1);
             }
         }
     }
@@ -104,6 +97,8 @@ public partial class CardUI : Control
 
     public override void _Ready()
     {
+        Card = defaultCard;
+
         _stateMachine = new CardStateMachine(this);
         _stateMachine.Init<BaseState>();
     }
@@ -144,10 +139,7 @@ public partial class CardUI : Control
             _tween.KillIfValid();
     }
 
-    public void SetPanelStyleBox(StyleBox styleBox)
-    {
-        panel.SetStyleBox(styleBox);
-    }
+    public void SetPanelStyleBox(StyleBox styleBox) => cardVisuals.Panel.SetStyleBox(styleBox);
 
     public async Task PlayAsync()
     {
@@ -169,12 +161,6 @@ public partial class CardUI : Control
         dropPointDetector.AreaExited -= OnDropPointDetectorAreaExited;
 
         CharacterStats.StatsChanged -= OnCharacterStatsChanged;
-    }
-
-    private void InitWithCard(Card cardDefinition)
-    {
-        cost.Text = cardDefinition.Cost.ToString();
-        icon.Texture = cardDefinition.Icon;
     }
 
     private void OnDropPointDetectorMouseEntered()
@@ -202,12 +188,12 @@ public partial class CardUI : Control
     private void OnCardDragOrAimingEnded(CardUI cardUI)
     {
         Disabled = false;
-        Playable = CharacterStats.CanPlayCard(card);
+        Playable = CharacterStats.CanPlayCard(Card);
     }
 
     private void OnCharacterStatsChanged()
     {
-        Playable = CharacterStats.CanPlayCard(card);
+        Playable = CharacterStats.CanPlayCard(Card);
     }
 
     public override void _Notification(int what)

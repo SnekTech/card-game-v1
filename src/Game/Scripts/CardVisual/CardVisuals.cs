@@ -9,7 +9,7 @@ public partial class CardVisuals : Control
 {
     [Export]
     private Card defaultCard = null!;
-    
+
     [Node]
     private Panel panel = null!;
     [Node]
@@ -32,6 +32,8 @@ public partial class CardVisuals : Control
     }
 
     public Panel Panel => panel;
+    public Label Cost => cost;
+    public TextureRect Icon => icon;
 
     public override void _Ready()
     {
