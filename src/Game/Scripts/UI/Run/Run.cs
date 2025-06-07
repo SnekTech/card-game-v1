@@ -2,6 +2,7 @@
 using CardGameV1.CustomResources;
 using CardGameV1.EventBus;
 using CardGameV1.MyExtensions;
+using CardGameV1.UI.CardPileDisplay;
 using Godot;
 using GodotUtilities;
 
@@ -12,9 +13,16 @@ public partial class Run : Node
 {
     [Export]
     private RunStartup runStartup = null!;
-    
+
     [Node]
     private Node currentView = null!;
+    [Node]
+    private CardPileOpener deckButton = null!;
+    [Node]
+    private CardPileView deckView = null!;
+
+    #region debug buttons
+
     [Node]
     private Button mapButton = null!;
     [Node]
@@ -27,6 +35,10 @@ public partial class Run : Node
     private Button battleRewardButton = null!;
     [Node]
     private Button campfireButton = null!;
+
+    #endregion
+
+    // todo: move these to ScenePath constant
 
     #region packed scenes
 
@@ -60,10 +72,22 @@ public partial class Run : Node
         }
     }
 
+    public override void _ExitTree()
+    {
+        UnsubscribeEvents();
+    }
+
     private void StartRun()
     {
         SubscribeEvents();
+        SetupTopBar();
         GD.Print("todo: procedurally generate map");
+    }
+
+    private void SetupTopBar()
+    {
+        deckButton.CardPile = Character.Deck;
+        deckView.CardPile = Character.Deck;
     }
 
     private void ChangeView(PackedScene scene)
@@ -88,6 +112,8 @@ public partial class Run : Node
         events.ShopExited += OnShopExited;
         events.TreasureRoomExited += OnTreasureRoomExited;
 
+        deckButton.Pressed += OnDeckButtonPressed;
+
         #region debug buttons
 
         battleButton.Pressed += OnBattleButtonPressed;
@@ -110,6 +136,8 @@ public partial class Run : Node
         events.ShopExited -= OnShopExited;
         events.TreasureRoomExited -= OnTreasureRoomExited;
 
+        deckButton.Pressed -= OnDeckButtonPressed;
+
         #region debug buttons
 
         battleButton.Pressed -= OnBattleButtonPressed;
@@ -127,6 +155,8 @@ public partial class Run : Node
     private void OnCampfireExited() => ChangeView(MapScene);
     private void OnShopExited() => ChangeView(MapScene);
     private void OnTreasureRoomExited() => ChangeView(MapScene);
+
+    private void OnDeckButtonPressed() => deckView.ShowCurrentView("Deck");
 
     #region debug button handlers
 

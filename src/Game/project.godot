@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="CardGameV1"
-run/main_scene="uid://ddeqm380rgljy"
+run/main_scene="uid://djy2yqlov2ffh"
 config/features=PackedStringArray("4.4", "C#", "Forward Plus")
 config/icon="uid://daap2op86ohp4"
 
