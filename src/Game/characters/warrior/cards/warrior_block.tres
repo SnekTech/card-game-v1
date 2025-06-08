@@ -1,17 +1,7 @@
-[gd_resource type="Resource" script_class="WarriorBlock" load_steps=4 format=3 uid="uid://bxutmrgg5ywiw"]
+[gd_resource type="Resource" script_class="WarriorBlock" load_steps=2 format=3 uid="uid://bxutmrgg5ywiw"]
 
-[ext_resource type="Texture2D" uid="uid://oe7v35ii8vrs" path="res://art/tile_0102.png" id="1_5nea4"]
-[ext_resource type="AudioStream" uid="uid://df64e7qat73gs" path="res://art/block.ogg" id="2_1eir7"]
-[ext_resource type="Script" uid="uid://cvrmkxr0b4ei3" path="res://Scripts/Character/Cards/WarriorBlock.cs" id="2_5nea4"]
+[ext_resource type="Script" uid="uid://cvrmkxr0b4ei3" path="res://Scripts/CustomResources/Cards/Warrior/WarriorBlock.cs" id="1_ti8q0"]
 
 [resource]
-script = ExtResource("2_5nea4")
-Id = "warrior_block"
-Cost = 1
-Type = 1
-Rarity = 0
-Target = 0
-Icon = ExtResource("1_5nea4")
-TooltipText = "[center]Gain [color=\"0044ff\"]5[/color] block.[/center]"
-Sound = ExtResource("2_1eir7")
+script = ExtResource("1_ti8q0")
 metadata/_custom_type_script = "uid://lggtvlpuxsee"

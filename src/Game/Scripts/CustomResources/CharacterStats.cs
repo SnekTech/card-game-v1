@@ -1,4 +1,5 @@
-﻿using Godot;
+﻿using CardGameV1.CustomResources.Cards;
+using Godot;
 
 namespace CardGameV1.CustomResources;
 

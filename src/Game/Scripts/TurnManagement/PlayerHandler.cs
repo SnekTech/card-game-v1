@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using CardGameV1.CardVisual;
 using CardGameV1.CustomResources;
+using CardGameV1.CustomResources.Cards;
 using CardGameV1.EventBus;
 using Godot;
 

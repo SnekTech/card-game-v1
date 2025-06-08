@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
+using CardGameV1.CustomResources.Cards;
 using Godot;
 using Godot.Collections;
 

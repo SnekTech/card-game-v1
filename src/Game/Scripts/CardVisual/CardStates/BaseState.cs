@@ -33,9 +33,7 @@ public class BaseState(CardStateMachine cardStateMachine) : CardState(cardStateM
             return;
 
         CardUI.SetPanelStyleBox(CardUI.HoverStyleBox);
-        var icon = CardUI.Card.Icon;
-        var tooltipText = CardUI.Card.TooltipText;
-        CardEvents.EmitCardTooltipRequested(icon, tooltipText);
+        CardEvents.EmitCardTooltipRequested(CardUI.Card.Icon, CardUI.Card.TooltipText);
     }
 
     public override void OnMouseExited()

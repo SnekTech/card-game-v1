@@ -1,6 +1,6 @@
 ﻿using System;
 using CardGameV1.CardVisual;
-using CardGameV1.CustomResources;
+using CardGameV1.CustomResources.Cards;
 using Godot;
 using GodotUtilities;
 
