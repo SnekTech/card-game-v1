@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="WarriorBigSlam" load_steps=2 format=3 uid="uid://bl0xjerpxg4b4"]
+
+[ext_resource type="Script" uid="uid://b6n143ieniiv3" path="res://Scripts/CustomResources/Cards/Warrior/WarriorBigSlam.cs" id="1_quy02"]
+
+[resource]
+script = ExtResource("1_quy02")
+metadata/_custom_type_script = "uid://b6n143ieniiv3"
