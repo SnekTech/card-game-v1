@@ -18,6 +18,8 @@ public partial class Run : Node
     [Node]
     private Node currentView = null!;
     [Node]
+    private GoldUI goldUI = null!;
+    [Node]
     private CardPileOpener deckButton = null!;
     [Node]
     private CardPileView deckView = null!;
@@ -50,6 +52,7 @@ public partial class Run : Node
 
     #endregion
 
+    private RunStats _runStats = null!;
     private CharacterStats Character { get; set; } = null!;
 
     public override void _Ready()
@@ -76,6 +79,8 @@ public partial class Run : Node
 
     private void StartRun()
     {
+        _runStats = new RunStats();
+        
         SubscribeEvents();
         SetupTopBar();
         GD.Print("todo: procedurally generate map");
@@ -83,6 +88,7 @@ public partial class Run : Node
 
     private void SetupTopBar()
     {
+        goldUI.RunStats = _runStats;
         deckButton.CardPile = Character.Deck;
         deckView.CardPile = Character.Deck;
     }
