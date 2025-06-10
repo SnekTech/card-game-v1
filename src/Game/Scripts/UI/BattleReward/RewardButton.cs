@@ -6,11 +6,6 @@ namespace CardGameV1.UI.BattleReward;
 [Scene]
 public partial class RewardButton : Button
 {
-    [Export]
-    private Texture2D rewardIcon = null!;
-    [Export]
-    private string rewardText = null!;
-    
     [Node]
     private TextureRect customIcon = null!;
     [Node]
@@ -24,12 +19,6 @@ public partial class RewardButton : Button
     public string RewardText
     {
         set => customText.Text = value;
-    }
-
-    public override void _Ready()
-    {
-        RewardIcon = rewardIcon;
-        RewardText = rewardText;
     }
 
     public override void _EnterTree()
