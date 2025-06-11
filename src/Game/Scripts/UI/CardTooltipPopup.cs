@@ -10,6 +10,11 @@ namespace CardGameV1.UI;
 [Scene]
 public partial class CardTooltipPopup : Control
 {
+    [Export]
+    private Color backgroundColor = new("000000b0");
+    
+    [Node]
+    private ColorRect background = null!;
     [Node]
     private CenterContainer tooltipCard = null!;
     [Node]
@@ -21,6 +26,8 @@ public partial class CardTooltipPopup : Control
     public override void _Ready()
     {
         tooltipCard.ClearChildren();
+
+        background.Color = backgroundColor;
     }
 
     public override void _GuiInput(InputEvent inputEvent)
