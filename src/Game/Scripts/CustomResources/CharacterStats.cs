@@ -21,6 +21,9 @@ public partial class CharacterStats : Stats
     public CardPile StartingDeck { get; private set; } = null!;
 
     [Export]
+    private CardPile draftableCards = null!;
+
+    [Export]
     public int CardsPerTurn { get; private set; } = 5;
 
     [Export]
