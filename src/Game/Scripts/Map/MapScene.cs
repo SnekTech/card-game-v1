@@ -2,10 +2,10 @@
 using Godot;
 using GodotUtilities;
 
-namespace CardGameV1.UI.Map;
+namespace CardGameV1.Map;
 
 [Scene]
-public partial class Map : Control
+public partial class MapScene : Control
 {
     [Node]
     private Button backButton = null!;

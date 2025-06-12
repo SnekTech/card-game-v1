@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://dnirq6j1k3v6b" path="res://Scripts/UI/Run/Run.cs" id="1_h4gtr"]
 [ext_resource type="Resource" uid="uid://o3w3lqaycokm" path="res://Scenes/run/run_startup.tres" id="2_3ply4"]
-[ext_resource type="PackedScene" uid="uid://cx3bnsa6yrnty" path="res://Scenes/UI/map/Map.tscn" id="2_7taag"]
+[ext_resource type="PackedScene" uid="uid://cx3bnsa6yrnty" path="res://Scenes/map/Map.tscn" id="2_7taag"]
 [ext_resource type="PackedScene" uid="uid://bwnipcvvpfdqe" path="res://Scenes/UI/card_pile_view/CardPileOpener.tscn" id="4_3ply4"]
 [ext_resource type="PackedScene" uid="uid://dool34j1rcm7l" path="res://Scenes/run/GoldUI.tscn" id="4_c2a4m"]
 [ext_resource type="Texture2D" uid="uid://ck670mrpw434x" path="res://art/deck.png" id="5_kxe06"]
