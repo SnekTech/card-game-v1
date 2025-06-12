@@ -6,6 +6,7 @@ public static class ScenePath
 
     public const string Battle = "res://Scenes/Battle.tscn";
     public const string BattleReward = "res://Scenes/UI/battle_reward/BattleReward.tscn";
+    public const string CardRewards = "res://Scenes/UI/battle_reward/CardRewards.tscn";
     public const string RewardButton = "res://Scenes/UI/battle_reward/RewardButton.tscn";
     public const string Campfire = "res://Scenes/UI/campfire/Campfire.tscn";
     public const string Map = "res://Scenes/UI/map/Map.tscn";

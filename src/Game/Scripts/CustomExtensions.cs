@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Godot;
@@ -81,10 +83,15 @@ public static class CustomExtensions
         }
     }
 
-
     public static void SetStyleBox(this Panel panel, StyleBox styleBox)
     {
         const string panelStylePath = "theme_override_styles/panel";
         panel.Set(panelStylePath, styleBox);
+    }
+
+    public static T PickRandom<T>(this List<T> list)
+    {
+        var randomIndex = GD.RandRange(0, list.Count - 1);
+        return list[randomIndex];
     }
 }

@@ -10,9 +10,9 @@ public partial class RunStats : Resource
 
     private const int StartingGold = 70;
     private const int BaseCardRewards = 3;
-    private const float BaseCommonWeight = 6f;
-    private const float BaseUncommonWeight = 3.7f;
-    private const float BaseRareWeight = 0.3f;
+    public const float BaseCommonWeight = 6f;
+    public const float BaseUncommonWeight = 3.7f;
+    public const float BaseRareWeight = 0.3f;
 
     private int _gold = StartingGold;
 

@@ -97,14 +97,12 @@ public partial class CardRewards : ColorRect
             return;
 
         CardRewardSelected?.Invoke(_selectedCard);
-        GD.Print($"drafted {_selectedCard.Id}");
         QueueFree();
     }
 
     private void OnSkipButtonPressed()
     {
         CardRewardSelected?.Invoke(null);
-        GD.Print("skipped card reward");
         QueueFree();
     }
 
