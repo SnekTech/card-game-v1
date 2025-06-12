@@ -50,7 +50,7 @@ public partial class BattleReward : Control
         backButton.Pressed -= OnBackButtonPressed;
     }
 
-    private void AddGoldReward(int amount)
+    public void AddGoldReward(int amount)
     {
         var goldRewardButton = RewardButtonScene.Instantiate<RewardButton>();
         goldRewardButton.RewardIcon = GoldIcon;
@@ -59,7 +59,7 @@ public partial class BattleReward : Control
         Callable.From(() => rewards.AddChild(goldRewardButton)).CallDeferred();
     }
 
-    private void AddCardReward()
+    public void AddCardReward()
     {
         var cardRewardButton = RewardButtonScene.Instantiate<RewardButton>();
         cardRewardButton.RewardIcon = CardIcon;

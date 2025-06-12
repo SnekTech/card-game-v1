@@ -93,7 +93,7 @@ public partial class Run : Node
         deckView.CardPile = Character.Deck;
     }
 
-    private void ChangeView(PackedScene scene)
+    private Node ChangeView(PackedScene scene)
     {
         if (currentView.HasAnyChild())
         {
@@ -103,6 +103,7 @@ public partial class Run : Node
         GetTree().Paused = false;
         var newView = scene.Instantiate();
         currentView.AddChild(newView);
+        return newView;
     }
 
     private void SubscribeEvents()
@@ -153,7 +154,17 @@ public partial class Run : Node
         #endregion
     }
 
-    private void OnBattleWon() => ChangeView(BattleRewardScene);
+    private void OnBattleWon()
+    {
+        var rewardScene = (BattleReward.BattleReward)ChangeView(BattleRewardScene);
+        rewardScene.RunStats = _runStats;
+        rewardScene.CharacterStats = Character;
+        
+        // todo: remove temporary, rewards will come from real battle encounter data
+        rewardScene.AddGoldReward(77);
+        rewardScene.AddCardReward();
+    }
+
     private void OnBattleRewardExited() => ChangeView(MapScene);
     private void OnCampfireExited() => ChangeView(MapScene);
     private void OnShopExited() => ChangeView(MapScene);
