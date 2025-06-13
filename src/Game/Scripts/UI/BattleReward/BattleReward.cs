@@ -23,7 +23,7 @@ public partial class BattleReward : Control
     private static readonly PackedScene CardRewardsScene = GD.Load<PackedScene>(ScenePath.CardRewards);
     private static readonly Texture2D GoldIcon = GD.Load<Texture2D>("res://art/gold.png");
     private static readonly Texture2D CardIcon = GD.Load<Texture2D>("res://art/rarity.png");
-    private static readonly System.Collections.Generic.Dictionary<CardRarity, float> CardRarityWeights = new()
+    private readonly System.Collections.Generic.Dictionary<CardRarity, float> _cardRarityWeights = new()
     {
         [CardRarity.Common] = 0,
         [CardRarity.Uncommon] = 0,
@@ -82,7 +82,7 @@ public partial class BattleReward : Control
             SetupCardChances();
             var roll = GD.RandRange(0, _cardRewardTotalWeight);
 
-            foreach (var (rarity, weight) in CardRarityWeights)
+            foreach (var (rarity, weight) in _cardRarityWeights)
             {
                 if (weight > roll)
                 {
@@ -102,9 +102,9 @@ public partial class BattleReward : Control
     private void SetupCardChances()
     {
         _cardRewardTotalWeight = RunStats.CommonWeight + RunStats.UncommonWeight + RunStats.RareWeight;
-        CardRarityWeights[CardRarity.Common] = RunStats.CommonWeight;
-        CardRarityWeights[CardRarity.Uncommon] = RunStats.CommonWeight + RunStats.UncommonWeight;
-        CardRarityWeights[CardRarity.Rare] = _cardRewardTotalWeight;
+        _cardRarityWeights[CardRarity.Common] = RunStats.CommonWeight;
+        _cardRarityWeights[CardRarity.Uncommon] = RunStats.CommonWeight + RunStats.UncommonWeight;
+        _cardRarityWeights[CardRarity.Rare] = _cardRewardTotalWeight;
     }
 
     private void ModifyWeights(CardRarity rarityRolled)

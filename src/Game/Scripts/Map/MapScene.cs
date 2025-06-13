@@ -10,6 +10,13 @@ public partial class MapScene : Control
     [Node]
     private Button backButton = null!;
 
+    private readonly MapGenerator _mapGenerator = new();
+
+    public override void _Ready()
+    {
+        _mapGenerator.GenerateMap();
+    }
+
     public override void _EnterTree()
     {
         backButton.Pressed += OnBackButtonPressed;

@@ -13,6 +13,6 @@ public class Room
 
     public override string ToString()
     {
-        return $"{GridPosition} ({Type.ToString()[0]})";
+        return $"{GridPosition.column} ({Type.ToString()[0]})";
     }
 }
