@@ -9,7 +9,9 @@ public class Room
     public (int row, int column) GridPosition { get; set; } = (0, 0);
     public Vector2 Position { get; set; }
     public List<Room> NextRooms { get; } = [];
+    public bool IsOnPath => NextRooms.Count > 0;
     public bool IsSelected { get; set; }
+    
 
     public override string ToString()
     {
