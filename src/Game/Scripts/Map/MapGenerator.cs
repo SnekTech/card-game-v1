@@ -29,6 +29,7 @@ public class MapGenerator
     public List<List<Room>> GenerateMap()
     {
         _mapData = GenerateInitialGrid();
+        var startingPoints = GetRandomStartingPoints();
 
         return [];
     }
@@ -61,5 +62,29 @@ public class MapGenerator
         }
 
         return result;
+    }
+
+    private List<int> GetRandomStartingPoints()
+    {
+        var yCoordinates = new List<int>();
+        var uniquePoints = 0;
+
+        while (uniquePoints < 2)
+        {
+            uniquePoints = 0;
+            yCoordinates.Clear();
+
+            for (var i = 0; i < Paths; i++)
+            {
+                var staringPoint = GD.RandRange(0, MapWidth - 1);
+                if (yCoordinates.Contains(staringPoint) == false)
+                {
+                    uniquePoints++;
+                }
+                yCoordinates.Add(staringPoint);
+            }
+        }
+
+        return yCoordinates;
     }
 }
