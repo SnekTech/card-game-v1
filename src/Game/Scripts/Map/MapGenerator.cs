@@ -31,6 +31,25 @@ public class MapGenerator
         _mapData = GenerateInitialGrid();
         var startingPoints = GetRandomStartingPoints();
 
+        foreach (var j in startingPoints)
+        {
+            var currentJ = j;
+
+            for (var i = 0; i < Floors - 1; i++)
+            {
+                // exclude the boss floor
+                currentJ = SetupConnection(i, currentJ);
+            }
+        }
+
+        for (var i = 0; i < Floors; i++)
+        {
+            GD.Print($"floor {i}:");
+            var floor = _mapData[i];
+            var usedRooms = floor.Where(room => room.NextRooms.Count > 0);
+            GD.Print($"[{string.Join(", ", usedRooms)}]\n");
+        }
+
         return [];
     }
 
@@ -81,10 +100,49 @@ public class MapGenerator
                 {
                     uniquePoints++;
                 }
+
                 yCoordinates.Add(staringPoint);
             }
         }
 
         return yCoordinates;
+    }
+
+    private int SetupConnection(int i, int j)
+    {
+        Room? nextRoom = null;
+        var currentRoom = _mapData[i][j];
+
+        while (nextRoom == null || WouldCrossExistingPath(i, j, nextRoom))
+        {
+            var randomJ = Mathf.Clamp(GD.RandRange(j - 1, j + 1), 0, MapWidth - 1);
+            nextRoom = _mapData[i + 1][randomJ];
+        }
+
+        currentRoom.NextRooms.Add(nextRoom);
+        return nextRoom.GridPosition.column;
+    }
+
+    private bool WouldCrossExistingPath(int i, int j, Room nextRoom)
+    {
+        var (nextI, nextJ) = nextRoom.GridPosition;
+        var currentRoom = _mapData[i][j];
+        var hasCrossed = false;
+
+        // has left neighbor and next room goes left
+        if (j > 0 && nextJ < j)
+        {
+            var leftNeighbor = _mapData[i][j - 1];
+            hasCrossed |= leftNeighbor.NextRooms.Any(room => room.GridPosition.column > nextJ);
+        }
+
+        // has right neighbor and next room goes right
+        if (j < MapWidth - 1 && nextJ > j)
+        {
+            var rightNeighbor = _mapData[i][j + 1];
+            hasCrossed |= rightNeighbor.NextRooms.Any(room => room.GridPosition.column < nextJ);
+        }
+
+        return hasCrossed;
     }
 }
