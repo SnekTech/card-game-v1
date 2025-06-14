@@ -51,19 +51,6 @@ public class MapGenerator
         SetupRandomRoomWeights();
         SetupRoomTypes();
 
-        #region test map generation
-
-        // todo: remove test
-        for (var i = 0; i < Floors; i++)
-        {
-            GD.Print($"floor {i}:");
-            var floor = _mapData[i];
-            var usedRooms = floor.Where(room => room.NextRooms.Count > 0);
-            GD.Print($"[{string.Join(", ", usedRooms)}]");
-        }
-
-        #endregion
-
         return _mapData;
     }
 
