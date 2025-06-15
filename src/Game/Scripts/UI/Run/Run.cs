@@ -2,6 +2,7 @@
 using CardGameV1.Constants;
 using CardGameV1.CustomResources;
 using CardGameV1.EventBus;
+using CardGameV1.Map;
 using CardGameV1.MyExtensions;
 using CardGameV1.UI.CardPileDisplay;
 using Godot;
@@ -183,10 +184,10 @@ public partial class Run : Node
 
     #endregion
 
-    private void OnMapExited()
+    private void OnMapExited(Room room)
     {
         // todo: change view on map exiting
-        GD.Print("exit from map, change view based on room type");
+        GD.Print($"exit from map, room {room}, change view based on room type");
     }
 
     public override void _Notification(int what)

@@ -1,4 +1,5 @@
 ﻿using System;
+using CardGameV1.Map;
 
 namespace CardGameV1.EventBus;
 
@@ -13,9 +14,9 @@ public class Events
 
     #region map
 
-    public event Action? MapExited;
+    public event Action<Room>? MapExited;
 
-    public void EmitMapExited() => MapExited?.Invoke();
+    public void EmitMapExited(Room room) => MapExited?.Invoke(room);
 
     #endregion
 

@@ -6,14 +6,15 @@ namespace CardGameV1.Map;
 
 public class MapGenerator
 {
-    private const int XDistance = 30;
-    private const int YDistance = 25;
+    public const int XDistance = 30;
+    public const int YDistance = 25;
     private const int PlacementRandomness = 5;
-    private const int Floors = 15;
-    private const int MapWidth = 7;
+    public const int Floors = 15;
+    public const int MapWidth = 7;
     private const int Paths = 6;
 
-    private const int BossFloor = Floors - 1;
+    public const int BossFloor = Floors - 1;
+    public const int BossColumn = MapWidth / 2;
     private const int TreasureFloor = Floors / 2;
     private const int FirstFloor = 0;
 
@@ -69,8 +70,7 @@ public class MapGenerator
                     GridPosition = (i, j),
                 };
 
-                var isBossFloor = i == Floors - 1;
-                if (isBossFloor)
+                if (i == BossFloor)
                 {
                     room.Position = room.Position with { Y = (i + 1) * -YDistance };
                 }
@@ -150,8 +150,7 @@ public class MapGenerator
 
     private void SetupBossRoom()
     {
-        var middle = Mathf.FloorToInt(MapWidth * 0.5);
-        var bossRoom = _mapData[Floors - 1][middle];
+        var bossRoom = _mapData[BossFloor][BossColumn];
         ConnectToBoss();
         bossRoom.Type = RoomType.Boss;
         return;
@@ -160,6 +159,9 @@ public class MapGenerator
         {
             foreach (var room in _mapData[BossFloor - 1])
             {
+                if (room.HasNextRooms == false)
+                    continue;
+
                 room.NextRooms.Clear();
                 room.NextRooms.Add(bossRoom);
             }
@@ -179,7 +181,7 @@ public class MapGenerator
     {
         foreach (var room in _mapData[FirstFloor])
         {
-            if (room.IsOnPath)
+            if (room.HasNextRooms)
             {
                 room.Type = RoomType.Monster;
             }
@@ -187,7 +189,7 @@ public class MapGenerator
 
         foreach (var room in _mapData[TreasureFloor])
         {
-            if (room.IsOnPath)
+            if (room.HasNextRooms)
             {
                 room.Type = RoomType.Treasure;
             }
@@ -196,7 +198,7 @@ public class MapGenerator
         // last floor before boss is campfire
         foreach (var room in _mapData[BossFloor - 1])
         {
-            if (room.IsOnPath)
+            if (room.HasNextRooms)
             {
                 room.Type = RoomType.Campfire;
             }
@@ -223,7 +225,7 @@ public class MapGenerator
         var campfireBeforeBossCampfire = true;
 
         var typeCandidate = RoomType.NotAssigned;
-        while (campfireBelow4 && consecutiveCampfire && consecutiveShop && campfireBeforeBossCampfire)
+        while (campfireBelow4 || consecutiveCampfire || consecutiveShop || campfireBeforeBossCampfire)
         {
             typeCandidate = GetRandomRoomTypeByWeight();
 

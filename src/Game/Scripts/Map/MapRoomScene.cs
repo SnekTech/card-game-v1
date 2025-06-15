@@ -53,6 +53,7 @@ public partial class MapRoomScene : Area2D
 
     public Room Room
     {
+        get => _room;
         set
         {
             _room = value;
