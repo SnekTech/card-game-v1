@@ -1,5 +1,4 @@
 ﻿using System;
-using CardGameV1.Constants;
 using CardGameV1.CustomResources;
 using CardGameV1.EventBus;
 using CardGameV1.Map;
@@ -41,16 +40,6 @@ public partial class Run : Node
     private Button battleRewardButton = null!;
     [Node]
     private Button campfireButton = null!;
-
-    #endregion
-
-    #region packed scenes
-
-    private static readonly PackedScene BattleScene = SnekUtility.LoadScene(ScenePath.Battle);
-    private static readonly PackedScene BattleRewardScene = SnekUtility.LoadScene(ScenePath.BattleReward);
-    private static readonly PackedScene CampfireScene = SnekUtility.LoadScene(ScenePath.Campfire);
-    private static readonly PackedScene ShopScene = SnekUtility.LoadScene(ScenePath.Shop);
-    private static readonly PackedScene TreasureRoomScene = SnekUtility.LoadScene(ScenePath.TreasureRoom);
 
     #endregion
 
@@ -96,7 +85,7 @@ public partial class Run : Node
         deckView.CardPile = Character.Deck;
     }
 
-    private Node ChangeView(PackedScene scene)
+    private T ChangeView<T>() where T : Node
     {
         if (currentView.HasAnyChild())
         {
@@ -104,7 +93,7 @@ public partial class Run : Node
         }
 
         GetTree().Paused = false;
-        var newView = scene.Instantiate();
+        var newView = SceneFactory.Instantiate<T>();
         currentView.AddChild(newView);
         map.HideMap();
 
@@ -172,7 +161,7 @@ public partial class Run : Node
 
     private void OnBattleWon()
     {
-        var rewardScene = (BattleReward.BattleReward)ChangeView(BattleRewardScene);
+        var rewardScene = ChangeView<BattleReward.BattleReward>();
         rewardScene.RunStats = _runStats;
         rewardScene.CharacterStats = Character;
 
@@ -190,12 +179,12 @@ public partial class Run : Node
 
     #region debug button handlers
 
-    private void OnBattleButtonPressed() => ChangeView(BattleScene);
-    private void OnCampfireButtonPressed() => ChangeView(CampfireScene);
+    private void OnBattleButtonPressed() => ChangeView<Battle>();
+    private void OnCampfireButtonPressed() => ChangeView<Campfire.Campfire>();
     private void OnMapButtonPressed() => ShowMap();
-    private void OnBattleRewardButtonPressed() => ChangeView(BattleRewardScene);
-    private void OnShopButtonPressed() => ChangeView(ShopScene);
-    private void OnTreasureRoomButtonPressed() => ChangeView(TreasureRoomScene);
+    private void OnBattleRewardButtonPressed() => ChangeView<BattleReward.BattleReward>();
+    private void OnShopButtonPressed() => ChangeView<Shop.Shop>();
+    private void OnTreasureRoomButtonPressed() => ChangeView<TreasureRoom.TreasureRoom>();
 
     #endregion
 
@@ -204,19 +193,19 @@ public partial class Run : Node
         switch (room.Type)
         {
             case RoomType.Monster:
-                ChangeView(BattleScene);
+                ChangeView<Battle>();
                 break;
             case RoomType.Treasure:
-                ChangeView(TreasureRoomScene);
+                ChangeView<TreasureRoom.TreasureRoom>();
                 break;
             case RoomType.Campfire:
-                ChangeView(CampfireScene);
+                ChangeView<Campfire.Campfire>();
                 break;
             case RoomType.Shop:
-                ChangeView(ShopScene);
+                ChangeView<Shop.Shop>();
                 break;
             case RoomType.Boss:
-                ChangeView(BattleScene);
+                ChangeView<Battle>();
                 break;
             case RoomType.NotAssigned:
                 break;

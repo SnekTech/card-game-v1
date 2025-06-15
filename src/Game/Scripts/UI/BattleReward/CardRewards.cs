@@ -23,8 +23,6 @@ public partial class CardRewards : ColorRect
     [Node]
     private CardTooltipPopup cardTooltipPopup = null!;
 
-    private static readonly PackedScene CardMenuUIScene = GD.Load<PackedScene>(ScenePath.CardMenuUI);
-
     private readonly List<Card> _rewards = [];
     private Card? _selectedCard;
 
@@ -39,7 +37,7 @@ public partial class CardRewards : ColorRect
             
             foreach (var card in _rewards)
             {
-                var newCard = CardMenuUIScene.Instantiate<CardMenuUI>();
+                var newCard = SceneFactory.Instantiate<CardMenuUI>();
                 cards.AddChild(newCard);
                 newCard.Card = card;
                 newCard.TooltipRequested += OnCardTooltipRequested;

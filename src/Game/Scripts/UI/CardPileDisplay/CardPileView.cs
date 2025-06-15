@@ -18,8 +18,6 @@ public partial class CardPileView : Control
     [Node]
     private CardTooltipPopup cardTooltipPopup = null!;
 
-    private static readonly PackedScene CardMenuUIScene = SnekUtility.LoadScene(ScenePath.CardMenuUI);
-
     private CardPile? _cardPile;
     
     public CardPile CardPile
@@ -84,7 +82,7 @@ public partial class CardPileView : Control
 
         foreach (var card in allCards)
         {
-            var newCard = CardMenuUIScene.Instantiate<CardMenuUI>();
+            var newCard = SceneFactory.Instantiate<CardMenuUI>();
             cards.AddChild(newCard);
             newCard.Card = card;
             newCard.TooltipRequested += cardTooltipPopup.ShowTooltip;

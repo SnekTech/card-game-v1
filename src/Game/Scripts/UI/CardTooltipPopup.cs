@@ -20,9 +20,6 @@ public partial class CardTooltipPopup : Control
     [Node]
     private RichTextLabel cardDescription = null!;
 
-    private static readonly PackedScene CardMenuUIScene =
-        GD.Load<PackedScene>(ScenePath.CardMenuUI);
-
     public override void _Ready()
     {
         tooltipCard.ClearChildren();
@@ -40,7 +37,7 @@ public partial class CardTooltipPopup : Control
 
     public void ShowTooltip(Card card)
     {
-        var newCard = CardMenuUIScene.Instantiate<CardMenuUI>();
+        var newCard = SceneFactory.Instantiate<CardMenuUI>();
         tooltipCard.AddChild(newCard);
         newCard.Card = card;
         newCard.TooltipRequested += OnCardTooltipRequested;

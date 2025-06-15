@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using CardGameV1.Constants;
 using CardGameV1.CustomResources;
 using CardGameV1.CustomResources.Cards;
 using CardGameV1.EventBus;
@@ -19,8 +18,6 @@ public partial class BattleReward : Control
     [Node]
     private Button backButton = null!;
 
-    private static readonly PackedScene RewardButtonScene = GD.Load<PackedScene>(ScenePath.RewardButton);
-    private static readonly PackedScene CardRewardsScene = GD.Load<PackedScene>(ScenePath.CardRewards);
     private static readonly Texture2D GoldIcon = GD.Load<Texture2D>("res://art/gold.png");
     private static readonly Texture2D CardIcon = GD.Load<Texture2D>("res://art/rarity.png");
     private readonly System.Collections.Generic.Dictionary<CardRarity, float> _cardRarityWeights = new()
@@ -52,7 +49,7 @@ public partial class BattleReward : Control
 
     public void AddGoldReward(int amount)
     {
-        var goldRewardButton = RewardButtonScene.Instantiate<RewardButton>();
+        var goldRewardButton = SceneFactory.Instantiate<RewardButton>();
         goldRewardButton.RewardIcon = GoldIcon;
         goldRewardButton.RewardText = $"{amount} gold";
         goldRewardButton.Pressed += () => RunStats.Gold += amount;
@@ -61,7 +58,7 @@ public partial class BattleReward : Control
 
     public void AddCardReward()
     {
-        var cardRewardButton = RewardButtonScene.Instantiate<RewardButton>();
+        var cardRewardButton = SceneFactory.Instantiate<RewardButton>();
         cardRewardButton.RewardIcon = CardIcon;
         cardRewardButton.RewardText = "Add New Card";
         cardRewardButton.Pressed += ShowCardRewards;
@@ -70,7 +67,7 @@ public partial class BattleReward : Control
 
     private void ShowCardRewards()
     {
-        var cardRewards = CardRewardsScene.Instantiate<CardRewards>();
+        var cardRewards = SceneFactory.Instantiate<CardRewards>();
         AddChild(cardRewards);
         cardRewards.CardRewardSelected += OnCardRewardSelected;
 
