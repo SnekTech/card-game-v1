@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using CardGameV1.Map;
 using Godot;
 
 namespace CardGameV1.Constants;
@@ -15,22 +14,16 @@ public static class ScenePath
     public const string RewardButton = "res://Scenes/UI/battle_reward/RewardButton.tscn";
     public const string Campfire = "res://Scenes/UI/campfire/Campfire.tscn";
 
-    public const string Map = "res://Scenes/map/Map.tscn";
-
     public const string Shop = "res://Scenes/UI/shop/Shop.tscn";
     public const string TreasureRoom = "res://Scenes/UI/treasure_room/TreasureRoom.tscn";
 }
 
 public static class SceneFactory
 {
-    private static readonly Dictionary<Type, string> Paths = new()
-    {
-        [typeof(MapRoomScene)] = "res://Scenes/map/MapRoom.tscn",
-        [typeof(MapLine)] = "res://Scenes/map/MapLine.tscn",
-    };
+    private static readonly Dictionary<Type, string> Paths = [];
 
-    public static T Instantiate<T>() where T : Node
-    {
-        return ResourceLoader.Load<PackedScene>(Paths[typeof(T)]).Instantiate<T>();
-    }
+    public static void Register<T>(string path) => Paths[typeof(T)] = path;
+
+    public static T Instantiate<T>() where T : Node =>
+        ResourceLoader.Load<PackedScene>(Paths[typeof(T)]).Instantiate<T>();
 }
