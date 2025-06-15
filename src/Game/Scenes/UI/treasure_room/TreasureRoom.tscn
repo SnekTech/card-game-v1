@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://dlidkvejwnkju"]
 
-[ext_resource type="Script" uid="uid://cdhgh8rtlsq1j" path="res://Scripts/UI/TreasureRoom/TreasureRoom.cs" id="1_4ugcn"]
+[ext_resource type="Script" uid="uid://cdhgh8rtlsq1j" path="res://Scripts/UI/TreasureRoom/TreasureRoomScene.cs" id="1_4ugcn"]
 
 [node name="TreasureRoom" type="Control"]
 layout_mode = 3

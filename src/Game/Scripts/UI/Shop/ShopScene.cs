@@ -5,7 +5,7 @@ using GodotUtilities;
 namespace CardGameV1.UI.Shop;
 
 [Scene]
-public partial class Shop : Control
+public partial class ShopScene : Control
 {
     [Node]
     private Button backButton = null!;

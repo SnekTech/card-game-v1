@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://5tpnwq0wbbwe"]
 
-[ext_resource type="Script" uid="uid://dnirq6j1k3v6b" path="res://Scripts/UI/Run/Run.cs" id="1_h4gtr"]
+[ext_resource type="Script" uid="uid://dnirq6j1k3v6b" path="res://Scripts/UI/Run/RunScene.cs" id="1_c2a4m"]
 [ext_resource type="Resource" uid="uid://o3w3lqaycokm" path="res://Scenes/run/run_startup.tres" id="2_3ply4"]
 [ext_resource type="PackedScene" uid="uid://cx3bnsa6yrnty" path="res://Scenes/map/Map.tscn" id="2_7taag"]
 [ext_resource type="PackedScene" uid="uid://bwnipcvvpfdqe" path="res://Scenes/UI/card_pile_view/CardPileOpener.tscn" id="4_3ply4"]
@@ -9,7 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://b8mfae4j2xgiw" path="res://Scenes/UI/card_pile_view/CardPileView.tscn" id="6_lux3d"]
 
 [node name="Run" type="Node"]
-script = ExtResource("1_h4gtr")
+script = ExtResource("1_c2a4m")
 runStartup = ExtResource("2_3ply4")
 
 [node name="Map" parent="." instance=ExtResource("2_7taag")]

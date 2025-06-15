@@ -11,7 +11,7 @@ using GodotUtilities;
 namespace CardGameV1.UI.BattleReward;
 
 [Scene]
-public partial class BattleReward : Control
+public partial class BattleRewardScene : Control
 {
     [Node]
     private VBoxContainer rewards = null!;

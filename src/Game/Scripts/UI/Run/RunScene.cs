@@ -3,14 +3,18 @@ using CardGameV1.CustomResources;
 using CardGameV1.EventBus;
 using CardGameV1.Map;
 using CardGameV1.MyExtensions;
+using CardGameV1.UI.BattleReward;
+using CardGameV1.UI.Campfire;
 using CardGameV1.UI.CardPileDisplay;
+using CardGameV1.UI.Shop;
+using CardGameV1.UI.TreasureRoom;
 using Godot;
 using GodotUtilities;
 
 namespace CardGameV1.UI.Run;
 
 [Scene]
-public partial class Run : Node
+public partial class RunScene : Node
 {
     [Export]
     private RunStartup runStartup = null!;
@@ -161,7 +165,7 @@ public partial class Run : Node
 
     private void OnBattleWon()
     {
-        var rewardScene = ChangeView<BattleReward.BattleReward>();
+        var rewardScene = ChangeView<BattleRewardScene>();
         rewardScene.RunStats = _runStats;
         rewardScene.CharacterStats = Character;
 
@@ -180,11 +184,11 @@ public partial class Run : Node
     #region debug button handlers
 
     private void OnBattleButtonPressed() => ChangeView<Battle>();
-    private void OnCampfireButtonPressed() => ChangeView<Campfire.Campfire>();
+    private void OnCampfireButtonPressed() => ChangeView<CampfireScene>();
     private void OnMapButtonPressed() => ShowMap();
-    private void OnBattleRewardButtonPressed() => ChangeView<BattleReward.BattleReward>();
-    private void OnShopButtonPressed() => ChangeView<Shop.Shop>();
-    private void OnTreasureRoomButtonPressed() => ChangeView<TreasureRoom.TreasureRoom>();
+    private void OnBattleRewardButtonPressed() => ChangeView<BattleRewardScene>();
+    private void OnShopButtonPressed() => ChangeView<ShopScene>();
+    private void OnTreasureRoomButtonPressed() => ChangeView<TreasureRoomScene>();
 
     #endregion
 
@@ -196,13 +200,13 @@ public partial class Run : Node
                 ChangeView<Battle>();
                 break;
             case RoomType.Treasure:
-                ChangeView<TreasureRoom.TreasureRoom>();
+                ChangeView<TreasureRoomScene>();
                 break;
             case RoomType.Campfire:
-                ChangeView<Campfire.Campfire>();
+                ChangeView<CampfireScene>();
                 break;
             case RoomType.Shop:
-                ChangeView<Shop.Shop>();
+                ChangeView<ShopScene>();
                 break;
             case RoomType.Boss:
                 ChangeView<Battle>();

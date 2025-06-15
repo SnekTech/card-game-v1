@@ -2,10 +2,10 @@
 using Godot;
 using GodotUtilities;
 
-namespace CardGameV1.UI.TreasureRoom;
+namespace CardGameV1.UI.Campfire;
 
 [Scene]
-public partial class TreasureRoom : Control
+public partial class CampfireScene : Control
 {
     [Node]
     private Button backButton = null!;
@@ -20,7 +20,7 @@ public partial class TreasureRoom : Control
         backButton.Pressed -= OnBackButtonPressed;
     }
 
-    private void OnBackButtonPressed() => EventBusOwner.Events.EmitTreasureRoomExited();
+    private void OnBackButtonPressed() => EventBusOwner.Events.EmitCampfireExited();
 
     public override void _Notification(int what)
     {

@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://bd647tehqj7a"]
 
-[ext_resource type="Script" uid="uid://bj3deuw3s5s0o" path="res://Scripts/UI/BattleReward/BattleReward.cs" id="1_k4og5"]
+[ext_resource type="Script" uid="uid://bj3deuw3s5s0o" path="res://Scripts/UI/BattleReward/BattleRewardScene.cs" id="1_8octo"]
 [ext_resource type="Texture2D" uid="uid://cp4iq5fd6j8be" path="res://art/background.png" id="2_7pc0u"]
 [ext_resource type="PackedScene" uid="uid://dosvm6681w3an" path="res://Scenes/UI/battle_reward/RewardButton.tscn" id="3_8octo"]
 
@@ -18,7 +18,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-script = ExtResource("1_k4og5")
+script = ExtResource("1_8octo")
 
 [node name="Background" type="TextureRect" parent="."]
 layout_mode = 1
