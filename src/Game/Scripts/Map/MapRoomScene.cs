@@ -81,9 +81,9 @@ public partial class MapRoomScene : Area2D
 
     private void OnSelectAnimationFinished(StringName animationName)
     {
-        Selected?.Invoke(_room);
         if (animationName == SelectAnimation)
         {
+            Selected?.Invoke(_room);
         }
     }
 

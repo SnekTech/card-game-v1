@@ -17,6 +17,8 @@ public partial class Run : Node
     private RunStartup runStartup = null!;
 
     [Node]
+    private MapScene map = null!;
+    [Node]
     private Node currentView = null!;
     [Node]
     private GoldUI goldUI = null!;
@@ -47,7 +49,6 @@ public partial class Run : Node
     private static readonly PackedScene BattleScene = SnekUtility.LoadScene(ScenePath.Battle);
     private static readonly PackedScene BattleRewardScene = SnekUtility.LoadScene(ScenePath.BattleReward);
     private static readonly PackedScene CampfireScene = SnekUtility.LoadScene(ScenePath.Campfire);
-    private static readonly PackedScene MapScene = SnekUtility.LoadScene(ScenePath.Map);
     private static readonly PackedScene ShopScene = SnekUtility.LoadScene(ScenePath.Shop);
     private static readonly PackedScene TreasureRoomScene = SnekUtility.LoadScene(ScenePath.TreasureRoom);
 
@@ -81,10 +82,11 @@ public partial class Run : Node
     private void StartRun()
     {
         _runStats = new RunStats();
-        
+
         SubscribeEvents();
         SetupTopBar();
-        GD.Print("todo: procedurally generate map");
+        map.GenerateNewMap();
+        map.UnlockFloor(0);
     }
 
     private void SetupTopBar()
@@ -104,7 +106,20 @@ public partial class Run : Node
         GetTree().Paused = false;
         var newView = scene.Instantiate();
         currentView.AddChild(newView);
+        map.HideMap();
+
         return newView;
+    }
+
+    private void ShowMap()
+    {
+        if (currentView.HasAnyChild())
+        {
+            currentView.GetChild(0).QueueFree();
+        }
+
+        map.ShowMap();
+        map.UnlockNextRooms();
     }
 
     private void SubscribeEvents()
@@ -160,16 +175,16 @@ public partial class Run : Node
         var rewardScene = (BattleReward.BattleReward)ChangeView(BattleRewardScene);
         rewardScene.RunStats = _runStats;
         rewardScene.CharacterStats = Character;
-        
+
         // todo: remove temporary, rewards will come from real battle encounter data
         rewardScene.AddGoldReward(77);
         rewardScene.AddCardReward();
     }
 
-    private void OnBattleRewardExited() => ChangeView(MapScene);
-    private void OnCampfireExited() => ChangeView(MapScene);
-    private void OnShopExited() => ChangeView(MapScene);
-    private void OnTreasureRoomExited() => ChangeView(MapScene);
+    private void OnBattleRewardExited() => ShowMap();
+    private void OnCampfireExited() => ShowMap();
+    private void OnShopExited() => ShowMap();
+    private void OnTreasureRoomExited() => ShowMap();
 
     private void OnDeckButtonPressed() => deckView.ShowCurrentView("Deck");
 
@@ -177,7 +192,7 @@ public partial class Run : Node
 
     private void OnBattleButtonPressed() => ChangeView(BattleScene);
     private void OnCampfireButtonPressed() => ChangeView(CampfireScene);
-    private void OnMapButtonPressed() => ChangeView(MapScene);
+    private void OnMapButtonPressed() => ShowMap();
     private void OnBattleRewardButtonPressed() => ChangeView(BattleRewardScene);
     private void OnShopButtonPressed() => ChangeView(ShopScene);
     private void OnTreasureRoomButtonPressed() => ChangeView(TreasureRoomScene);
@@ -186,8 +201,28 @@ public partial class Run : Node
 
     private void OnMapExited(Room room)
     {
-        // todo: change view on map exiting
-        GD.Print($"exit from map, room {room}, change view based on room type");
+        switch (room.Type)
+        {
+            case RoomType.Monster:
+                ChangeView(BattleScene);
+                break;
+            case RoomType.Treasure:
+                ChangeView(TreasureRoomScene);
+                break;
+            case RoomType.Campfire:
+                ChangeView(CampfireScene);
+                break;
+            case RoomType.Shop:
+                ChangeView(ShopScene);
+                break;
+            case RoomType.Boss:
+                ChangeView(BattleScene);
+                break;
+            case RoomType.NotAssigned:
+                break;
+            default:
+                throw new ArgumentOutOfRangeException(nameof(room), "room type out of range");
+        }
     }
 
     public override void _Notification(int what)

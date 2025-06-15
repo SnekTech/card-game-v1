@@ -32,6 +32,14 @@ public partial class MapScene : Node2D
         _cameraEdgeY = MapGenerator.YDistance * (MapGenerator.Floors - 1);
     }
 
+    public override void _ExitTree()
+    {
+        foreach (var mapRoom in rooms.GetChildrenOfType<MapRoomScene>())
+        {
+            mapRoom.Selected -= OnMapRoomSelected;
+        }
+    }
+
     public override void _Input(InputEvent @event)
     {
         if (@event.IsActionPressed(InputActions.ScrollUp))
@@ -54,7 +62,7 @@ public partial class MapScene : Node2D
         }
     }
 
-    private void GenerateNewMap()
+    public void GenerateNewMap()
     {
         _floorsClimbed = 0;
         _mapData = _mapGenerator.GenerateMap();
@@ -123,7 +131,7 @@ public partial class MapScene : Node2D
         EventBusOwner.Events.EmitMapExited(room);
     }
 
-    private void UnlockFloor(int floor)
+    public void UnlockFloor(int floor)
     {
         foreach (var mapRoom in rooms.GetChildrenOfType<MapRoomScene>())
         {
