@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://dcjpkniwxaq0p" path="res://Scripts/Battle.cs" id="1_8teo4"]
 [ext_resource type="Texture2D" uid="uid://cp4iq5fd6j8be" path="res://art/background.png" id="2_2h7oj"]
 [ext_resource type="AudioStream" uid="uid://dpdenqqbovwfq" path="res://art/8_bit_iced_village_lofi.mp3" id="2_262jj"]
-[ext_resource type="PackedScene" uid="uid://c17kqw1akj78t" path="res://Scenes/Enemy/crab/CrabEnemy.tscn" id="3_6yjxy"]
+[ext_resource type="PackedScene" uid="uid://c17kqw1akj78t" path="res://Scenes/Enemy/Enemy.tscn" id="3_6yjxy"]
 [ext_resource type="Script" uid="uid://0faq3w7tlvw2" path="res://Scripts/TurnManagement/EnemyHandler.cs" id="4_6yjxy"]
 [ext_resource type="PackedScene" uid="uid://dhri3662tt0n7" path="res://Scenes/Player/Player.tscn" id="4_qxnh6"]
 [ext_resource type="PackedScene" uid="uid://b1af48bdyphyk" path="res://Scenes/CardTargetSelector/CardTargetSelector.tscn" id="4_u22qb"]
