@@ -43,6 +43,9 @@ public partial class MapScene : Node2D
 
     public override void _Input(InputEvent @event)
     {
+        if (!Visible)
+            return;
+
         if (@event.IsActionPressed(InputActions.ScrollUp))
         {
             ScrollCameraY(-ScrollSpeed);
