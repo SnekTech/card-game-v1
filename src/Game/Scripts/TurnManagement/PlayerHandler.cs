@@ -4,6 +4,7 @@ using CardGameV1.CustomResources;
 using CardGameV1.CustomResources.Cards;
 using CardGameV1.EventBus;
 using Godot;
+using GodotUtilities;
 
 namespace CardGameV1.TurnManagement;
 
@@ -66,16 +67,13 @@ public partial class PlayerHandler : Node
 
     private async Task DiscardCardsAsync()
     {
-        foreach (var child in hand.GetChildren())
+        foreach (var cardUI in hand.GetChildrenOfType<CardUI>())
         {
-            if (child is CardUI cardUI)
-            {
-                _characterStats.DiscardPile.AddCard(cardUI.Card);
-                hand.DiscardCard(cardUI);
-                await this.DelayGd(HandDiscardInterval);
-            }
+            _characterStats.DiscardPile.AddCard(cardUI.Card);
+            hand.DiscardCard(cardUI);
+            await this.DelayGd(HandDiscardInterval);
         }
-        
+
         PlayerEvents.EmitPlayerHandDiscarded();
     }
 
@@ -88,7 +86,7 @@ public partial class PlayerHandler : Node
         {
             _characterStats.DrawPile.AddCard(_characterStats.DiscardPile.DrawCard());
         }
-        
+
         _characterStats.DrawPile.Shuffle();
     }
 
