@@ -163,6 +163,14 @@ public partial class RunScene : Node
         #endregion
     }
 
+    private void OnBattleRoomEntered(Room room)
+    {
+        var battleScene = ChangeView<Battle>();
+        battleScene.CharacterStats = Character;
+        battleScene.BattleStats = BattleStatsPool.TestBattle; // todo: replace test BattleStats
+        battleScene.StartBattle();
+    }
+
     private void OnBattleWon()
     {
         var rewardScene = ChangeView<BattleRewardScene>();
@@ -197,7 +205,7 @@ public partial class RunScene : Node
         switch (room.Type)
         {
             case RoomType.Monster:
-                ChangeView<Battle>();
+                OnBattleRoomEntered(room);
                 break;
             case RoomType.Treasure:
                 ChangeView<TreasureRoomScene>();
@@ -209,7 +217,7 @@ public partial class RunScene : Node
                 ChangeView<ShopScene>();
                 break;
             case RoomType.Boss:
-                ChangeView<Battle>();
+                OnBattleRoomEntered(room);
                 break;
             case RoomType.NotAssigned:
                 break;

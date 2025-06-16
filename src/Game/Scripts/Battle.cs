@@ -30,20 +30,9 @@ public partial class Battle : Node2D
     private static readonly EnemyEvents EnemyEvents = EventBusOwner.EnemyEvents;
     private static readonly BattleEvents BattleEvents = EventBusOwner.BattleEvents;
 
-    public override void _Ready()
-    {
-        /*
-         * normally we do this on every Run, to keep our
-         * health, gold and deck between battles
-         */
-        var newStats = characterStats.CreateInstance();
-        battleUI.CharacterStats = newStats;
-        player.CharacterStats = newStats;
+    public BattleStats BattleStats { get; set; } = null!;
 
-
-        StartBattle(newStats);
-        battleUI.InitCardPileUI();
-    }
+    public CharacterStats CharacterStats { get; set; } = null!;
 
     public override void _EnterTree()
     {
@@ -65,12 +54,19 @@ public partial class Battle : Node2D
         PlayerEvents.PlayerHandDiscarded -= enemyHandler.StartTurn;
     }
 
-    private void StartBattle(CharacterStats stats)
+    public void StartBattle()
     {
         GetTree().Paused = false;
         SoundManager.MusicPlayer.Play(music, true);
+
+        CharacterStats = characterStats.CreateInstance();
+        battleUI.CharacterStats = CharacterStats;
+        player.CharacterStats = CharacterStats;
+        enemyHandler.SetupEnemies(BattleStats);
+
         enemyHandler.ResetEnemyActions();
-        playerHandler.StartBattle(stats);
+        playerHandler.StartBattle(CharacterStats);
+        battleUI.InitCardPileUI();
     }
 
     private void OnEnemiesChildOrderChanged()
