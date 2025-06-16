@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using CardGameV1.CustomResources;
 using Godot;
 
 namespace CardGameV1.Map;
@@ -31,6 +32,7 @@ public class MapGenerator
 
     private float _randomRoomTotalWeight;
     private List<List<Room>> _mapData = [];
+    private readonly BattleStatsPool _battleStatsPool = BattleStatsPool.DefaultPool;
 
     public List<List<Room>> GenerateMap()
     {
@@ -47,6 +49,8 @@ public class MapGenerator
                 currentJ = SetupConnection(i, currentJ);
             }
         }
+        
+        _battleStatsPool.Setup();
 
         SetupBossRoom();
         SetupRandomRoomWeights();
@@ -153,6 +157,7 @@ public class MapGenerator
         var bossRoom = _mapData[BossFloor][BossColumn];
         ConnectToBoss();
         bossRoom.Type = RoomType.Boss;
+        bossRoom.BattleStats = _battleStatsPool.GetRandomBattleForTier(2);
         return;
 
         void ConnectToBoss()
@@ -179,29 +184,22 @@ public class MapGenerator
 
     private void SetupRoomTypes()
     {
-        foreach (var room in _mapData[FirstFloor])
+        // first floor is always a battle
+        foreach (var room in _mapData[FirstFloor].Where(room => room.HasNextRooms))
         {
-            if (room.HasNextRooms)
-            {
-                room.Type = RoomType.Monster;
-            }
+            room.Type = RoomType.Monster;
+            room.BattleStats = _battleStatsPool.GetRandomBattleForTier(0);
         }
 
-        foreach (var room in _mapData[TreasureFloor])
+        foreach (var room in _mapData[TreasureFloor].Where(room => room.HasNextRooms))
         {
-            if (room.HasNextRooms)
-            {
-                room.Type = RoomType.Treasure;
-            }
+            room.Type = RoomType.Treasure;
         }
 
         // last floor before boss is campfire
-        foreach (var room in _mapData[BossFloor - 1])
+        foreach (var room in _mapData[BossFloor - 1].Where(room => room.HasNextRooms))
         {
-            if (room.HasNextRooms)
-            {
-                room.Type = RoomType.Campfire;
-            }
+            room.Type = RoomType.Campfire;
         }
 
         foreach (var floor in _mapData)
@@ -241,6 +239,10 @@ public class MapGenerator
         }
 
         room.Type = typeCandidate;
+        if (typeCandidate == RoomType.Monster)
+        {
+            room.BattleStats = _battleStatsPool.GetRandomBattleForTier(room.BattleTier);
+        }
 
         return;
 

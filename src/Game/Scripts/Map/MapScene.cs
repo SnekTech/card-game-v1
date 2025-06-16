@@ -24,8 +24,9 @@ public partial class MapScene : Node2D
 
     private List<List<Room>> _mapData = [];
     private int _floorsClimbed;
-    private Room? _lastRoom;
     private float _cameraEdgeY;
+
+    public Room? LastRoom { get; private set; }
 
     public override void _Ready()
     {
@@ -126,7 +127,7 @@ public partial class MapScene : Node2D
             }
         }
 
-        _lastRoom = room;
+        LastRoom = room;
         _floorsClimbed++;
         EventBusOwner.Events.EmitMapExited(room);
     }
@@ -144,12 +145,12 @@ public partial class MapScene : Node2D
 
     public void UnlockNextRooms()
     {
-        if (_lastRoom == null)
+        if (LastRoom == null)
             return;
 
         foreach (var mapRoom in rooms.GetChildrenOfType<MapRoomScene>())
         {
-            if (_lastRoom.NextRooms.Contains(mapRoom.Room))
+            if (LastRoom.NextRooms.Contains(mapRoom.Room))
             {
                 mapRoom.Available = true;
             }

@@ -167,7 +167,7 @@ public partial class RunScene : Node
     {
         var battleScene = ChangeView<Battle>();
         battleScene.CharacterStats = Character;
-        battleScene.BattleStats = BattleStatsPool.TestBattle; // todo: replace test BattleStats
+        battleScene.BattleStats = room.BattleStats!;
         battleScene.StartBattle();
     }
 
@@ -177,8 +177,7 @@ public partial class RunScene : Node
         rewardScene.RunStats = _runStats;
         rewardScene.CharacterStats = Character;
 
-        // todo: remove temporary, rewards will come from real battle encounter data
-        rewardScene.AddGoldReward(77);
+        rewardScene.AddGoldReward(map.LastRoom!.BattleStats!.GoldRewardRoll);
         rewardScene.AddCardReward();
     }
 
