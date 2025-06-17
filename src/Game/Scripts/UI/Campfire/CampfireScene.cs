@@ -13,7 +13,7 @@ public partial class CampfireScene : Control
     [Node]
     private AnimationPlayer animationPlayer = null!;
 
-    private readonly CharacterStats _characterStats = GD.Load<CharacterStats>("res://characters/warrior/warrior.tres");
+    public CharacterStats CharacterStats { get; set; } = null!;
 
     public override void _EnterTree()
     {
@@ -27,7 +27,8 @@ public partial class CampfireScene : Control
 
     private void OnRestButtonPressed()
     {
-        _characterStats.Heal(Mathf.CeilToInt(_characterStats.MaxHealth));
+        restButton.Disabled = true;
+        CharacterStats.Heal(Mathf.CeilToInt(CharacterStats.MaxHealth));
         animationPlayer.Play("fade_out");
     }
 

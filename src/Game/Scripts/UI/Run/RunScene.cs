@@ -171,6 +171,12 @@ public partial class RunScene : Node
         battleScene.StartBattle();
     }
 
+    private void OnCampfireEntered()
+    {
+        var campfire = ChangeView<CampfireScene>();
+        campfire.CharacterStats = Character;
+    }
+
     private void OnBattleWon()
     {
         var rewardScene = ChangeView<BattleRewardScene>();
@@ -210,7 +216,7 @@ public partial class RunScene : Node
                 ChangeView<TreasureRoomScene>();
                 break;
             case RoomType.Campfire:
-                ChangeView<CampfireScene>();
+                OnCampfireEntered();
                 break;
             case RoomType.Shop:
                 ChangeView<ShopScene>();
