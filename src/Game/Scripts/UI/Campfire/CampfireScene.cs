@@ -28,7 +28,7 @@ public partial class CampfireScene : Control
     private void OnRestButtonPressed()
     {
         restButton.Disabled = true;
-        CharacterStats.Heal(Mathf.CeilToInt(CharacterStats.MaxHealth));
+        CharacterStats.Heal(Mathf.CeilToInt(CharacterStats.MaxHealth * 0.3));
         animationPlayer.Play("fade_out");
     }
 
