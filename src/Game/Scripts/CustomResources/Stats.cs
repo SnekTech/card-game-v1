@@ -26,6 +26,8 @@ public partial class Stats : Resource
         }
     }
 
+    public int MaxHealth => maxHealth;
+
     public int Block
     {
         get => _block;

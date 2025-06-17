@@ -1,6 +1,53 @@
-[gd_scene load_steps=2 format=3 uid="uid://k7xoex3c2q1t"]
+[gd_scene load_steps=11 format=3 uid="uid://k7xoex3c2q1t"]
 
 [ext_resource type="Script" uid="uid://dr42gvljaqty" path="res://Scripts/UI/Campfire/CampfireScene.cs" id="1_glgif"]
+[ext_resource type="Texture2D" uid="uid://bslm0xf3xr5lq" path="res://art/line.png" id="2_kch7y"]
+
+[sub_resource type="Gradient" id="Gradient_glgif"]
+offsets = PackedFloat32Array(0.168239, 1)
+colors = PackedColorArray(0, 0, 0, 1, 0.258824, 0.145098, 0.133333, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_kch7y"]
+gradient = SubResource("Gradient_glgif")
+fill_from = Vector2(0.5, 0)
+fill_to = Vector2(0.5, 1)
+metadata/_snap_enabled = true
+metadata/_snap_count = 8
+
+[sub_resource type="Gradient" id="Gradient_kch7y"]
+offsets = PackedFloat32Array(0, 0.221053, 0.485965, 0.82807, 1)
+colors = PackedColorArray(0.984314, 1, 0, 1, 1, 0.619608, 0.258824, 1, 0.898039, 0.231373, 0, 1, 0.396078, 0.0823529, 0, 1, 0.396078, 0.0823529, 0, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_qk31i"]
+gradient = SubResource("Gradient_kch7y")
+
+[sub_resource type="Curve" id="Curve_qk31i"]
+_data = [Vector2(0, 0.358687), 0.0, 0.0, 0, 0, Vector2(0.203333, 1), 0.0, 0.0, 0, 0, Vector2(0.856667, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.647406), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_u7d1r"]
+curve = SubResource("Curve_qk31i")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_a1n3e"]
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 25.0
+angle_min = 60.0
+angle_max = 120.0
+direction = Vector3(0, -1, 0)
+spread = 10.0
+initial_velocity_min = 50.0
+initial_velocity_max = 50.0
+gravity = Vector3(0, 0, 0)
+linear_accel_min = 15.0
+linear_accel_max = 25.0
+damping_min = 20.12
+damping_max = 52.102
+scale_curve = SubResource("CurveTexture_u7d1r")
+color_ramp = SubResource("GradientTexture1D_qk31i")
+
+[sub_resource type="LabelSettings" id="LabelSettings_glgif"]
+font_size = 12
 
 [node name="Campfire" type="Control"]
 layout_mode = 3
@@ -12,37 +59,58 @@ grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("1_glgif")
 
-[node name="ColorRect" type="ColorRect" parent="."]
-layout_mode = 1
+[node name="BackgroundLayer" type="CanvasLayer" parent="."]
+layer = 0
+
+[node name="Background" type="TextureRect" parent="BackgroundLayer"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 2
-color = Color(0, 0, 0, 0.290196)
+texture = SubResource("GradientTexture2D_kch7y")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
-layout_mode = 1
+[node name="ParticlesLayer" type="CanvasLayer" parent="."]
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="ParticlesLayer"]
+position = Vector2(81, 100)
+amount = 128
+texture = ExtResource("2_kch7y")
+lifetime = 1.5
+process_material = SubResource("ParticleProcessMaterial_a1n3e")
+
+[node name="UILayer" type="CanvasLayer" parent="."]
+
+[node name="UI" type="VBoxContainer" parent="UILayer"]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -20.0
-offset_right = 20.0
-offset_bottom = 20.0
+offset_left = 18.0
+offset_top = -22.0
+offset_right = 82.0
+offset_bottom = 22.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Label" type="Label" parent="VBoxContainer"]
+[node name="Title" type="Label" parent="UILayer/UI"]
 layout_mode = 2
 text = "Campfire"
+label_settings = SubResource("LabelSettings_glgif")
 horizontal_alignment = 1
 
-[node name="BackButton" type="Button" parent="VBoxContainer"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 14)
+[node name="Spacer" type="Control" parent="UILayer/UI"]
 layout_mode = 2
-text = "Go Back"
+
+[node name="RestButton" type="Button" parent="UILayer/UI"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(40, 14)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Rest"
+
+[node name="Description" type="Label" parent="UILayer/UI"]
+layout_mode = 2
+text = "+30% HP"
+horizontal_alignment = 1
