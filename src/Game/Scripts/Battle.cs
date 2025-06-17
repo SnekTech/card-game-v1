@@ -59,7 +59,6 @@ public partial class Battle : Node2D
         GetTree().Paused = false;
         SoundManager.MusicPlayer.Play(music, true);
 
-        CharacterStats = characterStats.CreateInstance();
         battleUI.CharacterStats = CharacterStats;
         player.CharacterStats = CharacterStats;
         enemyHandler.SetupEnemies(BattleStats);
