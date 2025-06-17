@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using CardGameV1.CustomResources;
+﻿using CardGameV1.CustomResources;
 using CardGameV1.EventBus;
 using Godot;
 using GodotUtilities;
@@ -11,6 +10,8 @@ public partial class CampfireScene : Control
 {
     [Node]
     private Button restButton = null!;
+    [Node]
+    private AnimationPlayer animationPlayer = null!;
 
     private readonly CharacterStats _characterStats = GD.Load<CharacterStats>("res://characters/warrior/warrior.tres");
 
@@ -27,14 +28,12 @@ public partial class CampfireScene : Control
     private void OnRestButtonPressed()
     {
         _characterStats.Heal(Mathf.CeilToInt(_characterStats.MaxHealth));
-        FadeOut().Fire();
+        animationPlayer.Play("fade_out");
     }
 
-    private async Task FadeOut()
+    // called by the animation player
+    private void OnFadeOutAnimationFinished()
     {
-        GD.Print("resting...");
-        await SnekUtility.DelayGd(2);
-        GD.Print("rest complete");
         EventBusOwner.Events.EmitCampfireExited();
     }
 
