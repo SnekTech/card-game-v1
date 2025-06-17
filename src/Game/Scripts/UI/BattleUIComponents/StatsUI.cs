@@ -9,15 +9,19 @@ public partial class StatsUI : HBoxContainer
 {
     [Node]
     private HBoxContainer blockContainer = null!;
-
-    [Node]
-    private HBoxContainer healthContainer = null!;
-
     [Node]
     private Label blockLabel = null!;
-
     [Node]
-    private Label healthLabel = null!;
+    private HealthUI healthUI = null!;
+
+    public void UpdateStats(Stats stats)
+    {
+        blockLabel.Text = stats.Block.ToString();
+        healthUI.UpdateStats(stats);
+        
+        blockContainer.Visible = stats.Block > 0;
+        healthUI.Visible = stats.Health > 0;
+    }
 
     public override void _Notification(int what)
     {
@@ -25,16 +29,5 @@ public partial class StatsUI : HBoxContainer
         {
             WireNodes();
         }
-    }
-
-    public void UpdateStats(Stats stats)
-    {
-        var (block, health) = (stats.Block, stats.Health);
-
-        blockLabel.Text = block.ToString();
-        healthLabel.Text = health.ToString();
-
-        blockContainer.Visible = block > 0;
-        healthContainer.Visible = health > 0;
     }
 }

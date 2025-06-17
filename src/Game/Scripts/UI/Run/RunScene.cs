@@ -24,6 +24,8 @@ public partial class RunScene : Node
     [Node]
     private Node currentView = null!;
     [Node]
+    private HealthUI healthUI = null!;
+    [Node]
     private GoldUI goldUI = null!;
     [Node]
     private CardPileOpener deckButton = null!;
@@ -56,6 +58,7 @@ public partial class RunScene : Node
         {
             case RunStartup.RunType.NewRun:
                 Character = runStartup.PickedCharacter.CreateInstance();
+                Character.StatsChanged += OnCharacterStatsChanged;
                 StartRun();
                 break;
             case RunStartup.RunType.ContinuedRun:
@@ -67,6 +70,11 @@ public partial class RunScene : Node
         }
     }
 
+    public override void _EnterTree()
+    {
+        SubscribeEvents();
+    }
+
     public override void _ExitTree()
     {
         UnsubscribeEvents();
@@ -76,7 +84,6 @@ public partial class RunScene : Node
     {
         _runStats = new RunStats();
 
-        SubscribeEvents();
         SetupTopBar();
         map.GenerateNewMap();
         map.UnlockFloor(0);
@@ -84,6 +91,7 @@ public partial class RunScene : Node
 
     private void SetupTopBar()
     {
+        healthUI.UpdateStats(Character);
         goldUI.RunStats = _runStats;
         deckButton.CardPile = Character.Deck;
         deckView.CardPile = Character.Deck;
@@ -150,6 +158,7 @@ public partial class RunScene : Node
         events.TreasureRoomExited -= OnTreasureRoomExited;
 
         deckButton.Pressed -= OnDeckButtonPressed;
+        Character.StatsChanged -= OnCharacterStatsChanged;
 
         #region debug buttons
 
@@ -161,6 +170,11 @@ public partial class RunScene : Node
         treasureRoomButton.Pressed -= OnTreasureRoomButtonPressed;
 
         #endregion
+    }
+
+    private void OnCharacterStatsChanged()
+    {
+        healthUI.UpdateStats(Character);
     }
 
     private void OnBattleRoomEntered(Room room)
