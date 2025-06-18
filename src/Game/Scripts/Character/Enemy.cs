@@ -3,6 +3,7 @@ using CardGameV1.Constants;
 using CardGameV1.CustomResources;
 using CardGameV1.EffectSystem;
 using CardGameV1.EnemyAI;
+using CardGameV1.StatusSystem;
 using CardGameV1.UI.BattleUIComponents;
 using Godot;
 using GodotUtilities;
@@ -19,15 +20,14 @@ public partial class Enemy : Area2D, ITarget
 
     [Node]
     private Sprite2D sprite2D = null!;
-
     [Node]
     private Sprite2D arrow = null!;
-
     [Node]
     private StatsUI statsUI = null!;
-
     [Node]
     private IntentUI intentUI = null!;
+    [Node]
+    private StatusHandler statusHandler = null!;
 
     private static readonly Material WhiteSprite = GD.Load<Material>("res://art/white_sprite_material.tres");
 
@@ -61,6 +61,8 @@ public partial class Enemy : Area2D, ITarget
         }
     }
 
+    #region lifecycle
+
     public override void _Ready()
     {
         Stats = originalEnemyStats;
@@ -83,13 +85,21 @@ public partial class Enemy : Area2D, ITarget
         _stats.StatsChanged -= UpdateAction;
     }
 
+    #endregion
+
+    private Task ApplyStatusesOfType(StatusType type) => statusHandler.ApplyStatusesByType(type);
+
     public async Task DoTurnAsync()
     {
-        Stats.Block = 0;
-        if (CurrentAction == null)
-            return;
+        await ApplyStatusesOfType(StatusType.StartOfTurn);
 
-        await CurrentAction.PerformActionAsync();
+        Stats.Block = 0;
+        if (CurrentAction != null)
+        {
+            await CurrentAction.PerformActionAsync();
+        }
+
+        await ApplyStatusesOfType(StatusType.EndOfTurn);
     }
 
     public async Task TakeDamageAsync(int damage)

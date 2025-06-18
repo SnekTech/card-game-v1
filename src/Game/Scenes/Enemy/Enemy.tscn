@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://c17kqw1akj78t"]
+[gd_scene load_steps=9 format=3 uid="uid://c17kqw1akj78t"]
 
 [ext_resource type="Script" uid="uid://52kw0idk7r00" path="res://Scripts/Character/Enemy.cs" id="1_02vxf"]
 [ext_resource type="Texture2D" uid="uid://1u3b3hwqd8yh" path="res://art/tile_0110.png" id="1_i1u57"]
@@ -6,6 +6,7 @@
 [ext_resource type="Resource" uid="uid://dhr0kajhhbp0o" path="res://Scenes/Enemy/crab/crab_enemy.tres" id="2_fw0yv"]
 [ext_resource type="PackedScene" uid="uid://cxy4ik6w7yg57" path="res://Scenes/UI/battle_ui_components/StatsUI.tscn" id="3_02vxf"]
 [ext_resource type="PackedScene" uid="uid://dmu5i71r5vqb" path="res://Scenes/UI/battle_ui_components/IntentUI.tscn" id="6_seemo"]
+[ext_resource type="PackedScene" uid="uid://bt4qmg7o0bqqn" path="res://Scenes/statusHandler/StatusHandler.tscn" id="7_ljmj3"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qxnh6"]
 
@@ -33,3 +34,10 @@ offset_bottom = 26.0
 [node name="IntentUI" parent="." instance=ExtResource("6_seemo")]
 offset_top = -24.0
 offset_bottom = -10.0
+
+[node name="StatusHandler" parent="." node_paths=PackedStringArray("statusOwner") instance=ExtResource("7_ljmj3")]
+offset_left = -24.0
+offset_top = 24.0
+offset_right = -24.0
+offset_bottom = 24.0
+statusOwner = NodePath("..")
