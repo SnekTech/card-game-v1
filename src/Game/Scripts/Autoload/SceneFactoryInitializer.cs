@@ -1,4 +1,5 @@
 ﻿using CardGameV1.Map;
+using CardGameV1.StatusSystem.UI;
 using CardGameV1.UI.BattleReward;
 using CardGameV1.UI.Campfire;
 using CardGameV1.UI.CardPileDisplay;
@@ -22,5 +23,6 @@ public partial class SceneFactoryInitializer : Node
         SceneFactory.Register<TreasureRoomScene>("res://Scenes/UI/treasure_room/TreasureRoom.tscn");
         SceneFactory.Register<MapRoomScene>("res://Scenes/map/MapRoom.tscn");
         SceneFactory.Register<MapLine>("res://Scenes/map/MapLine.tscn");
+        SceneFactory.Register<StatusUI>("res://Scenes/statusHandler/StatusUI.tscn");
     }
 }

@@ -17,6 +17,7 @@ public partial class StatusUI : Control
 
     public Status Status
     {
+        get => _status!;
         set
         {
             if (_status != null)

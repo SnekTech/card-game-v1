@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://bt4qmg7o0bqqn"]
+
+[ext_resource type="Script" uid="uid://c7mddrto2r424" path="res://Scripts/StatusSystem/StatusHandler.cs" id="1_sb85s"]
+
+[node name="StatusHandler" type="GridContainer"]
+theme_override_constants/h_separation = 0
+theme_override_constants/v_separation = 0
+columns = 6
+script = ExtResource("1_sb85s")

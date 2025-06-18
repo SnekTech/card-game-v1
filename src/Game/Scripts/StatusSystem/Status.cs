@@ -12,6 +12,7 @@ public class Status
     public string Id { get; init; } = "default status";
     public StatusType Type { get; init; }
     public StackType StackType { get; init; }
+    public bool IsStackable => StackType != StackType.None;
     public bool CanExpire { get; init; }
 
     public required string IconPath { get; init; }
