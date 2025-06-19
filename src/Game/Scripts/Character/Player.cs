@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using CardGameV1.CustomResources;
 using CardGameV1.EffectSystem;
+using CardGameV1.StatusSystem;
 using CardGameV1.UI.BattleUIComponents;
 using Godot;
 using GodotUtilities;
@@ -12,9 +13,12 @@ public partial class Player : Node2D, ITarget
 {
     [Node]
     private Sprite2D sprite2D = null!;
-
     [Node]
     private StatsUI statsUI = null!;
+    [Node]
+    private StatusHandler statusHandler = null!;
+
+    public StatusHandler StatusHandler => statusHandler;
 
     private static readonly Material WhiteSprite = GD.Load<Material>("res://art/white_sprite_material.tres");
     private CharacterStats _stats = null!;

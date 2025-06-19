@@ -55,6 +55,11 @@ public partial class StatusHandler : GridContainer
         foreach (var status in GetAllStatuses().Where(sts => sts.Type == type))
         {
             await status.ApplyStatusAsync(Target);
+            if (status.StackType == StackType.Duration)
+            {
+                status.Duration--;
+            }
+
             await SnekUtility.DelayGd(StatusApplyInterval);
         }
     }

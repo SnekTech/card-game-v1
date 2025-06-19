@@ -1,8 +1,8 @@
 ﻿namespace CardGameV1.StatusSystem;
 
-public static class StatusPool
+public static class StatusFactory
 {
-    public static readonly Status Exposed = new()
+    public static Status Exposed => new()
     {
         Id = nameof(Exposed),
         Type = StatusType.StartOfTurn,
@@ -13,7 +13,7 @@ public static class StatusPool
         IconPath = "res://art/expose.png",
     };
 
-    public static readonly Status Muscle = new()
+    public static Status Muscle => new()
     {
         Id = nameof(Muscle),
         Type = StatusType.EventBased,
@@ -24,7 +24,7 @@ public static class StatusPool
         IconPath = "res://art/muscle.png",
     };
 
-    public static readonly Status TrueStrengthForm = new()
+    public static Status TrueStrengthForm => new()
     {
         Id = nameof(TrueStrengthForm),
         Type = StatusType.StartOfTurn,

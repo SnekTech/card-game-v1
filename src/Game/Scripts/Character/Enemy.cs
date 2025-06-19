@@ -61,6 +61,8 @@ public partial class Enemy : Area2D, ITarget
         }
     }
 
+    public StatusHandler StatusHandler => statusHandler;
+
     #region lifecycle
 
     public override void _Ready()
@@ -87,11 +89,9 @@ public partial class Enemy : Area2D, ITarget
 
     #endregion
 
-    private Task ApplyStatusesOfType(StatusType type) => statusHandler.ApplyStatusesByType(type);
-
     public async Task DoTurnAsync()
     {
-        await ApplyStatusesOfType(StatusType.StartOfTurn);
+        await statusHandler.ApplyStatusesByType(StatusType.StartOfTurn);
 
         Stats.Block = 0;
         if (CurrentAction != null)
@@ -99,7 +99,7 @@ public partial class Enemy : Area2D, ITarget
             await CurrentAction.PerformActionAsync();
         }
 
-        await ApplyStatusesOfType(StatusType.EndOfTurn);
+        await statusHandler.ApplyStatusesByType(StatusType.EndOfTurn);
     }
 
     public async Task TakeDamageAsync(int damage)
