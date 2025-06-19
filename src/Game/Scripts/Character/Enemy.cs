@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading;
+using System.Threading.Tasks;
 using CardGameV1.Constants;
 using CardGameV1.CustomResources;
 using CardGameV1.EffectSystem;
@@ -35,6 +37,8 @@ public partial class Enemy : Area2D, ITarget
 
     private EnemyActionPicker _enemyActionPicker = null!;
     private EnemyAction? _currentAction;
+
+    private CancellationTokenSource cts = new();
 
     public EnemyAction? CurrentAction
     {
@@ -89,17 +93,36 @@ public partial class Enemy : Area2D, ITarget
 
     #endregion
 
+    protected override void Dispose(bool disposing)
+    {
+        cts.Cancel();
+        base.Dispose(disposing);
+    }
+
     public async Task DoTurnAsync()
     {
-        await statusHandler.ApplyStatusesByType(StatusType.StartOfTurn);
-
-        Stats.Block = 0;
-        if (CurrentAction != null)
+        if (cts.IsCancellationRequested)
         {
-            await CurrentAction.PerformActionAsync();
+            cts.Dispose();
+            cts = new CancellationTokenSource();
         }
 
-        await statusHandler.ApplyStatusesByType(StatusType.EndOfTurn);
+        try
+        {
+            await statusHandler.ApplyStatusesByType(StatusType.StartOfTurn, cts.Token);
+
+            Stats.Block = 0;
+            if (CurrentAction != null)
+            {
+                await CurrentAction.PerformActionAsync();
+            }
+
+            await statusHandler.ApplyStatusesByType(StatusType.EndOfTurn, cts.Token);
+        }
+        catch (OperationCanceledException)
+        {
+            GD.Print($"enemy {Name} turn canceled, 'cause this enemy died");
+        }
     }
 
     public async Task TakeDamageAsync(int damage)

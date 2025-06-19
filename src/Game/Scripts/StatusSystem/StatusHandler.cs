@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using CardGameV1.EffectSystem;
 using CardGameV1.StatusSystem.UI;
@@ -47,8 +48,10 @@ public partial class StatusHandler : GridContainer
     private IEnumerable<Status> GetAllStatuses() =>
         this.GetChildrenOfType<StatusUI>().Select(statusUI => statusUI.Status);
 
-    public async Task ApplyStatusesByType(StatusType type)
+    public async Task ApplyStatusesByType(StatusType type, CancellationToken cancellationToken)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+        
         if (IsQueuedForDeletion())
             return;
         
@@ -63,7 +66,7 @@ public partial class StatusHandler : GridContainer
                 status.Duration--;
             }
 
-            await SnekUtility.DelayGd(StatusApplyInterval);
+            await SnekUtility.DelayGd(StatusApplyInterval, cancellationToken);
         }
     }
 }

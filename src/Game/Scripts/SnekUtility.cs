@@ -8,9 +8,9 @@ namespace CardGameV1;
 
 public static class SnekUtility
 {
-    public static Task DelayGd(float timeSec)
+    public static Task DelayGd(float timeSec, CancellationToken cancellationToken = default)
     {
-        return GTweenSequenceBuilder.New().AppendTime(timeSec).Build().PlayAsync(CancellationToken.None);
+        return GTweenSequenceBuilder.New().AppendTime(timeSec).Build().PlayAsync(cancellationToken);
     }
 
     public static PackedScene LoadScene(string path) => ResourceLoader.Load<PackedScene>(path);

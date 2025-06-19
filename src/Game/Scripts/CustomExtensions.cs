@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Godot;
@@ -18,6 +17,12 @@ public static class CustomExtensions
             try
             {
                 await task;
+            }
+            catch (OperationCanceledException e)
+            {
+                GD.Print("---------- Under Control -----------");
+                GD.Print($"A task was canceled, token {e.CancellationToken}");
+                GD.Print("---------- Under Control -----------");
             }
             catch (Exception e)
             {

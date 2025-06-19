@@ -10,7 +10,7 @@ public class Exposed : Status
 
     public override async Task ApplyStatusAsync(ITarget target)
     {
-        GD.Print($"{target} should take {Modifier:P}");
+        GD.Print($"{target} should take {Modifier:P0} more damage");
 
         // todo: replace with modifier system
         var damageEffect = new DamageEffect(12);
