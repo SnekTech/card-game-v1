@@ -1,8 +1,10 @@
-﻿namespace CardGameV1.StatusSystem;
+﻿using CardGameV1.StatusSystem.BuiltinStatuses;
+
+namespace CardGameV1.StatusSystem;
 
 public static class StatusFactory
 {
-    public static Status Exposed => new()
+    public static Exposed Exposed => new()
     {
         Id = nameof(Exposed),
         Type = StatusType.StartOfTurn,

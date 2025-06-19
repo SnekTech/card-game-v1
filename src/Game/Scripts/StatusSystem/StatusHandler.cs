@@ -49,6 +49,9 @@ public partial class StatusHandler : GridContainer
 
     public async Task ApplyStatusesByType(StatusType type)
     {
+        if (IsQueuedForDeletion())
+            return;
+        
         if (type == StatusType.EventBased)
             return;
 

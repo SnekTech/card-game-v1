@@ -41,12 +41,12 @@ public class Status
         }
     }
 
-    public void Init(ITarget target)
+    public virtual void Init(ITarget target)
     {
-        GD.Print($"init status {Id}");
+        GD.Print($"init status {Id} for target {target}");
     }
 
-    public Task ApplyStatusAsync(ITarget target)
+    public virtual Task ApplyStatusAsync(ITarget target)
     {
         GD.Print($"applying status {Id}");
         return Task.CompletedTask;
