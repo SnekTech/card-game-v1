@@ -121,7 +121,7 @@ public partial class Enemy : Area2D, ITarget
         }
         catch (OperationCanceledException)
         {
-            GD.Print($"enemy {Name} turn canceled, 'cause this enemy died");
+            GD.Print($"enemy turn canceled, 'cause this enemy died");
         }
     }
 
