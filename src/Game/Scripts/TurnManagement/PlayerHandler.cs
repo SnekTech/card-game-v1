@@ -1,8 +1,11 @@
-﻿using System.Threading.Tasks;
+﻿using System.Threading;
+using System.Threading.Tasks;
 using CardGameV1.CardVisual;
+using CardGameV1.Character;
 using CardGameV1.CustomResources;
 using CardGameV1.CustomResources.Cards;
 using CardGameV1.EventBus;
+using CardGameV1.StatusSystem;
 using Godot;
 using GodotUtilities;
 
@@ -10,11 +13,13 @@ namespace CardGameV1.TurnManagement;
 
 public partial class PlayerHandler : Node
 {
-    private const float HandDrawInterval = 0.25f;
-    private const float HandDiscardInterval = 0.25f;
-
+    [Export]
+    private Player player = null!;
     [Export]
     private Hand hand = null!;
+
+    private const float HandDrawInterval = 0.25f;
+    private const float HandDiscardInterval = 0.25f;
 
     private static readonly PlayerEvents PlayerEvents = EventBusOwner.PlayerEvents;
     private static readonly CardEvents CardEvents = EventBusOwner.CardEvents;
@@ -38,13 +43,13 @@ public partial class PlayerHandler : Node
     {
         _characterStats.Block = 0;
         _characterStats.ResetMana();
-        DrawCardsAsync(_characterStats.CardsPerTurn).Fire();
+        StartTurnAsync().Fire();
     }
 
     public void EndTurn()
     {
         hand.DisableHand();
-        DiscardCardsAsync().Fire();
+        EndTurnAsync().Fire();
     }
 
     private void DrawCard()
@@ -75,6 +80,18 @@ public partial class PlayerHandler : Node
         }
 
         PlayerEvents.EmitPlayerHandDiscarded();
+    }
+
+    private async Task StartTurnAsync()
+    {
+        await player.StatusHandler.ApplyStatusesByType(StatusType.StartOfTurn, CancellationToken.None);
+        await DrawCardsAsync(_characterStats.CardsPerTurn);
+    }
+
+    private async Task EndTurnAsync()
+    {
+        await player.StatusHandler.ApplyStatusesByType(StatusType.EndOfTurn, CancellationToken.None);
+        await DiscardCardsAsync();
     }
 
     private void ReshuffleDeckFromDiscard()

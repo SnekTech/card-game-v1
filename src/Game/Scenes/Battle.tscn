@@ -58,8 +58,9 @@ position = Vector2(57, 72)
 
 [node name="CardTargetSelector" parent="." instance=ExtResource("4_u22qb")]
 
-[node name="PlayerHandler" type="Node" parent="." node_paths=PackedStringArray("hand")]
+[node name="PlayerHandler" type="Node" parent="." node_paths=PackedStringArray("player", "hand")]
 script = ExtResource("7_u22qb")
+player = NodePath("../Player")
 hand = NodePath("../BattleUI/Hand")
 
 [node name="BattleUI" parent="." node_paths=PackedStringArray("drawPileView", "discardPileView") instance=ExtResource("6_8teo4")]
