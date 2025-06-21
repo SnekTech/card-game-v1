@@ -84,6 +84,7 @@ public partial class PlayerHandler : Node
 
     private async Task StartTurnAsync()
     {
+        // todo: design the task cancel flow
         await player.StatusHandler.ApplyStatusesByType(StatusType.StartOfTurn, CancellationToken.None);
         await DrawCardsAsync(_characterStats.CardsPerTurn);
     }

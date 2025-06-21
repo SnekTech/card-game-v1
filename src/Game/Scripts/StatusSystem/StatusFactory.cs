@@ -15,7 +15,7 @@ public static class StatusFactory
         IconPath = "res://art/expose.png",
     };
 
-    public static Status Muscle => new()
+    public static Muscle Muscle => new()
     {
         Id = nameof(Muscle),
         Type = StatusType.EventBased,
@@ -26,7 +26,7 @@ public static class StatusFactory
         IconPath = "res://art/muscle.png",
     };
 
-    public static Status TrueStrengthForm => new()
+    public static TrueStrengthForm TrueStrengthForm => new()
     {
         Id = nameof(TrueStrengthForm),
         Type = StatusType.StartOfTurn,
