@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using CardGameV1.EffectSystem;
 using CardGameV1.StatusSystem;
+using CardGameV1.StatusSystem.BuiltinStatuses;
 using Godot;
 
 namespace CardGameV1.CustomResources.Cards.Warrior;
@@ -36,7 +37,7 @@ public partial class WarriorBigSlam : Card
 
         await damageEffect.ExecuteAllAsync(targetList);
 
-        var exposedStatus = StatusFactory.Exposed;
+        var exposedStatus = StatusFactory.Create<Exposed>();
         exposedStatus.Duration = Duration;
         var statusEffect = new AddStatusEffect(exposedStatus);
         await statusEffect.ExecuteAllAsync(targetList);

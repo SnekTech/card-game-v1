@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using CardGameV1.EffectSystem;
 using CardGameV1.StatusSystem;
+using CardGameV1.StatusSystem.BuiltinStatuses;
 using Godot;
 
 namespace CardGameV1.CustomResources.Cards.Warrior;
@@ -26,7 +27,7 @@ public partial class WarriorTrueStrength : Card
 
     protected override async Task ApplyEffectsAsync(IEnumerable<ITarget> targets)
     {
-        var trueStrengthStatus = StatusFactory.TrueStrengthForm;
+        var trueStrengthStatus = StatusFactory.Create<TrueStrengthForm>();
         var addTrueStrengthEffect = new AddStatusEffect(trueStrengthStatus);
         await addTrueStrengthEffect.ExecuteAllAsync(targets);
     }
