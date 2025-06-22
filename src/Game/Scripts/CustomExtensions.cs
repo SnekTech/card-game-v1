@@ -99,4 +99,13 @@ public static class CustomExtensions
         var randomIndex = GD.RandRange(0, list.Count - 1);
         return list[randomIndex];
     }
+
+    public static void Shuffle<T>(this List<T> list)
+    {
+        var random = new Random();
+        var array = list.ToArray();
+        random.Shuffle(array);
+        list.Clear();
+        list.AddRange(array);
+    }
 }
