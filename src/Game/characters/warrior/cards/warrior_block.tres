@@ -1,7 +1,0 @@
-[gd_resource type="Resource" script_class="WarriorBlock" load_steps=2 format=3 uid="uid://bxutmrgg5ywiw"]
-
-[ext_resource type="Script" uid="uid://cvrmkxr0b4ei3" path="res://Scripts/CustomResources/Cards/Warrior/WarriorBlock.cs" id="1_ti8q0"]
-
-[resource]
-script = ExtResource("1_ti8q0")
-metadata/_custom_type_script = "uid://lggtvlpuxsee"

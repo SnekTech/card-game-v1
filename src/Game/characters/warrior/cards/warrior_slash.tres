@@ -1,7 +1,0 @@
-[gd_resource type="Resource" script_class="WarriorSlash" load_steps=2 format=3 uid="uid://d1g5u4codrpbp"]
-
-[ext_resource type="Script" uid="uid://d3d3yw46dgvxm" path="res://Scripts/CustomResources/Cards/Warrior/WarriorSlash.cs" id="1_osobq"]
-
-[resource]
-script = ExtResource("1_osobq")
-metadata/_custom_type_script = "uid://lggtvlpuxsee"

@@ -1,7 +1,6 @@
-[gd_scene load_steps=4 format=3 uid="uid://cioihy11sscr0"]
+[gd_scene load_steps=3 format=3 uid="uid://cioihy11sscr0"]
 
 [ext_resource type="Script" uid="uid://dxrn8bdy43c8m" path="res://Scripts/UI/CardPileDisplay/CardMenuUI.cs" id="1_0d0a2"]
-[ext_resource type="Resource" uid="uid://bxutmrgg5ywiw" path="res://characters/warrior/cards/warrior_block.tres" id="2_0d0a2"]
 [ext_resource type="PackedScene" uid="uid://cfsk0tinni3qd" path="res://Scenes/UI/card_visual/CardVisuals.tscn" id="3_yc2wo"]
 
 [node name="CardMenuUI" type="CenterContainer"]
@@ -9,7 +8,6 @@ offset_right = 25.0
 offset_bottom = 30.0
 size_flags_horizontal = 3
 script = ExtResource("1_0d0a2")
-defaultCard = ExtResource("2_0d0a2")
 
 [node name="Visuals" parent="." instance=ExtResource("3_yc2wo")]
 unique_name_in_owner = true

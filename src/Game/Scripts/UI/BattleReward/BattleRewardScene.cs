@@ -72,7 +72,7 @@ public partial class BattleRewardScene : Control
         cardRewards.CardRewardSelected += OnCardRewardSelected;
 
         var cardRewardList = new List<Card>();
-        var availableCards = CharacterStats.DraftableCards.Cards.Duplicate(true);
+        var availableCards = CharacterStats.DraftableCards.Cards;
 
         for (var i = 0; i < RunStats.CardRewards; i++)
         {
@@ -111,7 +111,7 @@ public partial class BattleRewardScene : Control
             : Mathf.Clamp(RunStats.RareWeight + 0.3f, RunStats.BaseRareWeight, 5f);
     }
 
-    private Card GetRandomAvailableCard(Array<Card> availableCards, CardRarity rarity)
+    private Card GetRandomAvailableCard(List<Card> availableCards, CardRarity rarity)
     {
         var cardsWithThisRarity = availableCards.Where(card => card.Rarity == rarity).ToList();
         return cardsWithThisRarity.PickRandom();

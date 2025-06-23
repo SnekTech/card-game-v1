@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using CardGameV1.CardVisual.CardStates;
 using CardGameV1.CustomResources;
 using CardGameV1.CustomResources.Cards;
+using CardGameV1.CustomResources.Cards.Warrior;
 using CardGameV1.EventBus;
 using Godot;
 using GodotUtilities;
@@ -14,9 +15,6 @@ namespace CardGameV1.CardVisual;
 public partial class CardUI : Control
 {
     public event Action<CardUI>? ReparentRequested;
-
-    [Export]
-    private Card defaultCard = null!;
 
     [Node]
     private CardVisuals cardVisuals = null!;
@@ -38,6 +36,8 @@ public partial class CardUI : Control
     private readonly HashSet<Node> _targets = [];
     private Tween? _tween;
     private CharacterStats _characterStats = null!;
+
+    private readonly Card defaultCard = CardPool.Get<WarriorAxeAttack>();
     private Card? _card;
 
     public int OriginalIndex { get; set; }

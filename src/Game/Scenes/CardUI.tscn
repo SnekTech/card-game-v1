@@ -1,7 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://djmhd1i2e8j2h"]
+[gd_scene load_steps=4 format=3 uid="uid://djmhd1i2e8j2h"]
 
 [ext_resource type="PackedScene" uid="uid://cfsk0tinni3qd" path="res://Scenes/UI/card_visual/CardVisuals.tscn" id="2_547ju"]
-[ext_resource type="Resource" uid="uid://d1g5u4codrpbp" path="res://characters/warrior/cards/warrior_slash.tres" id="2_af8jv"]
 [ext_resource type="Script" uid="uid://dueur1nl3yajm" path="res://Scripts/CardVisual/CardUI.cs" id="2_hcufj"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_obeoo"]
@@ -19,7 +18,6 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
 script = ExtResource("2_hcufj")
-defaultCard = ExtResource("2_af8jv")
 
 [node name="CardVisuals" parent="." instance=ExtResource("2_547ju")]
 offset_right = 25.0

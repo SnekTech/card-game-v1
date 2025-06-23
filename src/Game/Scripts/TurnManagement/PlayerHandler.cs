@@ -33,7 +33,7 @@ public partial class PlayerHandler : Node
     public void StartBattle(CharacterStats stats)
     {
         _characterStats = stats;
-        _characterStats.DrawPile = (CardPile)stats.Deck.Duplicate(true);
+        _characterStats.DrawPile = new CardPile(stats.Deck.Cards);
         _characterStats.DrawPile.Shuffle();
         _characterStats.DiscardPile = new CardPile();
         StartTurn();

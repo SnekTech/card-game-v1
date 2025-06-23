@@ -8,8 +8,7 @@ using Godot;
 
 namespace CardGameV1.CustomResources.Cards;
 
-[GlobalClass]
-public abstract partial class Card : Resource
+public abstract class Card
 {
     public string Id => Attributes.Id;
     public int Cost => Attributes.Cost;
@@ -18,7 +17,7 @@ public abstract partial class Card : Resource
     public CardTarget Target => Attributes.Target;
     public string TooltipText => Attributes.TooltipText;
 
-    public Texture2D Icon => GD.Load<Texture2D>(Attributes.IconPath);
+    public Texture2D Icon => SnekUtility.LoadTexture(Attributes.IconPath);
     public AudioStream Sound => GD.Load<AudioStream>(Attributes.SoundPath);
 
 

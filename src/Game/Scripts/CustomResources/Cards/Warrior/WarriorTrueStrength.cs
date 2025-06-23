@@ -3,12 +3,10 @@ using System.Threading.Tasks;
 using CardGameV1.EffectSystem;
 using CardGameV1.StatusSystem;
 using CardGameV1.StatusSystem.BuiltinStatuses;
-using Godot;
 
 namespace CardGameV1.CustomResources.Cards.Warrior;
 
-[GlobalClass]
-public partial class WarriorTrueStrength : Card
+public class WarriorTrueStrength : Card
 {
     private const int MusclePerTurn = 2;
 

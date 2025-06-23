@@ -1,12 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using CardGameV1.EffectSystem;
-using Godot;
 
 namespace CardGameV1.CustomResources.Cards.Warrior;
 
-[GlobalClass]
-public partial class WarriorBlock : Card
+public class WarriorBlock : Card
 {
     private const int BlockAmount = 5;
     protected override CardAttributes Attributes { get; } = new()

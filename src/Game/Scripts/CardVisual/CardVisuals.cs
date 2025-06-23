@@ -1,4 +1,5 @@
 ﻿using CardGameV1.CustomResources.Cards;
+using CardGameV1.CustomResources.Cards.Warrior;
 using Godot;
 using GodotUtilities;
 
@@ -7,9 +8,6 @@ namespace CardGameV1.CardVisual;
 [Scene]
 public partial class CardVisuals : Control
 {
-    [Export]
-    private Card defaultCard = null!;
-
     [Node]
     private Panel panel = null!;
     [Node]
@@ -19,11 +17,11 @@ public partial class CardVisuals : Control
     [Node]
     private TextureRect rarity = null!;
 
+    private readonly Card defaultCard = CardPool.Get<WarriorAxeAttack>();
     private Card? _card;
 
     public Card Card
     {
-        private get => _card ?? defaultCard;
         set
         {
             _card = value;

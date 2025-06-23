@@ -1,7 +1,0 @@
-[gd_resource type="Resource" script_class="WarriorAxeAttack" load_steps=2 format=3 uid="uid://b8cv04kd1groj"]
-
-[ext_resource type="Script" uid="uid://cuc5hhabywprm" path="res://Scripts/CustomResources/Cards/Warrior/WarriorAxeAttack.cs" id="1_wba1x"]
-
-[resource]
-script = ExtResource("1_wba1x")
-metadata/_custom_type_script = "uid://lggtvlpuxsee"

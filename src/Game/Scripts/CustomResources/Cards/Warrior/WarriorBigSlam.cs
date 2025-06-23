@@ -4,12 +4,10 @@ using System.Threading.Tasks;
 using CardGameV1.EffectSystem;
 using CardGameV1.StatusSystem;
 using CardGameV1.StatusSystem.BuiltinStatuses;
-using Godot;
 
 namespace CardGameV1.CustomResources.Cards.Warrior;
 
-[GlobalClass]
-public partial class WarriorBigSlam : Card
+public class WarriorBigSlam : Card
 {
     protected override CardAttributes Attributes { get; } = new()
     {

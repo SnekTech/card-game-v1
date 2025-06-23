@@ -1,6 +1,7 @@
 ﻿using System;
 using CardGameV1.CardVisual;
 using CardGameV1.CustomResources.Cards;
+using CardGameV1.CustomResources.Cards.Warrior;
 using Godot;
 using GodotUtilities;
 
@@ -11,9 +12,6 @@ public partial class CardMenuUI : CenterContainer
 {
     public event Action<Card>? TooltipRequested;
 
-    [Export]
-    private Card defaultCard = null!;
-
     [Node]
     private CardVisuals visuals = null!;
 
@@ -22,6 +20,7 @@ public partial class CardMenuUI : CenterContainer
     private static readonly StyleBoxFlat HoverStyle =
         GD.Load<StyleBoxFlat>("res://Scenes/CardVisual/card_hover_stylebox.tres");
 
+    private readonly Card defaultCard = CardPool.Get<WarriorAxeAttack>();
     private Card? _card;
 
     public Card Card

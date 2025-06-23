@@ -16,12 +16,9 @@ public partial class CharacterStats : Stats
     [Export]
     public Texture2D Portrait { get; private set; } = null!;
 
-    [ExportGroup("Gameplay Data")]
-    [Export]
-    public CardPile StartingDeck { get; private set; } = null!;
+    public readonly CardPile StartingDeck = CardPool.WarriorStartingDeck;
 
-    [Export]
-    public CardPile DraftableCards { get; private set; } = null!;
+    public readonly CardPile DraftableCards = CardPool.WarriorDraftableCards;
 
     [Export]
     public int CardsPerTurn { get; private set; } = 5;

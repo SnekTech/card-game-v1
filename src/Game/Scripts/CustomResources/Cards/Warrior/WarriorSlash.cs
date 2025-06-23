@@ -1,12 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using CardGameV1.EffectSystem;
-using Godot;
 
 namespace CardGameV1.CustomResources.Cards.Warrior;
 
-[GlobalClass]
-public partial class WarriorSlash : Card
+public class WarriorSlash : Card
 {
     private const int DamageAmount = 6;
 

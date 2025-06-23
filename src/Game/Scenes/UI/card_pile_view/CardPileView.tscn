@@ -1,9 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://b8mfae4j2xgiw"]
+[gd_scene load_steps=5 format=3 uid="uid://b8mfae4j2xgiw"]
 
 [ext_resource type="Script" uid="uid://dqubh2vke1uds" path="res://Scripts/UI/CardPileDisplay/CardPileView.cs" id="1_fn2tg"]
 [ext_resource type="PackedScene" uid="uid://cioihy11sscr0" path="res://Scenes/UI/card_pile_view/CardMenuUI.tscn" id="1_n1tfx"]
 [ext_resource type="PackedScene" uid="uid://b3q1w1421uk6d" path="res://Scenes/UI/CardTooltipPopup.tscn" id="2_fwt5a"]
-[ext_resource type="Resource" uid="uid://iecbpq8c5qwo" path="res://characters/warrior/warrior_starting_deck.tres" id="2_wjq36"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_sinvb"]
 font_size = 12
@@ -16,7 +15,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_fn2tg")
-defaultCardPile = ExtResource("2_wjq36")
 
 [node name="Background" type="ColorRect" parent="."]
 layout_mode = 1
