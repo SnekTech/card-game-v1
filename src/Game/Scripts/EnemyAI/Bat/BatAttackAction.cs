@@ -7,11 +7,13 @@ using GTweensGodot.Extensions;
 
 namespace CardGameV1.EnemyAI.Bat;
 
-public partial class BatAttackAction : EnemyChanceBasedAction
+public class BatAttackAction : EnemyChanceBasedAction
 {
-    [Export]
-    public int Damage { get; private set; } = 4;
+    public override Intent Intent { get; } = new($"2x{Damage}", "res://art/tile_0103.png");
+    protected override AudioStream? Sound { get; } = SnekUtility.LoadSound("res://art/enemy_attack.ogg");
+    public override float ChanceWeight => 3;
 
+    private const int Damage = 4;
     private const int AttackOffset = 32;
 
     public override async Task PerformActionAsync()

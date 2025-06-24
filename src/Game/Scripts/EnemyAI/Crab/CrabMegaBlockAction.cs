@@ -4,13 +4,13 @@ using Godot;
 
 namespace CardGameV1.EnemyAI.Crab;
 
-public partial class CrabMegaBlockAction : EnemyConditionalAction
+public class CrabMegaBlockAction : EnemyConditionalAction
 {
-    [Export]
-    private int block = 15;
+    public override Intent Intent { get; } = new("", "res://art/tile_0102.png");
+    protected override AudioStream? Sound { get; } = SnekUtility.LoadSound("res://art/enemy_block.ogg");
 
-    [Export]
-    private int threshold = 6;
+    private const int Block = 15;
+    private const int Threshold = 6;
 
     private bool _alreadyUsed;
 
@@ -19,7 +19,7 @@ public partial class CrabMegaBlockAction : EnemyConditionalAction
         if (Enemy == null || _alreadyUsed)
             return false;
 
-        var healthIsLowEnough = Enemy.Stats.Health <= threshold;
+        var healthIsLowEnough = Enemy.Stats.Health <= Threshold;
 
         _alreadyUsed = healthIsLowEnough;
         return healthIsLowEnough;
@@ -33,7 +33,7 @@ public partial class CrabMegaBlockAction : EnemyConditionalAction
             return;
         }
 
-        var blockEffect = new BlockEffect(block) { Sound = Sound };
+        var blockEffect = new BlockEffect(Block) { Sound = Sound };
         await blockEffect.ExecuteAllAsync([Enemy]);
 
         await SnekUtility.DelayGd(0.6f);

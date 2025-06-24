@@ -7,11 +7,13 @@ using GTweensGodot.Extensions;
 
 namespace CardGameV1.EnemyAI.Crab;
 
-public partial class CrabAttackAction : EnemyChanceBasedAction
+public class CrabAttackAction : EnemyChanceBasedAction
 {
-    [Export]
-    public int Damage { get; private set; } = 7;
+    public override Intent Intent { get; } = new($"{Damage}", "res://art/tile_0103.png");
+    protected override AudioStream? Sound { get; } = SnekUtility.LoadSound("res://art/enemy_attack.ogg");
+    public override float ChanceWeight => 1;
 
+    private const int Damage = 7;
     private const int AttackOffset = 32;
 
     public override async Task PerformActionAsync()

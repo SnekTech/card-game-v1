@@ -6,7 +6,7 @@ namespace CardGameV1.EffectSystem;
 
 public abstract class Effect
 {
-    public AudioStream? Sound { get; set; }
+    public AudioStream? Sound { get; init; }
     
     public abstract Task ExecuteAllAsync(IEnumerable<ITarget> targets);
 }

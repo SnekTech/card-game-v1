@@ -4,10 +4,13 @@ using Godot;
 
 namespace CardGameV1.EnemyAI.Bat;
 
-public partial class BatBlockAction : EnemyChanceBasedAction
+public class BatBlockAction : EnemyChanceBasedAction
 {
-    [Export]
-    public int Block { get; private set; } = 4;
+    public override Intent Intent { get; } = new("", "res://art/tile_0101.png");
+    protected override AudioStream? Sound { get; } = SnekUtility.LoadSound("res://art/block.ogg");
+    public override float ChanceWeight => 1;
+
+    private const int Block = 4;
 
     public override async Task PerformActionAsync()
     {

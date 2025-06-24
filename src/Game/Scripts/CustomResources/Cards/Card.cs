@@ -18,7 +18,7 @@ public abstract class Card
     public string TooltipText => Attributes.TooltipText;
 
     public Texture2D Icon => SnekUtility.LoadTexture(Attributes.IconPath);
-    public AudioStream Sound => GD.Load<AudioStream>(Attributes.SoundPath);
+    public AudioStream Sound => SnekUtility.LoadSound(Attributes.SoundPath);
 
 
     public bool IsSingleTargeted => Target == CardTarget.SingleEnemy;

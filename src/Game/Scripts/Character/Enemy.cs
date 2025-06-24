@@ -35,7 +35,8 @@ public partial class Enemy : Area2D, ITarget
 
     private Stats _stats = null!;
 
-    private EnemyActionPicker _enemyActionPicker = null!;
+    // todo: use different action picker for different enemy
+    private readonly EnemyActionPicker _enemyActionPicker = EnemyActionPickerFactory.Crab;
     private EnemyAction? _currentAction;
 
     private CancellationTokenSource cts = new();
@@ -74,10 +75,8 @@ public partial class Enemy : Area2D, ITarget
         Stats = originalEnemyStats;
 
         var target = (ITarget)GetTree().GetFirstNodeInGroup(GroupNames.Player);
-        _enemyActionPicker = originalEnemyStats.AIScene.Instantiate<EnemyActionPicker>();
-        AddChild(_enemyActionPicker);
-        _enemyActionPicker.Target = target;
-        _enemyActionPicker.Enemy = this;
+        _enemyActionPicker.SetActionTarget(target);
+        _enemyActionPicker.SetActionEnemy(this);
 
         AreaEntered += OnAreaEntered;
         AreaExited += OnAreaExited;

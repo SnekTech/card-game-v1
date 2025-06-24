@@ -2,10 +2,9 @@
 
 namespace CardGameV1.EnemyAI;
 
-public abstract partial class EnemyChanceBasedAction : EnemyAction
+public abstract class EnemyChanceBasedAction : EnemyAction
 {
-    [Export]
-    public float ChanceWeight { get; set; }
+    public abstract float ChanceWeight { get; }
 
     public float AccumulatedWeight { get; set; }
 }

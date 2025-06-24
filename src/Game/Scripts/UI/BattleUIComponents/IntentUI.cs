@@ -1,4 +1,4 @@
-﻿using CardGameV1.CustomResources;
+﻿using CardGameV1.EnemyAI;
 using Godot;
 using GodotUtilities;
 
