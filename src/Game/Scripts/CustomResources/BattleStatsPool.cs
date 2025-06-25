@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using CardGameV1.Character;
 using Godot;
 
 namespace CardGameV1.CustomResources;
@@ -7,14 +8,6 @@ namespace CardGameV1.CustomResources;
 public class BattleStatsPool
 {
     public static readonly BattleStatsPool DefaultPool = new();
-
-    public static BattleStats TestBattle => new()
-    {
-        Tier = 0,
-        Weight = 2.5f,
-        GoldReward = (53, 72),
-        EnemiesScenePath = "res://Scenes/battles/Tier0Bats2.tscn"
-    };
 
     private readonly List<BattleStats> _pool = GenerateDefaultBattles();
     private readonly float[] _totalWeightsByTier = [0, 0, 0];
@@ -57,35 +50,35 @@ public class BattleStatsPool
             Tier = 0,
             Weight = 2.5f,
             GoldReward = (53, 72),
-            EnemiesScenePath = "res://Scenes/battles/Tier0Bats2.tscn"
+            Enemies = [EnemyPool.Bat, EnemyPool.Bat],
         };
         var tier0Crab = new BattleStats
         {
             Tier = 0,
             Weight = 3f,
             GoldReward = (49, 68),
-            EnemiesScenePath = "res://Scenes/battles/Tier0Crab.tscn"
+            Enemies = [EnemyPool.Crab],
         };
         var tier1Bats3 = new BattleStats
         {
             Tier = 1,
             Weight = 1f,
             GoldReward = (63, 81),
-            EnemiesScenePath = "res://Scenes/battles/Tier1Bats3.tscn"
+            Enemies = [EnemyPool.Bat, EnemyPool.Bat, EnemyPool.Bat],
         };
         var tier1BatCrab = new BattleStats
         {
             Tier = 1,
             Weight = 2f,
             GoldReward = (63, 81),
-            EnemiesScenePath = "res://Scenes/battles/Tier1BatCrab.tscn"
+            Enemies = [EnemyPool.Bat, EnemyPool.Crab],
         };
         var richBoss = new BattleStats
         {
             Tier = 2,
             Weight = 2f,
             GoldReward = (630, 810),
-            EnemiesScenePath = "res://Scenes/battles/Tier1BatCrab.tscn"
+            Enemies = [EnemyPool.Crab],
         };
         var result = new List<BattleStats> { tier0Bats2, tier0Crab, tier1Bats3, tier1BatCrab, richBoss };
         return result;

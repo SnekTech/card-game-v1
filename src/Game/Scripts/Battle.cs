@@ -14,8 +14,6 @@ public partial class Battle : Node2D
 {
     [Export]
     private AudioStream music = null!;
-    [Export]
-    private CharacterStats characterStats = null!;
 
     [Node]
     private BattleUI battleUI = null!;

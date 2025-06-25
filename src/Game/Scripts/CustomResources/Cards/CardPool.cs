@@ -28,7 +28,7 @@ public static class CardPool
         Get<WarriorTrueStrength>(),
     ]);
 
-    public static readonly CardPile WarriorDraftableCards = new CardPile([
+    public static readonly CardPile WarriorDraftableCards = new([
         Get<WarriorBlock>(),
         Get<WarriorBlock>(),
         Get<WarriorSlash>(),

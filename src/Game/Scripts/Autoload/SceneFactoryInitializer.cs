@@ -1,4 +1,5 @@
-﻿using CardGameV1.Map;
+﻿using CardGameV1.Character;
+using CardGameV1.Map;
 using CardGameV1.StatusSystem.UI;
 using CardGameV1.UI.BattleReward;
 using CardGameV1.UI.Campfire;
@@ -15,6 +16,7 @@ public partial class SceneFactoryInitializer : Node
     {
         SceneFactory.Register<CardMenuUI>("res://Scenes/UI/card_pile_view/CardMenuUI.tscn");
         SceneFactory.Register<Battle>("res://Scenes/Battle.tscn");
+        SceneFactory.Register<Enemy>("res://Scenes/Enemy/Enemy.tscn");
         SceneFactory.Register<BattleRewardScene>("res://Scenes/UI/battle_reward/BattleReward.tscn");
         SceneFactory.Register<CardRewards>("res://Scenes/UI/battle_reward/CardRewards.tscn");
         SceneFactory.Register<RewardButton>("res://Scenes/UI/battle_reward/RewardButton.tscn");

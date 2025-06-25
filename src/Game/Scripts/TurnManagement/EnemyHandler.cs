@@ -30,14 +30,12 @@ public partial class EnemyHandler : Node2D
     {
         this.ClearChildren();
 
-        var enemiesPacked = SnekUtility.LoadScene(battleStats.EnemiesScenePath).Instantiate<Node2D>();
-        foreach (var enemy in enemiesPacked.GetChildrenOfType<Enemy>())
+        foreach (var enemyStats in battleStats.Enemies)
         {
-            enemy.Owner = null;
-            enemy.Reparent(this);
+            var enemy = SceneFactory.Instantiate<Enemy>();
+            AddChild(enemy);
+            enemy.EnemyStats = enemyStats.Duplicate();
         }
-
-        enemiesPacked.QueueFree();
     }
 
     private async Task EnemiesDoTurnAsync()

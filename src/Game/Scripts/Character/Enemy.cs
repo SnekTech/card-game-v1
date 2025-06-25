@@ -15,11 +15,6 @@ namespace CardGameV1.Character;
 [Scene]
 public partial class Enemy : Area2D, ITarget
 {
-    private const int ArrowOffset = 5;
-
-    [Export]
-    private EnemyStats originalEnemyStats = null!;
-
     [Node]
     private Sprite2D sprite2D = null!;
     [Node]
@@ -31,12 +26,12 @@ public partial class Enemy : Area2D, ITarget
     [Node]
     private StatusHandler statusHandler = null!;
 
+    private const int ArrowOffset = 5;
     private static readonly Material WhiteSprite = GD.Load<Material>("res://art/white_sprite_material.tres");
 
-    private Stats _stats = null!;
+    private EnemyStats _stats = null!;
 
-    // todo: use different action picker for different enemy
-    private readonly EnemyActionPicker _enemyActionPicker = EnemyActionPickerFactory.Crab;
+    private EnemyActionPicker _enemyActionPicker = EnemyActionPickerFactory.CreateCrabBrain();
     private EnemyAction? _currentAction;
 
     private CancellationTokenSource cts = new();
@@ -54,12 +49,14 @@ public partial class Enemy : Area2D, ITarget
         }
     }
 
-    public Stats Stats
+    public Stats Stats => _stats;
+
+    public EnemyStats EnemyStats
     {
         get => _stats;
-        private set
+        set
         {
-            _stats = value.CreateInstance();
+            _stats = value;
             _stats.StatsChanged += UpdateStats;
             _stats.StatsChanged += UpdateAction;
             UpdateEnemy();
@@ -70,14 +67,8 @@ public partial class Enemy : Area2D, ITarget
 
     #region lifecycle
 
-    public override void _Ready()
+    public override void _EnterTree()
     {
-        Stats = originalEnemyStats;
-
-        var target = (ITarget)GetTree().GetFirstNodeInGroup(GroupNames.Player);
-        _enemyActionPicker.SetActionTarget(target);
-        _enemyActionPicker.SetActionEnemy(this);
-
         AreaEntered += OnAreaEntered;
         AreaExited += OnAreaExited;
     }
@@ -136,6 +127,7 @@ public partial class Enemy : Area2D, ITarget
 
         if (Stats.Health <= 0)
         {
+            // todo: cancel task here
             QueueFree();
         }
     }
@@ -149,6 +141,15 @@ public partial class Enemy : Area2D, ITarget
         var spriteWidth = sprite2D.GetRect().Size.X;
         arrow.Position = Vector2.Right * (spriteWidth / 2 + ArrowOffset);
         UpdateStats();
+        UpdateAI();
+    }
+
+    private void UpdateAI()
+    {
+        _enemyActionPicker = EnemyStats.ActionPickerGetter();
+        var target = (ITarget)GetTree().GetFirstNodeInGroup(GroupNames.Player);
+        _enemyActionPicker.SetActionTarget(target);
+        _enemyActionPicker.SetActionEnemy(this);
     }
 
     private void UpdateStats() => statsUI.UpdateStats(Stats);

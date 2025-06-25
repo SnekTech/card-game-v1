@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="EnemyStats" load_steps=3 format=3 uid="uid://bky0dx2b3oms8"]
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://bky0dx2b3oms8"]
 
 [ext_resource type="Texture2D" uid="uid://con6y7mc74c5a" path="res://art/tile_0120.png" id="1_16ser"]
 [ext_resource type="Script" uid="uid://cuoyi4yac4lqn" path="res://Scripts/CustomResources/EnemyStats.cs" id="1_33wpy"]

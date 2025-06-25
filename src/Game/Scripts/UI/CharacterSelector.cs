@@ -1,4 +1,5 @@
-﻿using CardGameV1.CustomResources;
+﻿using CardGameV1.Character;
+using CardGameV1.CustomResources;
 using Godot;
 using GodotUtilities;
 
@@ -26,13 +27,6 @@ public partial class CharacterSelector : Control
     private Button assassinButton = null!;
 
     private static readonly PackedScene RunScene = GD.Load<PackedScene>("res://Scenes/run/Run.tscn");
-    private static readonly CharacterStats WarriorStats =
-        GD.Load<CharacterStats>("res://characters/warrior/warrior.tres");
-    private static readonly CharacterStats WizardStats =
-        GD.Load<CharacterStats>("res://characters/wizard/wizard.tres");
-    private static readonly CharacterStats AssassinStats =
-        GD.Load<CharacterStats>("res://characters/assassin/assassin.tres");
-
 
     private CharacterStats CurrentCharacter
     {
@@ -44,11 +38,11 @@ public partial class CharacterSelector : Control
         }
     }
 
-    private CharacterStats _currentCharacter = WarriorStats;
+    private CharacterStats _currentCharacter = CharacterPool.Warrior;
 
     public override void _Ready()
     {
-        CurrentCharacter = WarriorStats;
+        CurrentCharacter = CharacterPool.Warrior;
     }
 
     public override void _EnterTree()
@@ -82,11 +76,9 @@ public partial class CharacterSelector : Control
         GetTree().ChangeSceneToPacked(RunScene);
     }
 
-    private void OnWarriorButtonPressed() => CurrentCharacter = WarriorStats;
-
-    private void OnWizardButtonPressed() => CurrentCharacter = WizardStats;
-
-    private void OnAssassinButtonPressed() => CurrentCharacter = AssassinStats;
+    private void OnWarriorButtonPressed() => CurrentCharacter = CharacterPool.Warrior;
+    private void OnWizardButtonPressed() => CurrentCharacter = CharacterPool.Wizard;
+    private void OnAssassinButtonPressed() => CurrentCharacter = CharacterPool.Assassin;
 
     public override void _Notification(int what)
     {

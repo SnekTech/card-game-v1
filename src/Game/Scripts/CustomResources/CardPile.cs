@@ -7,11 +7,11 @@ namespace CardGameV1.CustomResources;
 
 public class CardPile(List<Card> cards)
 {
-    public event Action<int>? CardPileSizeChanged;
-
     public CardPile() : this([])
     {
     }
+
+    public event Action<int>? CardPileSizeChanged;
 
     private readonly List<Card> _cards = cards.ToList();
 

@@ -3,31 +3,21 @@ using Godot;
 
 namespace CardGameV1.CustomResources;
 
-[GlobalClass]
-public partial class CharacterStats : Stats
+public class CharacterStats(CardPile startingDeck) : Stats
 {
-    [ExportGroup("Visuals")]
-    [Export]
-    public string CharacterName { get; private set; } = "default name";
+    public string CharacterName { get; init; } = "default name";
+    public string Description { get; init; } = "default description";
+    public required string PortraitPath { get; init; }
+    public required CardPile DraftableCards { get; init; }
 
-    [Export(PropertyHint.MultilineText)]
-    public string Description { get; private set; } = "default description";
+    public Texture2D Portrait => SnekUtility.LoadTexture(PortraitPath);
 
-    [Export]
-    public Texture2D Portrait { get; private set; } = null!;
-
-    public readonly CardPile StartingDeck = CardPool.WarriorStartingDeck;
-
-    public readonly CardPile DraftableCards = CardPool.WarriorDraftableCards;
-
-    [Export]
     public int CardsPerTurn { get; private set; } = 5;
 
-    [Export]
-    public int MaxMana { get; private set; } = 3;
+    public int MaxMana => 3;
 
     private int _mana;
-    public CardPile Deck { get; set; } = new();
+    public CardPile Deck { get; private set; } = new(startingDeck.Cards);
     public CardPile DrawPile { get; set; } = new();
     public CardPile DiscardPile { get; set; } = new();
 
@@ -55,13 +45,22 @@ public partial class CharacterStats : Stats
 
     public bool CanPlayCard(Card card) => Mana >= card.Cost;
 
-    public override CharacterStats CreateInstance()
+    public CharacterStats CreateInstance()
     {
-        var instance = (CharacterStats)base.CreateInstance();
-        instance.ResetMana();
-        instance.Deck = StartingDeck;
-        instance.DrawPile = new CardPile();
-        instance.DiscardPile = new CardPile();
-        return instance;
+        var other = new CharacterStats(startingDeck)
+        {
+            MaxHealth = MaxHealth,
+            Health = MaxHealth,
+            Block = Block,
+            ArtPath = ArtPath,
+            CharacterName = CharacterName,
+            Description = Description,
+            PortraitPath = PortraitPath,
+            DraftableCards = DraftableCards,
+            CardsPerTurn = CardsPerTurn,
+        };
+        other.ResetMana();
+
+        return other;
     }
 }

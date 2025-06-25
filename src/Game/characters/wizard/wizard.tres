@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="CharacterStats" load_steps=3 format=3 uid="uid://dk7n76y0iuy04"]
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://dk7n76y0iuy04"]
 
 [ext_resource type="Script" uid="uid://cp2n225uwa0h4" path="res://Scripts/CustomResources/CharacterStats.cs" id="1_idu3k"]
 [ext_resource type="Texture2D" uid="uid://dpfqok8tuy4r7" path="res://art/tile_0084.png" id="1_ihxtb"]

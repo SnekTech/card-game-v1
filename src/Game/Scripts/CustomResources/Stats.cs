@@ -3,37 +3,36 @@ using Godot;
 
 namespace CardGameV1.CustomResources;
 
-[GlobalClass]
-public partial class Stats : Resource
+public abstract class Stats
 {
     public event Action? StatsChanged;
 
-    [Export] private int maxHealth = 1;
-    [Export] private Texture2D art = null!;
+    public required string ArtPath { get; init; }
+    public int MaxHealth { get; set; }
+
+    public Texture2D Art => SnekUtility.LoadTexture(ArtPath);
+
+    private const int MaxBlock = 999;
 
     private int _health;
     private int _block;
-
-    public Texture2D Art => art;
 
     public int Health
     {
         get => _health;
         set
         {
-            _health = Mathf.Clamp(value, 0, maxHealth);
+            _health = Mathf.Clamp(value, 0, MaxHealth);
             EmitStatsChanged();
         }
     }
-
-    public int MaxHealth => maxHealth;
 
     public int Block
     {
         get => _block;
         set
         {
-            _block = Mathf.Clamp(value, 0, 999);
+            _block = Mathf.Clamp(value, 0, MaxBlock);
             EmitStatsChanged();
         }
     }
@@ -52,14 +51,6 @@ public partial class Stats : Resource
     public void Heal(int amount)
     {
         Health += amount;
-    }
-
-    public virtual Stats CreateInstance()
-    {
-        var instance = (Stats)Duplicate();
-        instance.Health = maxHealth;
-        instance.Block = 0;
-        return instance;
     }
 
     protected void EmitStatsChanged() => StatsChanged?.Invoke();
