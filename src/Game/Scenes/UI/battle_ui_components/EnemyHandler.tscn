@@ -1,0 +1,19 @@
+[gd_scene load_steps=2 format=3 uid="uid://bgdfe002lxib5"]
+
+[ext_resource type="Script" uid="uid://0faq3w7tlvw2" path="res://Scripts/TurnManagement/EnemyHandler.cs" id="1_gdike"]
+
+[node name="EnemyHandler" type="Node2D"]
+script = ExtResource("1_gdike")
+metadata/_edit_lock_ = true
+
+[node name="EnemySlots" type="Node2D" parent="."]
+metadata/_edit_lock_ = true
+
+[node name="Slot1" type="Marker2D" parent="EnemySlots"]
+position = Vector2(157, 64)
+
+[node name="Slot2" type="Marker2D" parent="EnemySlots"]
+position = Vector2(175, 82)
+
+[node name="Slot3" type="Marker2D" parent="EnemySlots"]
+position = Vector2(201, 67)

@@ -35,6 +35,7 @@ public partial class PlayerHandler : Node
         _characterStats = stats;
         _characterStats.DrawPile = new CardPile(stats.Deck.Cards);
         _characterStats.DrawPile.Shuffle();
+        // BUG: the discard pile size is increasing 
         _characterStats.DiscardPile = new CardPile();
         StartTurn();
     }

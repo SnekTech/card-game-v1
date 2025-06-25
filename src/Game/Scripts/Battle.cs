@@ -68,7 +68,7 @@ public partial class Battle : Node2D
 
     private void OnEnemiesChildOrderChanged()
     {
-        if (enemyHandler.GetChildCount() == 0)
+        if (enemyHandler.HasNoEnemyAlive)
         {
             BattleEvents.EmitBattleOverScreenRequested("Victorious!", BattleOverPanel.PanelType.Win);
         }

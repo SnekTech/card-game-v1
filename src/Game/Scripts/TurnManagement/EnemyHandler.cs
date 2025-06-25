@@ -1,20 +1,29 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using CardGameV1.Character;
 using CardGameV1.CustomResources;
 using CardGameV1.EventBus;
-using CardGameV1.MyExtensions;
 using Godot;
 using GodotUtilities;
 
 namespace CardGameV1.TurnManagement;
 
+[Scene]
 public partial class EnemyHandler : Node2D
 {
+    [Node]
+    private Node2D enemySlots = null!;
+
     private static readonly EnemyEvents EnemyEvents = EventBusOwner.EnemyEvents;
+
+    private IEnumerable<Enemy> Enemies => this.GetChildrenOfType<Enemy>();
+
+    public bool HasNoEnemyAlive => !Enemies.Any();
 
     public void ResetEnemyActions()
     {
-        foreach (var enemy in this.GetChildrenOfType<Enemy>())
+        foreach (var enemy in Enemies)
         {
             enemy.CurrentAction = null;
             enemy.UpdateAction();
@@ -28,23 +37,50 @@ public partial class EnemyHandler : Node2D
 
     public void SetupEnemies(BattleStats battleStats)
     {
-        this.ClearChildren();
+        ClearExistingEnemies();
 
-        foreach (var enemyStats in battleStats.Enemies)
+        var slots = enemySlots.GetChildrenOfType<Marker2D>().ToList();
+        for (var i = 0; i < slots.Count; i++)
         {
+            if (i >= battleStats.Enemies.Count)
+            {
+                GD.Print(
+                    $"{slots.Count} enemy slots available, but only got {battleStats.Enemies.Count} enemies for this battle");
+                return;
+            }
+
             var enemy = SceneFactory.Instantiate<Enemy>();
             AddChild(enemy);
-            enemy.EnemyStats = enemyStats.Duplicate();
+            enemy.EnemyStats = battleStats.Enemies[i].Duplicate();
+            enemy.GlobalPosition = slots[i].GlobalPosition;
+        }
+
+        return;
+
+        void ClearExistingEnemies()
+        {
+            foreach (var enemy in Enemies)
+            {
+                enemy.QueueFree();
+            }
         }
     }
 
     private async Task EnemiesDoTurnAsync()
     {
-        foreach (var enemy in this.GetChildrenOfType<Enemy>())
+        foreach (var enemy in Enemies)
         {
             await enemy.DoTurnAsync();
         }
 
         EnemyEvents.EmitEnemyTurnEnded();
+    }
+
+    public override void _Notification(int what)
+    {
+        if (what == NotificationSceneInstantiated)
+        {
+            WireNodes();
+        }
     }
 }
