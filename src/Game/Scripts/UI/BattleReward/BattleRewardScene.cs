@@ -5,7 +5,6 @@ using CardGameV1.CustomResources.Cards;
 using CardGameV1.EventBus;
 using CardGameV1.MyExtensions;
 using Godot;
-using Godot.Collections;
 using GodotUtilities;
 
 namespace CardGameV1.UI.BattleReward;
@@ -20,11 +19,11 @@ public partial class BattleRewardScene : Control
 
     private static readonly Texture2D GoldIcon = GD.Load<Texture2D>("res://art/gold.png");
     private static readonly Texture2D CardIcon = GD.Load<Texture2D>("res://art/rarity.png");
-    private readonly System.Collections.Generic.Dictionary<CardRarity, float> _cardRarityWeights = new()
+    private readonly Dictionary<CardRarity, float> _cardRarityWeights = new()
     {
         [CardRarity.Common] = 0,
         [CardRarity.Uncommon] = 0,
-        [CardRarity.Rare] = 0
+        [CardRarity.Rare] = 0,
     };
 
     private float _cardRewardTotalWeight;
