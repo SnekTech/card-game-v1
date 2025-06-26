@@ -26,8 +26,8 @@ public static class CustomExtensions
             }
             catch (Exception e)
             {
-                GD.Print("something wrong during fire & forget: ");
-                GD.Print(e);
+                GD.PrintErr("something wrong during fire & forget: ");
+                GD.PrintErr(e);
                 onError?.Invoke(e);
             }
 
@@ -35,8 +35,8 @@ public static class CustomExtensions
         }
         catch (Exception e)
         {
-            GD.Print("something wrong on fire & forget complete : ");
-            GD.Print(e);
+            GD.PrintErr("something wrong on fire & forget complete : ");
+            GD.PrintErr(e);
             onError?.Invoke(e);
         }
     }
