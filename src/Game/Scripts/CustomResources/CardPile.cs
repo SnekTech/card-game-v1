@@ -18,8 +18,11 @@ public class CardPile(List<Card> cards)
     public bool IsEmpty => _cards.Count == 0;
     public List<Card> Cards => _cards.ToList();
 
-    public Card DrawCard()
+    public Card? DrawCard()
     {
+        if (IsEmpty)
+            return null;
+
         var card = _cards[0];
         _cards.RemoveAt(0);
         CardPileSizeChanged?.Invoke(_cards.Count);

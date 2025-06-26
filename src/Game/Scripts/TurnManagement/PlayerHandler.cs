@@ -60,7 +60,14 @@ public partial class PlayerHandler : Node
     private void DrawCard()
     {
         ReshuffleDeckFromDiscard();
-        hand.AddCard(_characterStats.DrawPile.DrawCard());
+
+        var card = _characterStats.DrawPile.DrawCard();
+        if (card == null)
+        {
+            return;
+        }
+
+        hand.AddCard(card);
         ReshuffleDeckFromDiscard();
     }
 
@@ -102,12 +109,12 @@ public partial class PlayerHandler : Node
 
     private void ReshuffleDeckFromDiscard()
     {
-        if (_characterStats.DrawPile.IsEmpty == false)
+        if (!_characterStats.DrawPile.IsEmpty)
             return;
 
-        while (_characterStats.DiscardPile.IsEmpty == false)
+        while (!_characterStats.DiscardPile.IsEmpty)
         {
-            _characterStats.DrawPile.AddCard(_characterStats.DiscardPile.DrawCard());
+            _characterStats.DrawPile.AddCard(_characterStats.DiscardPile.DrawCard()!);
         }
 
         _characterStats.DrawPile.Shuffle();
