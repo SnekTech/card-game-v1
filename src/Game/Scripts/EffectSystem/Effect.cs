@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Godot;
 
@@ -8,5 +9,5 @@ public abstract class Effect
 {
     public AudioStream? Sound { get; init; }
     
-    public abstract Task ExecuteAllAsync(IEnumerable<ITarget> targets);
+    public abstract Task ExecuteAllAsync(IEnumerable<ITarget> targets, CancellationToken cancellationToken);
 }

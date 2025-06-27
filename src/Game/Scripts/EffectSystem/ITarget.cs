@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Threading;
+using System.Threading.Tasks;
 using CardGameV1.CustomResources;
 using CardGameV1.StatusSystem;
 using Godot;
@@ -11,4 +12,6 @@ public interface ITarget
     Stats Stats { get; }
     StatusHandler StatusHandler { get; }
     Task TakeDamageAsync(int amount);
+    CancellationToken CancellationTokenOnQueueFree { get; }
+    void QFree();
 }

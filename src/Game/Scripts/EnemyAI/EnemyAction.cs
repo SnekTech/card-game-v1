@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Threading;
+using System.Threading.Tasks;
 using CardGameV1.Character;
 using CardGameV1.EffectSystem;
 using Godot;
@@ -14,5 +15,5 @@ public abstract class EnemyAction
     public Enemy? Enemy { get; set; }
     public ITarget? Target { get; set; }
 
-    public abstract Task PerformActionAsync();
+    public abstract Task PerformActionAsync(CancellationToken cancellationToken);
 }

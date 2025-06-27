@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using CardGameV1.EffectSystem;
 using CardGameV1.StatusSystem;
@@ -25,7 +26,7 @@ public class WarriorBigSlam : Card
     private const int BaseDamage = 4;
     private const int Duration = 2;
 
-    protected override async Task ApplyEffectsAsync(IEnumerable<ITarget> targets)
+    protected override async Task ApplyEffectsAsync(IEnumerable<ITarget> targets, CancellationToken cancellationToken)
     {
         var targetList = targets.ToList();
         var damageEffect = new DamageEffect(BaseDamage)
@@ -33,11 +34,11 @@ public class WarriorBigSlam : Card
             Sound = Sound,
         };
 
-        await damageEffect.ExecuteAllAsync(targetList);
+        await damageEffect.ExecuteAllAsync(targetList, cancellationToken);
 
         var exposedStatus = StatusFactory.Create<Exposed>();
         exposedStatus.Duration = Duration;
         var statusEffect = new AddStatusEffect(exposedStatus);
-        await statusEffect.ExecuteAllAsync(targetList);
+        await statusEffect.ExecuteAllAsync(targetList, cancellationToken);
     }
 }

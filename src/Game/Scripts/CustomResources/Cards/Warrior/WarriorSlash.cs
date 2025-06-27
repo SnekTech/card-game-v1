@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using CardGameV1.EffectSystem;
 
@@ -20,12 +21,12 @@ public class WarriorSlash : Card
         SoundPath = "res://art/slash.ogg"
     };
 
-    protected override async Task ApplyEffectsAsync(IEnumerable<ITarget> targets)
+    protected override async Task ApplyEffectsAsync(IEnumerable<ITarget> targets, CancellationToken cancellationToken)
     {
         var damageEffect = new DamageEffect(DamageAmount)
         {
             Sound = Sound
         };
-        await damageEffect.ExecuteAllAsync(targets);
+        await damageEffect.ExecuteAllAsync(targets, cancellationToken);
     }
 }

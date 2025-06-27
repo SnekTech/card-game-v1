@@ -34,7 +34,7 @@ public partial class Enemy : Area2D, ITarget
     private EnemyActionPicker _enemyActionPicker = EnemyActionPickerFactory.CreateCrabBrain();
     private EnemyAction? _currentAction;
 
-    private CancellationTokenSource cts = new();
+    private CancellationTokenSource ctsOnQueueFree = new();
 
     public EnemyAction? CurrentAction
     {
@@ -65,6 +65,8 @@ public partial class Enemy : Area2D, ITarget
 
     public StatusHandler StatusHandler => statusHandler;
 
+    public CancellationToken CancellationTokenOnQueueFree => ctsOnQueueFree.Token;
+
     #region lifecycle
 
     public override void _EnterTree()
@@ -81,37 +83,38 @@ public partial class Enemy : Area2D, ITarget
         _stats.StatsChanged -= UpdateAction;
     }
 
-    #endregion
-
-    protected override void Dispose(bool disposing)
+    public void QFree()
     {
-        cts.Cancel();
-        base.Dispose(disposing);
+        ctsOnQueueFree.Cancel();
+        QueueFree();
     }
+
+    #endregion
 
     public async Task DoTurnAsync()
     {
-        if (cts.IsCancellationRequested)
-        {
-            cts.Dispose();
-            cts = new CancellationTokenSource();
-        }
-
         try
         {
-            await statusHandler.ApplyStatusesByType(StatusType.StartOfTurn, cts.Token);
+            await statusHandler.ApplyStatusesByType(StatusType.StartOfTurn, CancellationTokenOnQueueFree);
 
             Stats.Block = 0;
             if (CurrentAction != null)
             {
-                await CurrentAction.PerformActionAsync();
+                await CurrentAction.PerformActionAsync(CancellationTokenOnQueueFree);
             }
 
-            await statusHandler.ApplyStatusesByType(StatusType.EndOfTurn, cts.Token);
+            await statusHandler.ApplyStatusesByType(StatusType.EndOfTurn, CancellationTokenOnQueueFree);
         }
-        catch (OperationCanceledException)
+        catch (OperationCanceledException e)
         {
-            GD.Print($"enemy turn canceled, 'cause this enemy died");
+            if (e.CancellationToken == ctsOnQueueFree.Token)
+            {
+                GD.Print($"enemy turn canceled, 'cause this enemy died");
+            }
+            else
+            {
+                throw;
+            }
         }
     }
 
@@ -127,8 +130,7 @@ public partial class Enemy : Area2D, ITarget
 
         if (Stats.Health <= 0)
         {
-            // todo: cancel task here
-            QueueFree();
+            QFree();
         }
     }
 

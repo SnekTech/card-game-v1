@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Threading;
+using System.Threading.Tasks;
 using CardGameV1.EffectSystem;
 using Godot;
 
@@ -12,7 +13,7 @@ public class CrabBlockAction : EnemyChanceBasedAction
 
     private const int Block = 6;
 
-    public override async Task PerformActionAsync()
+    public override async Task PerformActionAsync(CancellationToken cancellationToken)
     {
         if (Target == null || Enemy == null)
         {
@@ -21,8 +22,8 @@ public class CrabBlockAction : EnemyChanceBasedAction
         }
 
         var blockEffect = new BlockEffect(Block) { Sound = Sound };
-        await blockEffect.ExecuteAllAsync([Enemy]);
+        await blockEffect.ExecuteAllAsync([Enemy], cancellationToken);
 
-        await SnekUtility.DelayGd(0.6f);
+        await SnekUtility.DelayGd(0.6f, cancellationToken);
     }
 }

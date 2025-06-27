@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Threading;
+using System.Threading.Tasks;
 using CardGameV1.CustomResources;
 using CardGameV1.EffectSystem;
 using CardGameV1.StatusSystem;
@@ -22,6 +23,7 @@ public partial class Player : Node2D, ITarget
 
     private static readonly Material WhiteSprite = GD.Load<Material>("res://art/white_sprite_material.tres");
     private CharacterStats _stats = null!;
+    private readonly CancellationTokenSource ctsOnQueueFree = new();
 
     public CharacterStats CharacterStats
     {
@@ -36,9 +38,18 @@ public partial class Player : Node2D, ITarget
 
     public Stats Stats => _stats;
 
+    public CancellationToken CancellationTokenOnQueueFree => ctsOnQueueFree.Token;
+
     public override void _ExitTree()
     {
         _stats.StatsChanged -= UpdateCharacterStats;
+    }
+
+    public void QFree()
+    {
+        ctsOnQueueFree.Cancel();
+        ctsOnQueueFree.Dispose();
+        QueueFree();
     }
 
     private void UpdatePlayer()

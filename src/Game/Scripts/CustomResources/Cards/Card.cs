@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using CardGameV1.Constants;
 using CardGameV1.EffectSystem;
@@ -45,7 +46,8 @@ public abstract class Card
         return targets.OfType<ITarget>();
     }
 
-    public async Task PlayAsync(IEnumerable<Node> targetNodes, CharacterStats characterStats)
+    public async Task PlayAsync(IEnumerable<Node> targetNodes, CharacterStats characterStats,
+        CancellationToken cancellationToken)
     {
         EventBusOwner.CardEvents.EmitCardPlayed(this);
         characterStats.Mana -= Cost;
@@ -53,15 +55,15 @@ public abstract class Card
 
         if (IsSingleTargeted)
         {
-            await ApplyEffectsAsync(targetNodes.Where(node => node is ITarget).Cast<ITarget>());
+            await ApplyEffectsAsync(targetNodes.Where(node => node is ITarget).Cast<ITarget>(), cancellationToken);
         }
         else
         {
-            await ApplyEffectsAsync(GetTargets(targetNodes.First().GetTree()));
+            await ApplyEffectsAsync(GetTargets(targetNodes.First().GetTree()), cancellationToken);
         }
     }
 
     protected abstract CardAttributes Attributes { get; }
 
-    protected abstract Task ApplyEffectsAsync(IEnumerable<ITarget> targets);
+    protected abstract Task ApplyEffectsAsync(IEnumerable<ITarget> targets, CancellationToken cancellationToken);
 }

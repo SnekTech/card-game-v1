@@ -80,7 +80,7 @@ public partial class Battle : Node2D
         if (playerDied)
         {
             BattleEvents.EmitBattleOverScreenRequested("Game Over!", BattleOverPanel.PanelType.Lose);
-            player.QueueFree();
+            player.QFree();
             return;
         }
 

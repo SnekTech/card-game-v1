@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using CardGameV1.EffectSystem;
 
@@ -19,12 +20,12 @@ public class WarriorBlock : Card
         SoundPath = "res://art/block.ogg"
     };
 
-    protected override async Task ApplyEffectsAsync(IEnumerable<ITarget> targets)
+    protected override async Task ApplyEffectsAsync(IEnumerable<ITarget> targets, CancellationToken cancellationToken)
     {
         var blockEffect = new BlockEffect(BlockAmount)
         {
             Sound = Sound
         };
-        await blockEffect.ExecuteAllAsync(targets);
+        await blockEffect.ExecuteAllAsync(targets, cancellationToken);
     }
 }

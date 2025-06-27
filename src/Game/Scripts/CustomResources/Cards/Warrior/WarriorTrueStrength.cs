@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using CardGameV1.EffectSystem;
 using CardGameV1.StatusSystem;
@@ -23,10 +24,10 @@ public class WarriorTrueStrength : Card
         SoundPath = "res://art/true_strength.ogg",
     };
 
-    protected override async Task ApplyEffectsAsync(IEnumerable<ITarget> targets)
+    protected override async Task ApplyEffectsAsync(IEnumerable<ITarget> targets, CancellationToken cancellationToken)
     {
         var trueStrengthStatus = StatusFactory.Create<TrueStrengthForm>();
         var addTrueStrengthEffect = new AddStatusEffect(trueStrengthStatus);
-        await addTrueStrengthEffect.ExecuteAllAsync(targets);
+        await addTrueStrengthEffect.ExecuteAllAsync(targets, cancellationToken);
     }
 }

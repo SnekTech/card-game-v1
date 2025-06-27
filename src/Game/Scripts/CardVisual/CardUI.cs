@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using CardGameV1.CardVisual.CardStates;
 using CardGameV1.CustomResources;
@@ -142,9 +143,9 @@ public partial class CardUI : Control
 
     public void SetPanelStyleBox(StyleBox styleBox) => cardVisuals.Panel.SetStyleBox(styleBox);
 
-    public async Task PlayAsync()
+    public async Task PlayAsync(CancellationToken cancellationToken)
     {
-        await Card.PlayAsync(Targets, CharacterStats);
+        await Card.PlayAsync(Targets, CharacterStats, cancellationToken);
         QueueFree();
     }
 

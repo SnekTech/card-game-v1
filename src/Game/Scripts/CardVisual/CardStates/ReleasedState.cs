@@ -1,4 +1,5 @@
-﻿using Godot;
+﻿using System.Threading;
+using Godot;
 
 namespace CardGameV1.CardVisual.CardStates;
 
@@ -14,7 +15,7 @@ public class ReleasedState(CardStateMachine cardStateMachine) : CardState(cardSt
         {
             EventBus.EventBusOwner.CardEvents.EmitTooltipHideRequested();
             _played = true;
-            CardUI.PlayAsync().Fire();
+            CardUI.PlayAsync(CancellationToken.None).Fire();
         }
     }
 

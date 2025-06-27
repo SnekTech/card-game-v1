@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Threading;
+using System.Threading.Tasks;
 using CardGameV1.EffectSystem;
 using Godot;
 
@@ -25,7 +26,7 @@ public class CrabMegaBlockAction : EnemyConditionalAction
         return healthIsLowEnough;
     }
 
-    public override async Task PerformActionAsync()
+    public override async Task PerformActionAsync(CancellationToken cancellationToken)
     {
         if (Target == null || Enemy == null)
         {
@@ -34,8 +35,8 @@ public class CrabMegaBlockAction : EnemyConditionalAction
         }
 
         var blockEffect = new BlockEffect(Block) { Sound = Sound };
-        await blockEffect.ExecuteAllAsync([Enemy]);
+        await blockEffect.ExecuteAllAsync([Enemy], cancellationToken);
 
-        await SnekUtility.DelayGd(0.6f);
+        await SnekUtility.DelayGd(0.6f, cancellationToken);
     }
 }

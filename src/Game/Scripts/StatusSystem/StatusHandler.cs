@@ -50,17 +50,13 @@ public partial class StatusHandler : GridContainer
 
     public async Task ApplyStatusesByType(StatusType type, CancellationToken cancellationToken)
     {
-        cancellationToken.ThrowIfCancellationRequested();
-        
-        if (IsQueuedForDeletion())
-            return;
-        
         if (type == StatusType.EventBased)
             return;
 
+        cancellationToken.ThrowIfCancellationRequested();
         foreach (var status in GetAllStatuses().Where(sts => sts.Type == type))
         {
-            await status.ApplyStatusAsync(Target);
+            await status.ApplyStatusAsync(Target, cancellationToken);
             if (status.StackType == StackType.Duration)
             {
                 status.Duration--;
