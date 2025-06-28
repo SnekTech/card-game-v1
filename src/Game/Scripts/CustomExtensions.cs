@@ -4,7 +4,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Godot;
 using GTweensGodot.Extensions;
-using Timer = Godot.Timer;
 
 namespace CardGameV1;
 
@@ -46,13 +45,6 @@ public static class CustomExtensions
     {
         var timer = node.GetTree().CreateTimer(timeSec, processAlways, processInPhysics, ignoreTimeScale);
         return timer;
-    }
-
-    public static async Task DelayGd(this Node node, double timeSec, bool processAlways = true,
-        bool processInPhysics = false, bool ignoreTimeScale = false)
-    {
-        var timer = node.CreateSceneTreeTimer(timeSec, processAlways, processInPhysics, ignoreTimeScale);
-        await timer.ToSignal(timer, Timer.SignalName.Timeout);
     }
 
     public static void SetModulateAlpha(this CanvasItem canvasItem, float alpha)

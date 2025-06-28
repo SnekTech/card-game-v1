@@ -1,5 +1,4 @@
-﻿using System.Threading;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using CardGameV1.CardVisual;
 using CardGameV1.Character;
 using CardGameV1.CustomResources;
@@ -76,7 +75,7 @@ public partial class PlayerHandler : Node
         for (var i = 0; i < cardsPerTurn; i++)
         {
             DrawCard();
-            await this.DelayGd(HandDrawInterval);
+            await SnekUtility.DelayGd(HandDrawInterval);
         }
 
         PlayerEvents.EmitPlayerHandDrawn();
@@ -88,7 +87,7 @@ public partial class PlayerHandler : Node
         {
             _characterStats.DiscardPile.AddCard(cardUI.Card);
             hand.DiscardCard(cardUI);
-            await this.DelayGd(HandDiscardInterval);
+            await SnekUtility.DelayGd(HandDiscardInterval);
         }
 
         PlayerEvents.EmitPlayerHandDiscarded();
