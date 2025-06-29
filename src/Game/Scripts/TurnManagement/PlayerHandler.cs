@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Threading;
+using System.Threading.Tasks;
 using CardGameV1.CardVisual;
 using CardGameV1.Character;
 using CardGameV1.CustomResources;
@@ -22,6 +23,7 @@ public partial class PlayerHandler : Node
 
     private static readonly PlayerEvents PlayerEvents = EventBusOwner.PlayerEvents;
     private static readonly CardEvents CardEvents = EventBusOwner.CardEvents;
+
     private CharacterStats _characterStats = null!;
 
     public override void _EnterTree()
@@ -40,14 +42,7 @@ public partial class PlayerHandler : Node
         _characterStats.DrawPile = new CardPile(stats.Deck.Cards);
         _characterStats.DrawPile.Shuffle();
         _characterStats.DiscardPile = new CardPile();
-        StartTurn();
-    }
-
-    public void StartTurn()
-    {
-        _characterStats.Block = 0;
-        _characterStats.ResetMana();
-        StartTurnAsync().Fire();
+        StartTurnAsync(CancellationToken.None).Fire();
     }
 
     public void EndTurn()
@@ -70,40 +65,46 @@ public partial class PlayerHandler : Node
         ReshuffleDeckFromDiscard();
     }
 
-    private async Task DrawCardsAsync(int cardsPerTurn)
+    private async Task DrawCardsAsync(int cardsPerTurn, CancellationToken cancellationToken)
     {
         for (var i = 0; i < cardsPerTurn; i++)
         {
+            cancellationToken.ThrowIfCancellationRequested();
             DrawCard();
-            await SnekUtility.DelayGd(HandDrawInterval);
+            await SnekUtility.DelayGd(HandDrawInterval, cancellationToken);
         }
 
         PlayerEvents.EmitPlayerHandDrawn();
     }
 
-    private async Task DiscardCardsAsync()
+    private async Task DiscardCardsAsync(CancellationToken cancellationToken)
     {
         foreach (var cardUI in hand.GetChildrenOfType<CardUI>())
         {
+            cancellationToken.ThrowIfCancellationRequested();
             _characterStats.DiscardPile.AddCard(cardUI.Card);
             hand.DiscardCard(cardUI);
-            await SnekUtility.DelayGd(HandDiscardInterval);
+            await SnekUtility.DelayGd(HandDiscardInterval, cancellationToken);
         }
 
         PlayerEvents.EmitPlayerHandDiscarded();
     }
 
-    private async Task StartTurnAsync()
+    public async Task StartTurnAsync(CancellationToken cancellationToken)
     {
-        // todo: design the task cancel flow
-        await player.StatusHandler.ApplyStatusesByType(StatusType.StartOfTurn, player.CancellationTokenOnQueueFree);
-        await DrawCardsAsync(_characterStats.CardsPerTurn);
+        _characterStats.Block = 0;
+        _characterStats.ResetMana();
+        var linkedCts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken,
+            player.CancellationTokenOnQueueFree);
+
+        await player.StatusHandler.ApplyStatusesByType(StatusType.StartOfTurn, linkedCts.Token);
+        await DrawCardsAsync(_characterStats.CardsPerTurn, linkedCts.Token);
     }
 
     private async Task EndTurnAsync()
     {
         await player.StatusHandler.ApplyStatusesByType(StatusType.EndOfTurn, player.CancellationTokenOnQueueFree);
-        await DiscardCardsAsync();
+        await DiscardCardsAsync(player.CancellationTokenOnQueueFree);
     }
 
     private void ReshuffleDeckFromDiscard()

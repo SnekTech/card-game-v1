@@ -1,4 +1,5 @@
-﻿using CardGameV1.Autoload;
+﻿using System.Threading;
+using CardGameV1.Autoload;
 using CardGameV1.Character;
 using CardGameV1.CustomResources;
 using CardGameV1.EventBus;
@@ -27,6 +28,8 @@ public partial class Battle : Node2D
     private static readonly PlayerEvents PlayerEvents = EventBusOwner.PlayerEvents;
     private static readonly EnemyEvents EnemyEvents = EventBusOwner.EnemyEvents;
     private static readonly BattleEvents BattleEvents = EventBusOwner.BattleEvents;
+
+    private readonly CancellationTokenSource _ctsBattleEnded = new();
 
     public BattleStats BattleStats { get; set; } = null!;
 
@@ -68,10 +71,10 @@ public partial class Battle : Node2D
 
     private void OnEnemiesChildOrderChanged()
     {
-        if (enemyHandler.HasNoEnemyAlive)
-        {
-            BattleEvents.EmitBattleOverScreenRequested("Victorious!", BattleOverPanel.PanelType.Win);
-        }
+        if (!enemyHandler.HasNoEnemyAlive) return;
+
+        _ctsBattleEnded.Cancel();
+        BattleEvents.EmitBattleOverScreenRequested("Victorious!", BattleOverPanel.PanelType.Win);
     }
 
     private void OnEnemyTurnEnded()
@@ -84,7 +87,9 @@ public partial class Battle : Node2D
             return;
         }
 
-        playerHandler.StartTurn();
+        if (enemyHandler.HasNoEnemyAlive) return;
+
+        playerHandler.StartTurnAsync(_ctsBattleEnded.Token).Fire();
         enemyHandler.ResetEnemyActions();
     }
 
