@@ -1,7 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using CardGameV1.Character;
-using Godot;
 
 namespace CardGameV1.CustomResources;
 
@@ -80,7 +78,14 @@ public class BattleStatsPool
             GoldReward = (630, 810),
             Enemies = [EnemyPool.Crab],
         };
-        var result = new List<BattleStats> { tier0Bats2, tier0Crab, tier1Bats3, tier1BatCrab, richBoss };
+        var result = new List<BattleStats>
+        {
+            tier0Bats2,
+            tier0Crab,
+            tier1Bats3,
+            tier1BatCrab,
+            richBoss,
+        };
         return result;
     }
 }

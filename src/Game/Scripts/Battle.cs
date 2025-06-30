@@ -5,7 +5,6 @@ using CardGameV1.CustomResources;
 using CardGameV1.EventBus;
 using CardGameV1.TurnManagement;
 using CardGameV1.UI.BattleUIComponents;
-using Godot;
 using GodotUtilities;
 
 namespace CardGameV1;
@@ -43,6 +42,7 @@ public partial class Battle : Node2D
 
         PlayerEvents.PlayerTurnEnded += playerHandler.EndTurn;
         PlayerEvents.PlayerHandDiscarded += enemyHandler.StartTurn;
+        PlayerEvents.PlayerDied += OnPlayerDied;
     }
 
     public override void _ExitTree()
@@ -53,6 +53,7 @@ public partial class Battle : Node2D
 
         PlayerEvents.PlayerTurnEnded -= playerHandler.EndTurn;
         PlayerEvents.PlayerHandDiscarded -= enemyHandler.StartTurn;
+        PlayerEvents.PlayerDied -= OnPlayerDied;
     }
 
     public void StartBattle()
@@ -79,18 +80,15 @@ public partial class Battle : Node2D
 
     private void OnEnemyTurnEnded()
     {
-        var playerDied = player.Stats.Health <= 0;
-        if (playerDied)
-        {
-            BattleEvents.EmitBattleOverScreenRequested("Game Over!", BattleOverPanel.PanelType.Lose);
-            player.QFree();
-            return;
-        }
-
         if (enemyHandler.HasNoEnemyAlive) return;
 
         playerHandler.StartTurnAsync(_ctsBattleEnded.Token).Fire();
         enemyHandler.ResetEnemyActions();
+    }
+
+    private void OnPlayerDied()
+    {
+        EventBusOwner.BattleEvents.EmitBattleOverScreenRequested("Game Over!", BattleOverPanel.PanelType.Lose);
     }
 
     public override void _Notification(int what)

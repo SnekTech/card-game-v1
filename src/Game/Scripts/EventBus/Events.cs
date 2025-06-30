@@ -1,5 +1,4 @@
-﻿using System;
-using CardGameV1.Map;
+﻿using CardGameV1.Map;
 
 namespace CardGameV1.EventBus;
 
@@ -8,7 +7,9 @@ public class Events
     #region battle
 
     public event Action? BattleWon;
+    public event Action? BattleLost;
     public void EmitBattleWon() => BattleWon?.Invoke();
+    public void EmitBattleLost() => BattleLost?.Invoke();
 
     #endregion
 

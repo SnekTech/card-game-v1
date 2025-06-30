@@ -6,7 +6,6 @@ using CardGameV1.CustomResources;
 using CardGameV1.CustomResources.Cards;
 using CardGameV1.EventBus;
 using CardGameV1.StatusSystem;
-using Godot;
 using GodotUtilities;
 
 namespace CardGameV1.TurnManagement;

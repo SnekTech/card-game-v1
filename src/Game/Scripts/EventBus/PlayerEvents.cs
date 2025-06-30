@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace CardGameV1.EventBus;
+﻿namespace CardGameV1.EventBus;
 
 public class PlayerEvents
 {

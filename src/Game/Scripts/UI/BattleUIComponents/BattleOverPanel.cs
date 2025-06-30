@@ -1,5 +1,4 @@
 ﻿using CardGameV1.EventBus;
-using Godot;
 using GodotUtilities;
 
 namespace CardGameV1.UI.BattleUIComponents;
@@ -17,11 +16,6 @@ public partial class BattleOverPanel : Panel
     private Button restartButton = null!;
 
     private static readonly BattleEvents BattleEvents = EventBusOwner.BattleEvents;
-
-    public override void _Ready()
-    {
-        WireNodes();
-    }
 
     public override void _EnterTree()
     {
@@ -48,7 +42,7 @@ public partial class BattleOverPanel : Panel
 
     private void OnContinuePressed() => EventBusOwner.Events.EmitBattleWon();
 
-    private void OnRestartPressed() => GetTree().ReloadCurrentScene();
+    private void OnRestartPressed() => EventBusOwner.Events.EmitBattleLost();
 
     public override void _Notification(int what)
     {
@@ -61,6 +55,6 @@ public partial class BattleOverPanel : Panel
     public enum PanelType
     {
         Win,
-        Lose
+        Lose,
     }
 }

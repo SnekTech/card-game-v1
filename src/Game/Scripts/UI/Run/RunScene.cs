@@ -1,5 +1,4 @@
-﻿using System;
-using CardGameV1.CustomResources;
+﻿using CardGameV1.CustomResources;
 using CardGameV1.EventBus;
 using CardGameV1.Map;
 using CardGameV1.MyExtensions;
@@ -8,7 +7,6 @@ using CardGameV1.UI.Campfire;
 using CardGameV1.UI.CardPileDisplay;
 using CardGameV1.UI.Shop;
 using CardGameV1.UI.TreasureRoom;
-using Godot;
 using GodotUtilities;
 
 namespace CardGameV1.UI.Run;
@@ -127,6 +125,7 @@ public partial class RunScene : Node
     {
         var events = EventBusOwner.Events;
         events.BattleWon += OnBattleWon;
+        events.BattleLost += OnBattleLost;
         events.BattleRewardExited += OnBattleRewardExited;
         events.CampfireExited += OnCampfireExited;
         events.MapExited += OnMapExited;
@@ -151,6 +150,7 @@ public partial class RunScene : Node
     {
         var events = EventBusOwner.Events;
         events.BattleWon -= OnBattleWon;
+        events.BattleLost -= OnBattleLost;
         events.BattleRewardExited -= OnBattleRewardExited;
         events.CampfireExited -= OnCampfireExited;
         events.MapExited -= OnMapExited;
@@ -199,6 +199,14 @@ public partial class RunScene : Node
 
         rewardScene.AddGoldReward(map.LastRoom!.BattleStats!.GoldRewardRoll);
         rewardScene.AddCardReward();
+    }
+
+    private void OnBattleLost()
+    {
+        // todo: handle losing this run
+        GD.Print("should lose this run");
+        GetTree().Paused = false;
+        OnCampfireEntered();
     }
 
     private void OnBattleRewardExited() => ShowMap();

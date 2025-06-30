@@ -2,9 +2,9 @@
 using System.Threading.Tasks;
 using CardGameV1.CustomResources;
 using CardGameV1.EffectSystem;
+using CardGameV1.EventBus;
 using CardGameV1.StatusSystem;
 using CardGameV1.UI.BattleUIComponents;
-using Godot;
 using GodotUtilities;
 
 namespace CardGameV1.Character;
@@ -48,7 +48,6 @@ public partial class Player : Node2D, ITarget
     public void QFree()
     {
         ctsOnQueueFree.Cancel();
-        ctsOnQueueFree.Dispose();
         QueueFree();
     }
 
@@ -69,6 +68,12 @@ public partial class Player : Node2D, ITarget
         CharacterStats.TakeDamage(damage);
         await this.ShakeAsync(16, 0.15f);
         sprite2D.Material = null;
+
+        if (Stats.Health <= 0)
+        {
+            QFree();
+            EventBusOwner.PlayerEvents.EmitPlayerDied();
+        }
     }
 
     public override void _Notification(int what)
