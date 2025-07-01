@@ -1,11 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using CardGameV1.Constants;
 using CardGameV1.EffectSystem;
 using CardGameV1.EventBus;
-using Godot;
+using Godot.Collections;
 
 namespace CardGameV1.CustomResources.Cards;
 
@@ -16,15 +15,15 @@ public abstract class Card
     public CardType Type => Attributes.Type;
     public CardRarity Rarity => Attributes.Rarity;
     public CardTarget Target => Attributes.Target;
-    public string TooltipText => Attributes.TooltipText;
+    public bool ShouldExhaust => Attributes.ShouldExhaust;
 
+    public string TooltipText => Attributes.TooltipText;
     public Texture2D Icon => SnekUtility.LoadTexture(Attributes.IconPath);
     public AudioStream Sound => SnekUtility.LoadSound(Attributes.SoundPath);
 
-
     public bool IsSingleTargeted => Target == CardTarget.SingleEnemy;
 
-    private static readonly Dictionary<CardRarity, Color> RarityColors = new()
+    private static readonly System.Collections.Generic.Dictionary<CardRarity, Color> RarityColors = new()
     {
         [CardRarity.Common] = Colors.Gray,
         [CardRarity.Uncommon] = Colors.CornflowerBlue,
@@ -41,7 +40,7 @@ public abstract class Card
             CardTarget.AllEnemies => tree.GetNodesInGroup(GroupNames.Enemy),
             CardTarget.Everyone => tree.GetNodesInGroup(GroupNames.Player)
                 .Concat(tree.GetNodesInGroup(GroupNames.Enemy)),
-            _ => new Godot.Collections.Array<Node>()
+            _ => new Array<Node>()
         };
         return targets.OfType<ITarget>();
     }

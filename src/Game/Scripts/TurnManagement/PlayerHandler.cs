@@ -121,6 +121,8 @@ public partial class PlayerHandler : Node
 
     private void OnCardPlayed(Card card)
     {
+        if (card.ShouldExhaust || card.Type == CardType.Power) return;
+
         _characterStats.DiscardPile.AddCard(card);
     }
 }

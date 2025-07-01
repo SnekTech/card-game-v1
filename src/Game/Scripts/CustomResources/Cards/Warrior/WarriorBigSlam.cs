@@ -17,6 +17,7 @@ public class WarriorBigSlam : Card
         Type = CardType.Attack,
         Rarity = CardRarity.Uncommon,
         Target = CardTarget.SingleEnemy,
+        ShouldExhaust = true,
         TooltipText =
             $"[center]Deal [color=\"ff0000\"]{BaseDamage}[/color] damage and apply 2 [color=\"ffdf00\"] Exposed[/color].[/center]",
         IconPath = "res://art/tile_0117.png",
