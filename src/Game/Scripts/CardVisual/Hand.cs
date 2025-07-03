@@ -7,9 +7,6 @@ namespace CardGameV1.CardVisual;
 
 public partial class Hand : HBoxContainer
 {
-    [Export]
-    private PackedScene cardUIScene = null!;
-
     public CharacterStats CharacterStats { get; set; } = null!;
 
     public override void _ExitTree()
@@ -22,8 +19,7 @@ public partial class Hand : HBoxContainer
 
     public void AddCard(Card card, ModifierHandler playerModifierHandler)
     {
-        // todo: use scene factory
-        var newCardUI = cardUIScene.Instantiate<CardUI>();
+        var newCardUI = SceneFactory.Instantiate<CardUI>();
         AddChild(newCardUI);
 
         newCardUI.ReparentRequested += OnCardUIReparentRequested;

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using CardGameV1.CardVisual;
 using CardGameV1.Character;
 using CardGameV1.Map;
 using CardGameV1.StatusSystem.UI;
@@ -8,7 +7,6 @@ using CardGameV1.UI.Campfire;
 using CardGameV1.UI.CardPileDisplay;
 using CardGameV1.UI.Shop;
 using CardGameV1.UI.TreasureRoom;
-using Godot;
 
 namespace CardGameV1;
 
@@ -17,6 +15,7 @@ public static class SceneFactory
     static SceneFactory()
     {
         Register<CardMenuUI>("res://Scenes/UI/card_pile_view/CardMenuUI.tscn");
+        Register<CardUI>("res://Scenes/UI/card_visual/CardUI.tscn");
         Register<Battle>("res://Scenes/Battle.tscn");
         Register<Enemy>("res://Scenes/Enemy/Enemy.tscn");
         Register<BattleRewardScene>("res://Scenes/UI/battle_reward/BattleReward.tscn");

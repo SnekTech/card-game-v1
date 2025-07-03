@@ -1,8 +1,7 @@
-[gd_scene load_steps=9 format=3 uid="uid://bxdkorsjy5k6g"]
+[gd_scene load_steps=8 format=3 uid="uid://bxdkorsjy5k6g"]
 
 [ext_resource type="Script" uid="uid://6pmisx6msu1n" path="res://Scripts/UI/BattleUIComponents/BattleUI.cs" id="1_5s6ks"]
 [ext_resource type="Script" uid="uid://6alav0l7l8ly" path="res://Scripts/CardVisual/Hand.cs" id="3_ijghn"]
-[ext_resource type="PackedScene" uid="uid://djmhd1i2e8j2h" path="res://Scenes/CardUI.tscn" id="4_qvr0f"]
 [ext_resource type="Theme" uid="uid://c306wkaelrn2q" path="res://main_theme.tres" id="6_h4kvj"]
 [ext_resource type="PackedScene" uid="uid://b52j2y5jnu2bi" path="res://Scenes/UI/battle_ui_components/ManaUI.tscn" id="7_iys2e"]
 [ext_resource type="PackedScene" uid="uid://bwnipcvvpfdqe" path="res://Scenes/UI/card_pile_view/CardPileOpener.tscn" id="7_nk3qv"]
@@ -25,7 +24,6 @@ grow_horizontal = 2
 grow_vertical = 0
 alignment = 1
 script = ExtResource("3_ijghn")
-cardUIScene = ExtResource("4_qvr0f")
 
 [node name="ManaUI" parent="." instance=ExtResource("7_iys2e")]
 offset_top = -45.0
