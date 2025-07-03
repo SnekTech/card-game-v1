@@ -1,13 +1,12 @@
-﻿using System;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 using CardGameV1.Constants;
 using CardGameV1.CustomResources;
 using CardGameV1.EffectSystem;
 using CardGameV1.EnemyAI;
+using CardGameV1.ModifierSystem;
 using CardGameV1.StatusSystem;
 using CardGameV1.UI.BattleUIComponents;
-using Godot;
 using GodotUtilities;
 
 namespace CardGameV1.Character;
@@ -64,6 +63,8 @@ public partial class Enemy : Area2D, ITarget
     }
 
     public StatusHandler StatusHandler => statusHandler;
+    // todo: use enemy's modifier handler
+    public ModifierHandler ModifierHandler { get; } = ModifierFactory.CreatePlayerModifierHandler();
 
     public CancellationToken CancellationTokenOnQueueFree => ctsOnQueueFree.Token;
 

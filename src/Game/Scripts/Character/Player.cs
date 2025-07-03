@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using CardGameV1.CustomResources;
 using CardGameV1.EffectSystem;
 using CardGameV1.EventBus;
+using CardGameV1.ModifierSystem;
 using CardGameV1.StatusSystem;
 using CardGameV1.UI.BattleUIComponents;
 using GodotUtilities;
@@ -19,11 +20,13 @@ public partial class Player : Node2D, ITarget
     [Node]
     private StatusHandler statusHandler = null!;
 
-    public StatusHandler StatusHandler => statusHandler;
 
     private static readonly Material WhiteSprite = GD.Load<Material>("res://art/white_sprite_material.tres");
     private CharacterStats _stats = null!;
     private readonly CancellationTokenSource ctsOnQueueFree = new();
+
+    public StatusHandler StatusHandler => statusHandler;
+    public ModifierHandler ModifierHandler { get; } = ModifierFactory.CreatePlayerModifierHandler();
 
     public CharacterStats CharacterStats
     {

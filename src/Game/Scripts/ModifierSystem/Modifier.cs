@@ -8,21 +8,21 @@ public class Modifier
 
     private readonly Dictionary<string, ModifierValue> _modifierValues = [];
 
-    public ModifierValue GetValue(string source)
+    public ModifierValue? GetValue(string key)
     {
-        return _modifierValues[source];
+        return _modifierValues.GetValueOrDefault(key);
     }
 
     public void AddNewValue(ModifierValue value)
     {
-        _modifierValues.TryAdd(value.Source, value);
-        _modifierValues[value.Source].FlatValue = value.FlatValue;
-        _modifierValues[value.Source].PercentValue = value.PercentValue;
+        _modifierValues.TryAdd(value.Key, value);
+        _modifierValues[value.Key].FlatValue = value.FlatValue;
+        _modifierValues[value.Key].PercentValue = value.PercentValue;
     }
 
-    public void RemoveValue(string source)
+    public void RemoveValue(string key)
     {
-        _modifierValues.Remove(source);
+        _modifierValues.Remove(key);
     }
 
     public void ClearValues() => _modifierValues.Clear();
