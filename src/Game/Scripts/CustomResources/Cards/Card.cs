@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using CardGameV1.Constants;
 using CardGameV1.EffectSystem;
 using CardGameV1.EventBus;
+using CardGameV1.ModifierSystem;
 using Godot.Collections;
 
 namespace CardGameV1.CustomResources.Cards;
@@ -40,12 +41,12 @@ public abstract class Card
             CardTarget.AllEnemies => tree.GetNodesInGroup(GroupNames.Enemy),
             CardTarget.Everyone => tree.GetNodesInGroup(GroupNames.Player)
                 .Concat(tree.GetNodesInGroup(GroupNames.Enemy)),
-            _ => new Array<Node>()
+            _ => new Array<Node>(),
         };
         return targets.OfType<ITarget>();
     }
 
-    public async Task PlayAsync(IEnumerable<Node> targetNodes, CharacterStats characterStats,
+    public async Task PlayAsync(IEnumerable<Node> targetNodes, CharacterStats characterStats, ModifierHandler modifiers,
         CancellationToken cancellationToken)
     {
         EventBusOwner.CardEvents.EmitCardPlayed(this);
@@ -54,15 +55,17 @@ public abstract class Card
 
         if (IsSingleTargeted)
         {
-            await ApplyEffectsAsync(targetNodes.Where(node => node is ITarget).Cast<ITarget>(), cancellationToken);
+            await ApplyEffectsAsync(targetNodes.Where(node => node is ITarget).Cast<ITarget>(), modifiers,
+                cancellationToken);
         }
         else
         {
-            await ApplyEffectsAsync(GetTargets(targetNodes.First().GetTree()), cancellationToken);
+            await ApplyEffectsAsync(GetTargets(targetNodes.First().GetTree()), modifiers, cancellationToken);
         }
     }
 
     protected abstract CardAttributes Attributes { get; }
 
-    protected abstract Task ApplyEffectsAsync(IEnumerable<ITarget> targets, CancellationToken cancellationToken);
+    protected abstract Task ApplyEffectsAsync(IEnumerable<ITarget> targets, ModifierHandler modifiers,
+        CancellationToken cancellationToken);
 }

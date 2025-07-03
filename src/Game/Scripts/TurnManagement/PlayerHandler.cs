@@ -60,7 +60,7 @@ public partial class PlayerHandler : Node
             return;
         }
 
-        hand.AddCard(card);
+        hand.AddCard(card, player.ModifierHandler);
         ReshuffleDeckFromDiscard();
     }
 

@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 using CardGameV1.CardVisual.CardStates;
 using CardGameV1.CustomResources;
 using CardGameV1.CustomResources.Cards;
 using CardGameV1.CustomResources.Cards.Warrior;
 using CardGameV1.EventBus;
-using Godot;
+using CardGameV1.ModifierSystem;
 using GodotUtilities;
 
 namespace CardGameV1.CardVisual;
@@ -72,6 +70,8 @@ public partial class CardUI : Control
     }
 
     public Control Parent { get; set; } = null!;
+
+    public ModifierHandler ModifierHandler { private get; set; } = null!;
 
     private bool _playable = true;
 
@@ -145,7 +145,7 @@ public partial class CardUI : Control
 
     public async Task PlayAsync(CancellationToken cancellationToken)
     {
-        await Card.PlayAsync(Targets, CharacterStats, cancellationToken);
+        await Card.PlayAsync(Targets, CharacterStats, ModifierHandler, cancellationToken);
         QueueFree();
     }
 

@@ -1,6 +1,7 @@
 ﻿using CardGameV1.CustomResources;
 using CardGameV1.CustomResources.Cards;
-using Godot;
+using CardGameV1.ModifierSystem;
+using GodotUtilities;
 
 namespace CardGameV1.CardVisual;
 
@@ -11,8 +12,17 @@ public partial class Hand : HBoxContainer
 
     public CharacterStats CharacterStats { get; set; } = null!;
 
-    public void AddCard(Card card)
+    public override void _ExitTree()
     {
+        foreach (var cardUI in this.GetChildrenOfType<CardUI>())
+        {
+            cardUI.ReparentRequested -= OnCardUIReparentRequested;
+        }
+    }
+
+    public void AddCard(Card card, ModifierHandler playerModifierHandler)
+    {
+        // todo: use scene factory
         var newCardUI = cardUIScene.Instantiate<CardUI>();
         AddChild(newCardUI);
 
@@ -20,6 +30,7 @@ public partial class Hand : HBoxContainer
         newCardUI.Card = card;
         newCardUI.Parent = this;
         newCardUI.CharacterStats = CharacterStats;
+        newCardUI.ModifierHandler = playerModifierHandler;
     }
 
     public void DiscardCard(CardUI card)
@@ -29,12 +40,9 @@ public partial class Hand : HBoxContainer
 
     public void DisableHand()
     {
-        foreach (var child in GetChildren())
+        foreach (var cardUI in this.GetChildrenOfType<CardUI>())
         {
-            if (child is CardUI cardUI)
-            {
-                cardUI.Disabled = true;
-            }
+            cardUI.Disabled = true;
         }
     }
 

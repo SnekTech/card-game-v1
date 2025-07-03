@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using CardGameV1.EffectSystem;
+using CardGameV1.ModifierSystem;
 using CardGameV1.StatusSystem;
 using CardGameV1.StatusSystem.BuiltinStatuses;
 
@@ -19,18 +19,20 @@ public class WarriorBigSlam : Card
         Target = CardTarget.SingleEnemy,
         ShouldExhaust = true,
         TooltipText =
-            $"[center]Deal [color=\"ff0000\"]{BaseDamage}[/color] damage and apply 2 [color=\"ffdf00\"] Exposed[/color].[/center]",
+            $"[center]Deal [color=\"ff0000\"]{BaseDamageAmount}[/color] damage and apply 2 [color=\"ffdf00\"] Exposed[/color].[/center]",
         IconPath = "res://art/tile_0117.png",
         SoundPath = "res://art/slash.ogg",
     };
 
-    private const int BaseDamage = 4;
+    private const int BaseDamageAmount = 4;
     private const int Duration = 2;
 
-    protected override async Task ApplyEffectsAsync(IEnumerable<ITarget> targets, CancellationToken cancellationToken)
+    protected override async Task ApplyEffectsAsync(IEnumerable<ITarget> targets, ModifierHandler modifierHandler,
+        CancellationToken cancellationToken)
     {
         var targetList = targets.ToList();
-        var damageEffect = new DamageEffect(BaseDamage)
+        var modifiedValue = modifierHandler.GetModifiedValue(BaseDamageAmount, ModifierType.DamageDealt);
+        var damageEffect = new DamageEffect(modifiedValue)
         {
             Sound = Sound,
         };

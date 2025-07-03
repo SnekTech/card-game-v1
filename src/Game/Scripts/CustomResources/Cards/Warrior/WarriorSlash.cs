@@ -1,13 +1,13 @@
-﻿using System.Collections.Generic;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 using CardGameV1.EffectSystem;
+using CardGameV1.ModifierSystem;
 
 namespace CardGameV1.CustomResources.Cards.Warrior;
 
 public class WarriorSlash : Card
 {
-    private const int DamageAmount = 6;
+    private const int BaseDamageAmount = 6;
 
     protected override CardAttributes Attributes { get; } = new()
     {
@@ -16,16 +16,18 @@ public class WarriorSlash : Card
         Type = CardType.Attack,
         Rarity = CardRarity.Common,
         Target = CardTarget.AllEnemies,
-        TooltipText = $"[center]Deal [color=\"ff0000\"]{DamageAmount}[/color] damage to all enemies.[/center]",
+        TooltipText = $"[center]Deal [color=\"ff0000\"]{BaseDamageAmount}[/color] damage to all enemies.[/center]",
         IconPath = "res://art/tile_0118.png",
-        SoundPath = "res://art/slash.ogg"
+        SoundPath = "res://art/slash.ogg",
     };
 
-    protected override async Task ApplyEffectsAsync(IEnumerable<ITarget> targets, CancellationToken cancellationToken)
+    protected override async Task ApplyEffectsAsync(IEnumerable<ITarget> targets, ModifierHandler modifierHandler,
+        CancellationToken cancellationToken)
     {
-        var damageEffect = new DamageEffect(DamageAmount)
+        var modifiedValue = modifierHandler.GetModifiedValue(BaseDamageAmount, ModifierType.DamageDealt);
+        var damageEffect = new DamageEffect(modifiedValue)
         {
-            Sound = Sound
+            Sound = Sound,
         };
         await damageEffect.ExecuteAllAsync(targets, cancellationToken);
     }
