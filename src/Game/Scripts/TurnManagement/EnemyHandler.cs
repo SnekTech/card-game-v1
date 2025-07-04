@@ -1,10 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using CardGameV1.Character;
+﻿using CardGameV1.Character;
 using CardGameV1.CustomResources;
 using CardGameV1.EventBus;
-using Godot;
 using GodotUtilities;
 
 namespace CardGameV1.TurnManagement;
@@ -20,6 +16,16 @@ public partial class EnemyHandler : Node2D
     private IEnumerable<Enemy> Enemies => this.GetChildrenOfType<Enemy>();
 
     public bool HasNoEnemyAlive => !Enemies.Any();
+
+    public override void _EnterTree()
+    {
+        EventBusOwner.PlayerEvents.PlayerHandDrawn += OnPlayerHandDrawn;
+    }
+
+    public override void _ExitTree()
+    {
+        EventBusOwner.PlayerEvents.PlayerHandDrawn -= OnPlayerHandDrawn;
+    }
 
     public void ResetEnemyActions()
     {
@@ -74,6 +80,14 @@ public partial class EnemyHandler : Node2D
         }
 
         EnemyEvents.EmitEnemyTurnEnded();
+    }
+
+    private void OnPlayerHandDrawn()
+    {
+        foreach (var enemy in Enemies)
+        {
+            enemy.UpdateIntent();
+        }
     }
 
     public override void _Notification(int what)

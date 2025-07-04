@@ -1,5 +1,4 @@
 ﻿using System.Threading;
-using System.Threading.Tasks;
 using CardGameV1.Constants;
 using CardGameV1.CustomResources;
 using CardGameV1.EffectSystem;
@@ -41,10 +40,7 @@ public partial class Enemy : Area2D, ITarget
         set
         {
             _currentAction = value;
-            if (_currentAction != null)
-            {
-                intentUI.UpdateIntent(_currentAction.Intent);
-            }
+            UpdateIntent();
         }
     }
 
@@ -171,6 +167,15 @@ public partial class Enemy : Area2D, ITarget
         if (newConditionalAction != null && CurrentAction != newConditionalAction)
         {
             CurrentAction = newConditionalAction;
+        }
+    }
+
+    public void UpdateIntent()
+    {
+        if (CurrentAction != null)
+        {
+            CurrentAction.UpdateIntentText();
+            intentUI.UpdateIntent(CurrentAction.Intent);
         }
     }
 

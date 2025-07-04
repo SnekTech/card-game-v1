@@ -1,7 +1,6 @@
 ﻿using System.Threading;
-using System.Threading.Tasks;
 using CardGameV1.EffectSystem;
-using Godot;
+using CardGameV1.ModifierSystem;
 using GTweens.Easings;
 using GTweensGodot.Extensions;
 
@@ -37,5 +36,17 @@ public class BatAttackAction : EnemyChanceBasedAction
         await SnekUtility.DelayGd(0.25f, cancellationToken);
         await Enemy.TweenGlobalPosition(startPosition, 0.4f).SetEasing(Easing.OutQuint)
             .PlayAsync(cancellationToken);
+    }
+
+    public override void UpdateIntentText()
+    {
+        if (Target == null)
+        {
+            GD.Print("target is null");
+            return;
+        }
+
+        var modifiedDamage = Target.ModifierHandler.GetModifiedValue(Damage, ModifierType.DamageTaken);
+        Intent.CurrentText = $"2x{modifiedDamage}";
     }
 }

@@ -1,8 +1,6 @@
 ﻿using System.Threading;
-using System.Threading.Tasks;
 using CardGameV1.Character;
 using CardGameV1.EffectSystem;
-using Godot;
 
 namespace CardGameV1.EnemyAI;
 
@@ -16,4 +14,9 @@ public abstract class EnemyAction
     public ITarget? Target { get; set; }
 
     public abstract Task PerformActionAsync(CancellationToken cancellationToken);
+
+    public virtual void UpdateIntentText()
+    {
+        Intent.CurrentText = Intent.BaseText;
+    }
 }

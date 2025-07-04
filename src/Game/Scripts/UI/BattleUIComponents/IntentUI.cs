@@ -1,5 +1,4 @@
 ﻿using CardGameV1.EnemyAI;
-using Godot;
 using GodotUtilities;
 
 namespace CardGameV1.UI.BattleUIComponents;
@@ -11,7 +10,7 @@ public partial class IntentUI : HBoxContainer
     private TextureRect icon = null!;
 
     [Node]
-    private Label numberLabel = null!;
+    private Label label = null!;
 
     public void UpdateIntent(Intent? intent)
     {
@@ -22,7 +21,8 @@ public partial class IntentUI : HBoxContainer
         }
 
         icon.Texture = intent.Icon;
-        numberLabel.Text = intent.Number;
+        label.Text = intent.CurrentText;
+        label.Visible = intent.CurrentText.Length > 0;
         Show();
     }
 
