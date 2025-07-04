@@ -12,7 +12,7 @@ public interface ITarget
     Stats Stats { get; }
     StatusHandler StatusHandler { get; }
     ModifierHandler ModifierHandler { get; }
-    Task TakeDamageAsync(int amount);
+    Task TakeDamageAsync(int amount, ModifierType whichModifier);
     CancellationToken CancellationTokenOnQueueFree { get; }
     void QFree();
 }

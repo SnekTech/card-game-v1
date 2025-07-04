@@ -65,10 +65,11 @@ public partial class Player : Node2D, ITarget
 
     private void UpdateCharacterStats() => statsUI.UpdateStats(CharacterStats);
 
-    public async Task TakeDamageAsync(int damage)
+    public async Task TakeDamageAsync(int damage, ModifierType whichModifier)
     {
         sprite2D.Material = WhiteSprite;
-        CharacterStats.TakeDamage(damage);
+        var modifiedDamage = ModifierHandler.GetModifiedValue(damage, whichModifier);
+        CharacterStats.TakeDamage(modifiedDamage);
         await this.ShakeAsync(16, 0.15f);
         sprite2D.Material = null;
 

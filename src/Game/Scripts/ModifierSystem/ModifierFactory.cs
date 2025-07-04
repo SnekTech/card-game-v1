@@ -13,4 +13,14 @@ public static class ModifierFactory
         handler.AddModifier(cardCost);
         return handler;
     }
+
+    public static ModifierHandler CreateEnemyModifierHandler()
+    {
+        var handler = new ModifierHandler();
+        var damageDealt = new Modifier { Type = ModifierType.DamageDealt };
+        var damageTaken = new Modifier { Type = ModifierType.DamageTaken };
+        handler.AddModifier(damageDealt);
+        handler.AddModifier(damageTaken);
+        return handler;
+    }
 }

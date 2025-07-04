@@ -33,7 +33,7 @@ public partial class Enemy : Area2D, ITarget
     private EnemyActionPicker _enemyActionPicker = EnemyActionPickerFactory.CreateCrabBrain();
     private EnemyAction? _currentAction;
 
-    private CancellationTokenSource ctsOnQueueFree = new();
+    private readonly CancellationTokenSource ctsOnQueueFree = new();
 
     public EnemyAction? CurrentAction
     {
@@ -63,8 +63,8 @@ public partial class Enemy : Area2D, ITarget
     }
 
     public StatusHandler StatusHandler => statusHandler;
-    // todo: use enemy's modifier handler
-    public ModifierHandler ModifierHandler { get; } = ModifierFactory.CreatePlayerModifierHandler();
+
+    public ModifierHandler ModifierHandler { get; } = ModifierFactory.CreateEnemyModifierHandler();
 
     public CancellationToken CancellationTokenOnQueueFree => ctsOnQueueFree.Token;
 
@@ -119,14 +119,16 @@ public partial class Enemy : Area2D, ITarget
         }
     }
 
-    public async Task TakeDamageAsync(int damage)
+    public async Task TakeDamageAsync(int damage, ModifierType whichModifier)
     {
         if (Stats.Health <= 0)
             return;
 
         sprite2D.Material = WhiteSprite;
         await this.ShakeAsync(16, 0.15f);
-        Stats.TakeDamage(damage);
+
+        var modifiedDamage = ModifierHandler.GetModifiedValue(damage, whichModifier);
+        Stats.TakeDamage(modifiedDamage);
         sprite2D.Material = null;
 
         if (Stats.Health <= 0)

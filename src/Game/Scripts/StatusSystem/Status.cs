@@ -1,8 +1,6 @@
-﻿using System;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 using CardGameV1.EffectSystem;
-using Godot;
 
 namespace CardGameV1.StatusSystem;
 
@@ -49,7 +47,6 @@ public class Status
 
     public virtual Task ApplyStatusAsync(ITarget target, CancellationToken cancellationToken)
     {
-        GD.Print($"applying status {Id}");
         return Task.CompletedTask;
     }
 }

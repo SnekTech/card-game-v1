@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using CardGameV1.StatusSystem.BuiltinStatuses;
+﻿using CardGameV1.StatusSystem.BuiltinStatuses;
 
 namespace CardGameV1.StatusSystem;
 
