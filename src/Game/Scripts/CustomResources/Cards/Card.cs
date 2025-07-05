@@ -1,6 +1,4 @@
-﻿using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
+﻿using System.Threading;
 using CardGameV1.Constants;
 using CardGameV1.EffectSystem;
 using CardGameV1.EventBus;
@@ -68,4 +66,7 @@ public abstract class Card
 
     protected abstract Task ApplyEffectsAsync(IEnumerable<ITarget> targets, ModifierHandler modifiers,
         CancellationToken cancellationToken);
+
+    public abstract string GetUpdatedTooltipText(ModifierHandler playerModifierHandler,
+        ModifierHandler enemyModifierHandler);
 }

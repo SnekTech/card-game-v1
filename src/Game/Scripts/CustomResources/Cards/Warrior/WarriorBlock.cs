@@ -1,5 +1,4 @@
 ﻿using System.Threading;
-using System.Threading.Tasks;
 using CardGameV1.EffectSystem;
 using CardGameV1.ModifierSystem;
 
@@ -16,7 +15,7 @@ public class WarriorBlock : Card
         Type = CardType.Skill,
         Rarity = CardRarity.Common,
         Target = CardTarget.Self,
-        TooltipText = $"[center]Gain [color=\"0044ff\"]{BlockAmount}[/color] block.[/center]",
+        TooltipText = GenerateTooltipText(BlockAmount),
         IconPath = "res://art/tile_0102.png",
         SoundPath = "res://art/block.ogg",
     };
@@ -30,4 +29,11 @@ public class WarriorBlock : Card
         };
         await blockEffect.ExecuteAllAsync(targets, cancellationToken);
     }
+
+    private static string GenerateTooltipText(int block) =>
+        $"[center]Gain [color=\"0044ff\"]{block}[/color] block.[/center]";
+
+    public override string GetUpdatedTooltipText(ModifierHandler playerModifierHandler,
+        ModifierHandler enemyModifierHandler) =>
+        GenerateTooltipText(BlockAmount);
 }

@@ -1,5 +1,4 @@
 ﻿using System.Threading;
-using System.Threading.Tasks;
 using CardGameV1.EffectSystem;
 using CardGameV1.ModifierSystem;
 using CardGameV1.StatusSystem;
@@ -18,16 +17,22 @@ public class WarriorTrueStrength : Card
         Type = CardType.Power,
         Rarity = CardRarity.Rare,
         Target = CardTarget.Self,
-        TooltipText =
-            $"[center]At the start of your turn, gain {MusclePerTurn} [color=\"ffdf00\"] Muscle[/color].[/center]",
+        TooltipText = GenerateTooltipText(MusclePerTurn),
         IconPath = "res://art/tile_0127.png",
         SoundPath = "res://art/true_strength.ogg",
     };
 
-    protected override async Task ApplyEffectsAsync(IEnumerable<ITarget> targets, ModifierHandler _, CancellationToken cancellationToken)
+    protected override async Task ApplyEffectsAsync(IEnumerable<ITarget> targets, ModifierHandler _,
+        CancellationToken cancellationToken)
     {
         var trueStrengthStatus = StatusFactory.Create<TrueStrengthForm>();
         var addTrueStrengthEffect = new AddStatusEffect(trueStrengthStatus);
         await addTrueStrengthEffect.ExecuteAllAsync(targets, cancellationToken);
     }
+
+    private static string GenerateTooltipText(int musclePerTurn) =>
+        $"[center]At the start of your turn, gain {musclePerTurn} [color=\"ffdf00\"] Muscle[/color].[/center]";
+
+    public override string GetUpdatedTooltipText(ModifierHandler playerModifierHandler,
+        ModifierHandler enemyModifierHandler) => GenerateTooltipText(MusclePerTurn);
 }

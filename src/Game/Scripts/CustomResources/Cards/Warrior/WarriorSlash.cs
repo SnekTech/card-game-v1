@@ -1,5 +1,4 @@
 ﻿using System.Threading;
-using System.Threading.Tasks;
 using CardGameV1.EffectSystem;
 using CardGameV1.ModifierSystem;
 
@@ -16,7 +15,7 @@ public class WarriorSlash : Card
         Type = CardType.Attack,
         Rarity = CardRarity.Common,
         Target = CardTarget.AllEnemies,
-        TooltipText = $"[center]Deal [color=\"ff0000\"]{BaseDamageAmount}[/color] damage to all enemies.[/center]",
+        TooltipText = GenerateTooltipText(BaseDamageAmount),
         IconPath = "res://art/tile_0118.png",
         SoundPath = "res://art/slash.ogg",
     };
@@ -30,5 +29,16 @@ public class WarriorSlash : Card
             Sound = Sound,
         };
         await damageEffect.ExecuteAllAsync(targets, cancellationToken);
+    }
+
+    private static string GenerateTooltipText(int damage) =>
+        $"[center]Deal [color=\"ff0000\"]{damage}[/color] damage to all enemies.[/center]";
+
+    public override string GetUpdatedTooltipText(ModifierHandler playerModifierHandler,
+        ModifierHandler enemyModifierHandler)
+    {
+        var modifiedDamage = playerModifierHandler.GetModifiedValue(BaseDamageAmount, ModifierType.DamageDealt);
+        modifiedDamage = enemyModifierHandler.GetModifiedValue(modifiedDamage, ModifierType.DamageTaken);
+        return GenerateTooltipText(modifiedDamage);
     }
 }
