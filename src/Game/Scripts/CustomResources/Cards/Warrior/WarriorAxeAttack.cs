@@ -34,10 +34,15 @@ public class WarriorAxeAttack : Card
     private static string GenerateTooltipText(int damage) =>
         $"[center]Deal [color=\"ff0000\"]{damage}[/color] damage.[/center]";
 
-    public override string GetUpdatedTooltipText(ModifierHandler playerModifierHandler, ModifierHandler enemyModifierHandler)
+    public override string GetUpdatedTooltipText(ModifierHandler playerModifierHandler,
+        ModifierHandler? enemyModifierHandler = null)
     {
         var modifiedDamage = playerModifierHandler.GetModifiedValue(BaseDamageAmount, ModifierType.DamageDealt);
-        modifiedDamage = enemyModifierHandler.GetModifiedValue(modifiedDamage, ModifierType.DamageTaken);
+        if (enemyModifierHandler != null)
+        {
+            modifiedDamage = enemyModifierHandler.GetModifiedValue(modifiedDamage, ModifierType.DamageTaken);
+        }
+
         return GenerateTooltipText(modifiedDamage);
     }
 }

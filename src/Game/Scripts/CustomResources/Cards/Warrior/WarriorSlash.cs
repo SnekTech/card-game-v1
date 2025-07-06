@@ -35,10 +35,14 @@ public class WarriorSlash : Card
         $"[center]Deal [color=\"ff0000\"]{damage}[/color] damage to all enemies.[/center]";
 
     public override string GetUpdatedTooltipText(ModifierHandler playerModifierHandler,
-        ModifierHandler enemyModifierHandler)
+        ModifierHandler? enemyModifierHandler = null)
     {
         var modifiedDamage = playerModifierHandler.GetModifiedValue(BaseDamageAmount, ModifierType.DamageDealt);
-        modifiedDamage = enemyModifierHandler.GetModifiedValue(modifiedDamage, ModifierType.DamageTaken);
+        if (enemyModifierHandler != null)
+        {
+            modifiedDamage = enemyModifierHandler.GetModifiedValue(modifiedDamage, ModifierType.DamageTaken);
+        }
+
         return GenerateTooltipText(modifiedDamage);
     }
 }

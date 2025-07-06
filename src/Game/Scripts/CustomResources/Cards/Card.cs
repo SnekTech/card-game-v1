@@ -68,5 +68,5 @@ public abstract class Card
         CancellationToken cancellationToken);
 
     public abstract string GetUpdatedTooltipText(ModifierHandler playerModifierHandler,
-        ModifierHandler enemyModifierHandler);
+        ModifierHandler? enemyModifierHandler = null);
 }

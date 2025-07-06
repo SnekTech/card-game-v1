@@ -34,6 +34,6 @@ public class WarriorBlock : Card
         $"[center]Gain [color=\"0044ff\"]{block}[/color] block.[/center]";
 
     public override string GetUpdatedTooltipText(ModifierHandler playerModifierHandler,
-        ModifierHandler enemyModifierHandler) =>
+        ModifierHandler? enemyModifierHandler = null) =>
         GenerateTooltipText(BlockAmount);
 }

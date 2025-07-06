@@ -34,5 +34,5 @@ public class WarriorTrueStrength : Card
         $"[center]At the start of your turn, gain {musclePerTurn} [color=\"ffdf00\"] Muscle[/color].[/center]";
 
     public override string GetUpdatedTooltipText(ModifierHandler playerModifierHandler,
-        ModifierHandler enemyModifierHandler) => GenerateTooltipText(MusclePerTurn);
+        ModifierHandler? enemyModifierHandler = null) => GenerateTooltipText(MusclePerTurn);
 }
