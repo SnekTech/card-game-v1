@@ -26,7 +26,7 @@ public partial class Hand : HBoxContainer
         newCardUI.Card = card;
         newCardUI.Parent = this;
         newCardUI.CharacterStats = CharacterStats;
-        newCardUI.ModifierHandler = playerModifierHandler;
+        newCardUI.PlayerModifierHandler = playerModifierHandler;
     }
 
     public void DiscardCard(CardUI card)

@@ -1,5 +1,4 @@
 ﻿using CardGameV1.Constants;
-using Godot;
 
 namespace CardGameV1.CardVisual.CardStates;
 
@@ -33,7 +32,7 @@ public class BaseState(CardStateMachine cardStateMachine) : CardState(cardStateM
             return;
 
         CardUI.SetPanelStyleBox(CardUI.HoverStyleBox);
-        CardEvents.EmitCardTooltipRequested(CardUI.Card.Icon, CardUI.Card.TooltipText);
+        CardUI.RequestTooltip();
     }
 
     public override void OnMouseExited()

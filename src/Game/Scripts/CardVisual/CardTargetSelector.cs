@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using CardGameV1.EventBus;
-using Godot;
+﻿using CardGameV1.EventBus;
 using GodotUtilities;
 
 namespace CardGameV1.CardVisual;
@@ -89,6 +87,7 @@ public partial class CardTargetSelector : Node2D
             return;
 
         _currentCardUI.Targets.Add(otherArea2D);
+        _currentCardUI.RequestTooltip();
     }
 
     private void OnAreaExited(Area2D otherArea2D)
@@ -97,6 +96,7 @@ public partial class CardTargetSelector : Node2D
             return;
 
         _currentCardUI.Targets.Remove(otherArea2D);
+        _currentCardUI.RequestTooltip();
     }
 
     public override void _Notification(int what)

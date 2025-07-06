@@ -1,5 +1,4 @@
 ﻿using CardGameV1.EventBus;
-using Godot;
 using GodotUtilities;
 
 namespace CardGameV1.UI.BattleUIComponents;
@@ -11,10 +10,10 @@ public partial class Tooltip : PanelContainer
 
     [Node]
     private TextureRect tooltipIcon = null!;
-
     [Node]
     private RichTextLabel tooltipText = null!;
 
+    // todo: replace with GTweensGodot
     private Tween? _tween;
     private bool _isVisible;
     private static readonly CardEvents CardEvents = EventBusOwner.CardEvents;

@@ -1,6 +1,6 @@
 ﻿using System.Threading;
-using System.Threading.Tasks;
 using CardGameV1.CardVisual.CardStates;
+using CardGameV1.Character;
 using CardGameV1.CustomResources;
 using CardGameV1.CustomResources.Cards;
 using CardGameV1.CustomResources.Cards.Warrior;
@@ -71,7 +71,7 @@ public partial class CardUI : Control
 
     public Control Parent { get; set; } = null!;
 
-    public ModifierHandler ModifierHandler { private get; set; } = null!;
+    public ModifierHandler PlayerModifierHandler { private get; set; } = null!;
 
     private bool _playable = true;
 
@@ -145,8 +145,26 @@ public partial class CardUI : Control
 
     public async Task PlayAsync(CancellationToken cancellationToken)
     {
-        await Card.PlayAsync(Targets, CharacterStats, ModifierHandler, cancellationToken);
+        await Card.PlayAsync(Targets, CharacterStats, PlayerModifierHandler, cancellationToken);
         QueueFree();
+    }
+
+    public void RequestTooltip()
+    {
+        var enemyModifierHandler = GetActiveEnemyModifierHandler();
+        var updatedTooltip = Card.GetUpdatedTooltipText(PlayerModifierHandler, enemyModifierHandler);
+        CardEvents.EmitCardTooltipRequested(Card.Icon, updatedTooltip);
+        return;
+
+        ModifierHandler? GetActiveEnemyModifierHandler()
+        {
+            if (Targets.Count != 1)
+                return null;
+            if (Targets.First() is not Enemy enemy)
+                return null;
+
+            return enemy.ModifierHandler;
+        }
     }
 
     private void ClearSubscriptions()

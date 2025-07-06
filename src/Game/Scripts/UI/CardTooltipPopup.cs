@@ -2,7 +2,6 @@
 using CardGameV1.CustomResources.Cards;
 using CardGameV1.MyExtensions;
 using CardGameV1.UI.CardPileDisplay;
-using Godot;
 using GodotUtilities;
 
 namespace CardGameV1.UI;
