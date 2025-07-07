@@ -6,10 +6,12 @@ namespace CardGameV1.StatusSystem.BuiltinStatuses;
 public class Exposed : Status
 {
     private const string ModifierKey = nameof(Exposed);
-    
+
     private const float Increment = 0.5f;
     private Modifier? _damageTakenModifier;
     private bool _subscribed;
+
+    public override string Tooltip => GenerateTooltip(Duration);
 
     public override void Init(ITarget target)
     {
@@ -30,6 +32,9 @@ public class Exposed : Status
             _subscribed = true;
         }
     }
+
+    private static string GenerateTooltip(int duration, float increment = Increment) =>
+        $"{nameof(Exposed)}: takes {increment:P0} more damage for {duration} turns";
 
     private void OnStatusChanged()
     {

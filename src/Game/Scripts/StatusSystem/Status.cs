@@ -1,10 +1,9 @@
 ﻿using System.Threading;
-using System.Threading.Tasks;
 using CardGameV1.EffectSystem;
 
 namespace CardGameV1.StatusSystem;
 
-public class Status
+public abstract class Status
 {
     public event Action? Changed;
 
@@ -16,7 +15,7 @@ public class Status
 
     public required string IconPath { get; init; }
     public Texture2D Icon => SnekUtility.LoadTexture(IconPath);
-    public string Tooltip { get; init; } = "default tooltip for status";
+    public abstract string Tooltip { get; }
 
     private int _duration;
     private int _stacks;
@@ -30,6 +29,7 @@ public class Status
             Changed?.Invoke();
         }
     }
+
     public int Stacks
     {
         get => _stacks;

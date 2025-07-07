@@ -7,6 +7,10 @@ public class Muscle : Status
 {
     private ITarget _target = null!;
 
+    public override string Tooltip => GenerateTooltip(Stacks);
+
+    private static string GenerateTooltip(int muscleStacks) => $"{nameof(Muscle)}: attacks deal {muscleStacks} more damage";
+    
     public override void Init(ITarget target)
     {
         _target = target;
