@@ -1,7 +1,6 @@
 ﻿using CardGameV1.Constants;
 using CardGameV1.CustomResources;
 using CardGameV1.MyExtensions;
-using Godot;
 using GodotUtilities;
 
 namespace CardGameV1.UI.CardPileDisplay;
@@ -47,7 +46,7 @@ public partial class CardPileView : Control
 
     public override void _Input(InputEvent inputEvent)
     {
-        if (inputEvent.IsActionPressed(InputActions.UICancel))
+        if (inputEvent.IsActionPressed(BuiltinInputActions.UICancel))
         {
             if (cardTooltipPopup.Visible)
             {

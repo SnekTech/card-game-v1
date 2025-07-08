@@ -26,7 +26,7 @@ public partial class StatusView : Control
 
     public override void _Input(InputEvent inputEvent)
     {
-        if (inputEvent.IsActionPressed(InputActions.UICancel) && Visible)
+        if (inputEvent.IsActionPressed(BuiltinInputActions.UICancel) && Visible)
         {
             HideView();
         }

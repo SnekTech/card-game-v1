@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using CardGameV1.Constants;
+﻿using CardGameV1.Constants;
 using CardGameV1.CustomResources.Cards;
 using CardGameV1.MyExtensions;
 using CardGameV1.UI.CardPileDisplay;
-using Godot;
 using GodotUtilities;
 
 namespace CardGameV1.UI.BattleReward;
@@ -65,7 +62,7 @@ public partial class CardRewards : ColorRect
 
     public override void _Input(InputEvent inputEvent)
     {
-        if (inputEvent.IsActionPressed(InputActions.UICancel))
+        if (inputEvent.IsActionPressed(BuiltinInputActions.UICancel))
         {
             cardTooltipPopup.HideTooltip();
         }
