@@ -33,8 +33,11 @@ public class Exposed : Status
         }
     }
 
-    private static string GenerateTooltip(int duration, float increment = Increment) =>
-        $"{nameof(Exposed)}: takes {increment:P0} more damage for {duration} turns";
+    private static string GenerateTooltip(int duration, float increment = Increment)
+    {
+        var turnText = duration == 1 ? "turn" : "turns";
+        return $"{nameof(Exposed)}: takes {increment:P0} more damage for {duration} {turnText}";
+    }
 
     private void OnStatusChanged()
     {
