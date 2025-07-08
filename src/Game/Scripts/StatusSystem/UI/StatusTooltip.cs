@@ -1,26 +1,22 @@
-﻿using GodotUtilities;
+﻿namespace CardGameV1.StatusSystem.UI;
 
-namespace CardGameV1.StatusSystem.UI;
-
-[Scene]
+[SceneTree]
 public partial class StatusTooltip : HBoxContainer
 {
-    [Node]
-    private TextureRect icon = null!;
-    [Node]
-    private Label label = null!;
+    private Status _status = null!;
 
-    public void Update(Status status)
+    public Status Status
     {
-        icon.Texture = status.Icon;
-        label.Text = status.Tooltip;
+        set
+        {
+            _status = value;
+            Update(_status);
+        }
     }
 
-    public override void _Notification(int what)
+    private void Update(Status status)
     {
-        if (what == NotificationSceneInstantiated)
-        {
-            WireNodes();
-        }
+        _.Icon.Texture = status.Icon;
+        _.Label.Text = status.Tooltip;
     }
 }
