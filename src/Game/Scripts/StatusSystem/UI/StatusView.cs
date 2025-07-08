@@ -1,4 +1,5 @@
 ﻿using CardGameV1.Constants;
+using CardGameV1.EventBus;
 using CardGameV1.MyExtensions;
 
 namespace CardGameV1.StatusSystem.UI;
@@ -13,11 +14,13 @@ public partial class StatusView : Control
 
     public override void _EnterTree()
     {
+        EventBusOwner.Events.StatusTooltipRequested += OnStatusTooltipRequested;
         _.BackButton.Pressed += OnBackButtonPressed;
     }
 
     public override void _ExitTree()
     {
+        EventBusOwner.Events.StatusTooltipRequested -= OnStatusTooltipRequested;
         _.BackButton.Pressed -= OnBackButtonPressed;
     }
 
@@ -37,7 +40,7 @@ public partial class StatusView : Control
         }
     }
 
-    public void ShowView(List<Status> statusList)
+    private void ShowView(List<Status> statusList)
     {
         foreach (var status in statusList)
         {
@@ -45,6 +48,7 @@ public partial class StatusView : Control
             StatusTooltipContainer.AddChild(newStatusTooltip);
             newStatusTooltip.Status = status;
         }
+
         Show();
     }
 
@@ -53,6 +57,7 @@ public partial class StatusView : Control
         StatusTooltipContainer.ClearChildren();
         Hide();
     }
-    
+
+    private void OnStatusTooltipRequested(List<Status> statusList) => ShowView(statusList);
     private void OnBackButtonPressed() => HideView();
 }

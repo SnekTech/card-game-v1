@@ -6,6 +6,7 @@
 [node name="StatusUI" type="Control"]
 layout_mode = 3
 anchors_preset = 0
+mouse_filter = 2
 script = ExtResource("1_0d0hw")
 
 [node name="Icon" type="TextureRect" parent="."]

@@ -1,5 +1,7 @@
 ﻿using System.Threading;
+using CardGameV1.Constants;
 using CardGameV1.EffectSystem;
+using CardGameV1.EventBus;
 using CardGameV1.StatusSystem.UI;
 using GodotUtilities;
 
@@ -13,6 +15,14 @@ public partial class StatusHandler : GridContainer
     private const float StatusApplyInterval = 0.25f;
 
     private ITarget Target => (ITarget)statusOwner;
+
+    public override void _GuiInput(InputEvent inputEvent)
+    {
+        if (inputEvent.IsActionPressed(InputActions.LeftMouse))
+        {
+            EventBusOwner.Events.EmitStatusTooltipRequested(GetAllStatuses().ToList());
+        }
+    }
 
     public void AddStatus(Status status)
     {

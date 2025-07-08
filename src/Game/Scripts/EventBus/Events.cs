@@ -1,4 +1,5 @@
 ﻿using CardGameV1.Map;
+using CardGameV1.StatusSystem;
 
 namespace CardGameV1.EventBus;
 
@@ -8,8 +9,10 @@ public class Events
 
     public event Action? BattleWon;
     public event Action? BattleLost;
+    public event Action<List<Status>>? StatusTooltipRequested;
     public void EmitBattleWon() => BattleWon?.Invoke();
     public void EmitBattleLost() => BattleLost?.Invoke();
+    public void EmitStatusTooltipRequested(List<Status> statusList) => StatusTooltipRequested?.Invoke(statusList);
 
     #endregion
 
