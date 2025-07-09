@@ -5,6 +5,7 @@ namespace CardGameV1.EventBus;
 
 public class Events
 {
+    // todo: use source generator to generate EmitXXX functions
     #region battle
 
     public event Action? BattleWon;
