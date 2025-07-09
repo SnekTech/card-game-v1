@@ -27,7 +27,7 @@ public static class SceneFactory
         Register<MapRoomScene>("res://Scenes/map/MapRoom.tscn");
         Register<MapLine>("res://Scenes/map/MapLine.tscn");
         Register<StatusUI>("res://Scenes/statusHandler/StatusUI.tscn");
-        Register<StatusTooltip>("res://Scripts/StatusSystem/UI/StatusTooltip.tscn");
+        Register<StatusTooltip>(StatusTooltip.TscnFilePath);
     }
     
     private static readonly Dictionary<Type, string> Paths = [];
