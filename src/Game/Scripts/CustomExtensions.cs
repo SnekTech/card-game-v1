@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
-using Godot;
-using GTweensGodot.Extensions;
+﻿using GTweensGodot.Extensions;
 
 namespace CardGameV1;
 
@@ -38,13 +33,6 @@ public static class CustomExtensions
             GD.PrintErr(e);
             onError?.Invoke(e);
         }
-    }
-
-    public static SceneTreeTimer CreateSceneTreeTimer(this Node node, double timeSec, bool processAlways = true,
-        bool processInPhysics = false, bool ignoreTimeScale = false)
-    {
-        var timer = node.GetTree().CreateTimer(timeSec, processAlways, processInPhysics, ignoreTimeScale);
-        return timer;
     }
 
     public static void SetModulateAlpha(this CanvasItem canvasItem, float alpha)

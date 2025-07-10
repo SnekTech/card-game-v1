@@ -1,22 +1,18 @@
 ﻿using CardGameV1.EventBus;
-using GodotUtilities;
+using GTweens.Easings;
+using GTweensGodot.Extensions;
 
 namespace CardGameV1.UI.BattleUIComponents;
 
-[Scene]
+[SceneTree]
 public partial class Tooltip : PanelContainer
 {
     private const float FadeSeconds = 0.2f;
 
-    [Node]
-    private TextureRect tooltipIcon = null!;
-    [Node]
-    private RichTextLabel tooltipText = null!;
-
-    // todo: replace with GTweensGodot
-    private Tween? _tween;
     private bool _isVisible;
     private static readonly CardEvents CardEvents = EventBusOwner.CardEvents;
+
+    private CancellationTokenSource _cts = new();
 
     public override void _Ready()
     {
@@ -39,45 +35,46 @@ public partial class Tooltip : PanelContainer
     private void ShowTooltip(Texture2D icon, string text)
     {
         _isVisible = true;
-        _tween?.KillIfValid();
+        CancelAndResetRunningAnimation();
 
-        tooltipIcon.Texture = icon;
-        tooltipText.Text = text;
+        TooltipIcon.Texture = icon;
+        TooltipTextLabel.Text = text;
 
-        ShowAnimation();
+        PlayShowAnimationAsync(_cts.Token).Fire();
     }
 
     private void HideTooltip()
     {
         _isVisible = false;
-        _tween?.KillIfValid();
+        CancelAndResetRunningAnimation();
 
-        var timer = this.CreateSceneTreeTimer(FadeSeconds);
-        timer.Timeout += HideAnimation;
+        PlayHideAnimationAsync(_cts.Token).Fire();
     }
 
-    private void ShowAnimation()
+    private async Task PlayShowAnimationAsync(CancellationToken cancellationToken)
     {
-        _tween = CreateTween().SetEase(Tween.EaseType.Out).SetTrans(Tween.TransitionType.Cubic);
-        _tween.TweenCallback(Callable.From(Show));
-        _tween.TweenProperty(this, "modulate", Colors.White, FadeSeconds);
+        Show();
+        await this.TweenModulate(Colors.White, FadeSeconds)
+            .SetEasing(Easing.OutCubic)
+            .PlayAsync(cancellationToken);
     }
-
-    private void HideAnimation()
+    
+    private async Task PlayHideAnimationAsync(CancellationToken cancellationToken)
     {
+        await SnekUtility.DelayGd(FadeSeconds, cancellationToken);
         if (_isVisible)
             return;
         
-        _tween = CreateTween().SetEase(Tween.EaseType.Out).SetTrans(Tween.TransitionType.Cubic);
-        _tween.TweenProperty(this, "modulate", Colors.Transparent, FadeSeconds);
-        _tween.TweenCallback(Callable.From(Hide));
+        await this.TweenModulate(Colors.Transparent, FadeSeconds)
+            .SetEasing(Easing.OutCubic)
+            .PlayAsync(cancellationToken);
+        Hide();
     }
 
-    public override void _Notification(int what)
+    private void CancelAndResetRunningAnimation()
     {
-        if (what == NotificationSceneInstantiated)
-        {
-            WireNodes();
-        }
+        _cts.Cancel();
+        _cts.Dispose();
+        _cts = new CancellationTokenSource();
     }
 }
