@@ -8,7 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://b1af48bdyphyk" path="res://Scenes/CardTargetSelector/CardTargetSelector.tscn" id="4_u22qb"]
 [ext_resource type="PackedScene" uid="uid://bxdkorsjy5k6g" path="res://Scenes/UI/battle_ui_components/BattleUI.tscn" id="6_8teo4"]
 [ext_resource type="Script" uid="uid://ldj8l4cpecn1" path="res://Scripts/TurnManagement/PlayerHandler.cs" id="7_u22qb"]
-[ext_resource type="PackedScene" uid="uid://dix6o2poewlna" path="res://Scenes/UI/battle_ui_components/RedFlash.tscn" id="10_qxnh6"]
+[ext_resource type="PackedScene" uid="uid://dix6o2poewlna" path="res://Scripts/UI/BattleUIComponents/RedFlash.tscn" id="10_qxnh6"]
 [ext_resource type="PackedScene" uid="uid://bqm3yb5vlbrpl" path="res://Scenes/UI/battle_ui_components/BattleOverPanel.tscn" id="12_l0uqe"]
 [ext_resource type="PackedScene" uid="uid://djto6ecyqb1pi" path="res://Scripts/StatusSystem/UI/StatusView.tscn" id="12_xmk5i"]
 [ext_resource type="PackedScene" uid="uid://b8mfae4j2xgiw" path="res://Scenes/UI/card_pile_view/CardPileView.tscn" id="16_n5y6x"]

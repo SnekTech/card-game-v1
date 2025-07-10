@@ -7,6 +7,7 @@ layer = 2
 script = ExtResource("1_gl3cv")
 
 [node name="ColorRect" type="ColorRect" parent="."]
+unique_name_in_owner = true
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -14,7 +15,3 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 color = Color(1, 0.443137, 0.443137, 0)
-
-[node name="Timer" type="Timer" parent="."]
-wait_time = 0.1
-one_shot = true

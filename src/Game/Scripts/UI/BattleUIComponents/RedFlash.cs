@@ -1,45 +1,33 @@
-﻿using Godot;
-using GodotUtilities;
+﻿namespace CardGameV1.UI.BattleUIComponents;
 
-namespace CardGameV1.UI.BattleUIComponents;
-
-[Scene]
+[SceneTree]
 public partial class RedFlash : CanvasLayer
 {
-    [Node]
-    private ColorRect colorRect = null!;
-
-    [Node]
-    private Timer timer = null!;
+    private const float FlashAlpha = 0.2f;
+    private const float FlashDuration = 0.1f;
 
     public override void _EnterTree()
     {
         EventBus.EventBusOwner.PlayerEvents.PlayerHit += OnPlayerHit;
-        timer.Timeout += OnTimerTimeout;
     }
 
     public override void _ExitTree()
     {
         EventBus.EventBusOwner.PlayerEvents.PlayerHit -= OnPlayerHit;
-        timer.Timeout -= OnTimerTimeout;
     }
 
     private void OnPlayerHit()
     {
-        colorRect.Color = colorRect.Color with { A = 0.2f };
-        timer.Start();
-    }
+        SetColorRectAlpha(FlashAlpha);
+        ResetAfterDelay().Fire();
+        return;
 
-    private void OnTimerTimeout()
-    {
-        colorRect.Color = colorRect.Color with { A = 0 };
-    }
-
-    public override void _Notification(int what)
-    {
-        if (what == NotificationSceneInstantiated)
+        async Task ResetAfterDelay()
         {
-            WireNodes();
+            await SnekUtility.DelayGd(FlashDuration);
+            SetColorRectAlpha(0);
         }
     }
+
+    private void SetColorRectAlpha(float alpha) => ColorRect.Color = ColorRect.Color with { A = alpha };
 }
