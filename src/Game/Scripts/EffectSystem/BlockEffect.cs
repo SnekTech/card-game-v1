@@ -1,9 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
-using CardGameV1.Autoload;
-
-namespace CardGameV1.EffectSystem;
+﻿namespace CardGameV1.EffectSystem;
 
 public class BlockEffect(int amount) : Effect
 {
@@ -14,7 +9,7 @@ public class BlockEffect(int amount) : Effect
             target.Stats.Block += amount;
             if (Sound != null)
             {
-                SoundManager.SFXPlayer.Play(Sound);
+                Autoload.SoundManager.SFXPlayer.Play(Sound);
             }
         }
 

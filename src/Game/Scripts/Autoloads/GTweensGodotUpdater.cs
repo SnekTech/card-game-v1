@@ -1,5 +1,5 @@
 ﻿using GTweensGodot.Contexts;
 
-namespace CardGameV1.Autoload;
+namespace CardGameV1.Autoloads;
 
 public partial class GTweensGodotUpdater : GodotGTweensContextNode;

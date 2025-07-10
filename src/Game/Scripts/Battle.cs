@@ -1,6 +1,4 @@
-﻿using System.Threading;
-using CardGameV1.Autoload;
-using CardGameV1.Character;
+﻿using CardGameV1.Character;
 using CardGameV1.CustomResources;
 using CardGameV1.EventBus;
 using CardGameV1.TurnManagement;
@@ -59,7 +57,7 @@ public partial class Battle : Node2D
     public void StartBattle()
     {
         GetTree().Paused = false;
-        SoundManager.MusicPlayer.Play(music, true);
+        Autoload.SoundManager.MusicPlayer.Play(music, true);
 
         battleUI.CharacterStats = CharacterStats;
         player.CharacterStats = CharacterStats;

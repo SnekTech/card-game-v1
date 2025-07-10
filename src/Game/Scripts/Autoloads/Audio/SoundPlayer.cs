@@ -1,7 +1,6 @@
-﻿using Godot;
-using GodotUtilities;
+﻿using GodotUtilities;
 
-namespace CardGameV1.Autoload;
+namespace CardGameV1.Autoloads.Audio;
 
 public partial class SoundPlayer : Node
 {

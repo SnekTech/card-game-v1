@@ -17,8 +17,8 @@ config/icon="uid://daap2op86ohp4"
 
 [autoload]
 
-GTweensGodotUpdater="*res://Scripts/Autoload/GTweensGodotUpdater.cs"
-SoundManager="*res://Scenes/Autoload/Audio/SoundManager.tscn"
+SoundManager="*res://Scripts/Autoloads/Audio/SoundManager.tscn"
+GTweensGodotUpdater="*res://Scripts/Autoloads/GTweensGodotUpdater.cs"
 
 [display]
 
