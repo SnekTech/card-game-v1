@@ -31,7 +31,7 @@ public class EnemyActionPicker
 
     public EnemyConditionalAction? GetFirstConditionalAction()
     {
-        return _conditionalActions.FirstOrDefault(conditionalAction => conditionalAction.IsPerformable());
+        return _conditionalActions.FirstOrDefault(conditionalAction => conditionalAction.PerformDictator.IsPerformable());
     }
 
     public void SetActionTarget(ITarget target)
