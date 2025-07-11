@@ -1,8 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using CardGameV1.Character;
-using CardGameV1.EffectSystem;
-using Godot;
+﻿using CardGameV1.EffectSystem;
 
 namespace CardGameV1.EnemyAI;
 
@@ -38,16 +34,10 @@ public class EnemyActionPicker
         return _conditionalActions.FirstOrDefault(conditionalAction => conditionalAction.IsPerformable());
     }
 
-    public void SetActionEnemy(Enemy enemy)
-    {
-        _conditionalActions.ForEach(action => action.Enemy = enemy);
-        _chanceBasedActions.ForEach(action => action.Enemy = enemy);
-    }
-
     public void SetActionTarget(ITarget target)
     {
-        _conditionalActions.ForEach(action => action.Target = target);
-        _chanceBasedActions.ForEach(action => action.Target = target);
+        foreach (var action in _conditionalActions) action.UpdateTarget(target);
+        foreach (var action in _chanceBasedActions) action.UpdateTarget(target);
     }
 
     private EnemyChanceBasedAction GetChanceBasedAction()

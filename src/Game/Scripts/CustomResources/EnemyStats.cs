@@ -1,11 +1,11 @@
-﻿using System;
+﻿using CardGameV1.Character;
 using CardGameV1.EnemyAI;
 
 namespace CardGameV1.CustomResources;
 
 public class EnemyStats : Stats
 {
-    public required Func<EnemyActionPicker> ActionPickerGetter { get; init; }
+    public required Func<Enemy, EnemyActionPicker> ActionPickerGetter { get; init; }
 
     public EnemyStats Duplicate()
     {

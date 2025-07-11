@@ -29,7 +29,7 @@ public partial class Enemy : Area2D, ITarget
 
     private EnemyStats _stats = null!;
 
-    private EnemyActionPicker _enemyActionPicker = EnemyActionPickerFactory.CreateCrabBrain();
+    private EnemyActionPicker _enemyActionPicker = null!;
     private EnemyAction? _currentAction;
 
     private readonly CancellationTokenSource ctsOnQueueFree = new();
@@ -65,6 +65,11 @@ public partial class Enemy : Area2D, ITarget
     public CancellationToken CancellationTokenOnQueueFree => ctsOnQueueFree.Token;
 
     #region lifecycle
+
+    public override void _Ready()
+    {
+        _enemyActionPicker = EnemyActionPickerFactory.CreateCrabBrain(this);
+    }
 
     public override void _EnterTree()
     {
@@ -147,10 +152,9 @@ public partial class Enemy : Area2D, ITarget
 
     private void UpdateAI()
     {
-        _enemyActionPicker = EnemyStats.ActionPickerGetter();
+        _enemyActionPicker = EnemyStats.ActionPickerGetter(this);
         var target = (ITarget)GetTree().GetFirstNodeInGroup(GroupNames.Player);
         _enemyActionPicker.SetActionTarget(target);
-        _enemyActionPicker.SetActionEnemy(this);
     }
 
     private void UpdateStats() => statsUI.UpdateStats(Stats);

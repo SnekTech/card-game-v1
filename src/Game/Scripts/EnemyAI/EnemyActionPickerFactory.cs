@@ -1,18 +1,17 @@
-﻿using CardGameV1.EnemyAI.Bat;
-using CardGameV1.EnemyAI.Crab;
+﻿using CardGameV1.Character;
 
 namespace CardGameV1.EnemyAI;
 
 public static class EnemyActionPickerFactory
 {
-    public static EnemyActionPicker CreateCrabBrain() => new(
-        [new CrabMegaBlockAction()],
-        [new CrabAttackAction(), new CrabBlockAction()]
+    public static EnemyActionPicker CreateCrabBrain(Enemy enemy) => new(
+        [EnemyConditionalAction.CreateCrabMegaBlockAction(enemy)],
+        [EnemyChanceBasedAction.CreateCrabAttackAction(enemy), EnemyChanceBasedAction.CreateCrabBlockAction(enemy)]
     );
 
-    public static EnemyActionPicker CreateBatBrain() =>
+    public static EnemyActionPicker CreateBatBrain(Enemy enemy) =>
         new(
             [],
-            [new BatAttackAction(), new BatBlockAction()]
+            [EnemyChanceBasedAction.CreateBatAttackAction(enemy), EnemyChanceBasedAction.CreateBatBlockAction(enemy)]
         );
 }
