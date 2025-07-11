@@ -30,6 +30,7 @@ public partial class Tooltip : PanelContainer
     {
         CardEvents.CardTooltipRequested -= ShowTooltip;
         CardEvents.TooltipHideRequested -= HideTooltip;
+        _cts.Cancel();
     }
 
     private void ShowTooltip(Texture2D icon, string text)
