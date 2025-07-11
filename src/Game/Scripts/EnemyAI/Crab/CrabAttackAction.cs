@@ -1,5 +1,4 @@
-﻿using System.Threading;
-using CardGameV1.EffectSystem;
+﻿using CardGameV1.EffectSystem;
 using CardGameV1.ModifierSystem;
 using GTweens.Easings;
 using GTweensGodot.Extensions;
@@ -9,11 +8,11 @@ namespace CardGameV1.EnemyAI.Crab;
 public class CrabAttackAction : EnemyChanceBasedAction
 {
     public override Intent Intent { get; } = new($"{Damage}", "res://art/tile_0103.png");
-    protected override AudioStream? Sound { get; } = SnekUtility.LoadSound("res://art/enemy_attack.ogg");
     public override float ChanceWeight => 1;
 
     private const int Damage = 7;
     private const int AttackOffset = 32;
+    private static readonly AudioStream CrabAttackSound = SnekUtility.LoadSound("res://art/enemy_attack.ogg");
 
     public override async Task PerformActionAsync(CancellationToken cancellationToken)
     {
@@ -25,7 +24,7 @@ public class CrabAttackAction : EnemyChanceBasedAction
 
         var startPosition = Enemy.GlobalPosition;
         var endPosition = Target.GlobalPosition + Vector2.Right * AttackOffset;
-        var damageEffect = new DamageEffect(Damage) { Sound = Sound };
+        var damageEffect = new DamageEffect(Damage) { Sound = CrabAttackSound };
 
         await Enemy.TweenGlobalPosition(endPosition, 0.4f).SetEasing(Easing.OutQuint).PlayAsync(cancellationToken);
         await damageEffect.ExecuteAllAsync([Target], cancellationToken);

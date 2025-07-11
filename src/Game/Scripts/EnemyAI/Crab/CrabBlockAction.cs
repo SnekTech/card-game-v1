@@ -1,17 +1,14 @@
-﻿using System.Threading;
-using System.Threading.Tasks;
-using CardGameV1.EffectSystem;
-using Godot;
+﻿using CardGameV1.EffectSystem;
 
 namespace CardGameV1.EnemyAI.Crab;
 
 public class CrabBlockAction : EnemyChanceBasedAction
 {
     public override Intent Intent { get; } = new("", "res://art/tile_0101.png");
-    protected override AudioStream? Sound { get; } = SnekUtility.LoadSound("res://art/enemy_block.ogg");
     public override float ChanceWeight => 1;
 
     private const int Block = 6;
+    private static readonly AudioStream BlockSound = SnekUtility.LoadSound("res://art/enemy_block.ogg");
 
     public override async Task PerformActionAsync(CancellationToken cancellationToken)
     {
@@ -21,7 +18,7 @@ public class CrabBlockAction : EnemyChanceBasedAction
             return;
         }
 
-        var blockEffect = new BlockEffect(Block) { Sound = Sound };
+        var blockEffect = new BlockEffect(Block) { Sound = BlockSound };
         await blockEffect.ExecuteAllAsync([Enemy], cancellationToken);
 
         await SnekUtility.DelayGd(0.6f, cancellationToken);
