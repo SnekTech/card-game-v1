@@ -1,7 +1,8 @@
-﻿namespace CardGameV1.EnemyAI;
+﻿using CardGameV1.WeightedRandom;
 
-public class EnemyChanceBasedAction : EnemyAction
+namespace CardGameV1.EnemyAI;
+
+public class EnemyChanceBasedAction : EnemyAction, IWeightedCandidate
 {
-    public required float ChanceWeight { get; init; }
-    public float AccumulatedWeight { get; set; }
+    public required WeightData WeightData { get; init; }
 }

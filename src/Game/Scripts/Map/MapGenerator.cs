@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using CardGameV1.CustomResources;
-using Godot;
+﻿using CardGameV1.CustomResources;
 
 namespace CardGameV1.Map;
 
@@ -50,8 +47,6 @@ public class MapGenerator
             }
         }
         
-        _battleStatsPool.Setup();
-
         SetupBossRoom();
         SetupRandomRoomWeights();
         SetupRoomTypes();
