@@ -4,5 +4,5 @@ namespace CardGameV1.EnemyAI;
 
 public class EnemyChanceBasedAction : EnemyAction, IWeightedCandidate
 {
-    public required WeightData WeightData { get; init; }
+    public required WeightData WeightData { get; set; }
 }

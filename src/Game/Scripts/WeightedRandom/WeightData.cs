@@ -1,7 +1,7 @@
 namespace CardGameV1.WeightedRandom;
 
-public record WeightData
+public record WeightData(float Weight)
 {
-    public required float Weight { get; init; }
+    public float Weight { get; set; } = Weight;
     public float AccumulatedWeight { get; set; }
 }

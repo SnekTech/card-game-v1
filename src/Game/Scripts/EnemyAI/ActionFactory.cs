@@ -14,7 +14,7 @@ public static class ActionFactory
         {
             Intent = new Intent($"{batDamage}", "res://art/tile_0103.png"),
             ActionPerformer = new Attack(batDamage) { Enemy = enemy },
-            WeightData = new WeightData { Weight = 3 },
+            WeightData = new WeightData(3),
         };
     }
 
@@ -25,7 +25,7 @@ public static class ActionFactory
         {
             Intent = new Intent("", "res://art/tile_0101.png"),
             ActionPerformer = new Block(batBlock) { Enemy = enemy },
-            WeightData = new WeightData { Weight = 1 },
+            WeightData = new WeightData(1),
         };
     }
 
@@ -36,7 +36,7 @@ public static class ActionFactory
         {
             Intent = new Intent($"{crabDamage}", "res://art/tile_0103.png"),
             ActionPerformer = new Attack(crabDamage) { Enemy = enemy },
-            WeightData = new WeightData { Weight = 1 },
+            WeightData = new WeightData(1),
         };
     }
 
@@ -47,7 +47,7 @@ public static class ActionFactory
         {
             Intent = new Intent("", "res://art/tile_0101.png"),
             ActionPerformer = new Block(crabBlock) { Enemy = enemy },
-            WeightData = new WeightData { Weight = 1 },
+            WeightData = new WeightData(1),
         };
     }
 

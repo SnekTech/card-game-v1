@@ -2,11 +2,11 @@ namespace CardGameV1.WeightedRandom;
 
 public static class WeightedRandomCalculator
 {
-    public static T? GetWeighted<T>(List<T> candidates) where T : class, IWeightedCandidate
+    public static T GetWeighted<T>(List<T> candidates) where T : class, IWeightedCandidate
     {
         if (candidates.Count == 0)
         {
-            return null;
+            throw new ArgumentException("cannot get weighted random from an empty candidate list");
         }
 
         float totalWeight;

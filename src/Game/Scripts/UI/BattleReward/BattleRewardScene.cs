@@ -1,10 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using CardGameV1.CustomResources;
+﻿using CardGameV1.CustomResources;
 using CardGameV1.CustomResources.Cards;
 using CardGameV1.EventBus;
 using CardGameV1.MyExtensions;
-using Godot;
 using GodotUtilities;
 
 namespace CardGameV1.UI.BattleReward;
@@ -17,16 +14,8 @@ public partial class BattleRewardScene : Control
     [Node]
     private Button backButton = null!;
 
-    private static readonly Texture2D GoldIcon = GD.Load<Texture2D>("res://art/gold.png");
-    private static readonly Texture2D CardIcon = GD.Load<Texture2D>("res://art/rarity.png");
-    private readonly Dictionary<CardRarity, float> _cardRarityWeights = new()
-    {
-        [CardRarity.Common] = 0,
-        [CardRarity.Uncommon] = 0,
-        [CardRarity.Rare] = 0,
-    };
-
-    private float _cardRewardTotalWeight;
+    private static readonly Texture2D GoldIcon = SnekUtility.LoadTexture("res://art/gold.png");
+    private static readonly Texture2D CardIcon = SnekUtility.LoadTexture("res://art/rarity.png");
 
     public RunStats RunStats { private get; set; } = new();
     public CharacterStats CharacterStats { private get; set; } = null!;
@@ -75,45 +64,15 @@ public partial class BattleRewardScene : Control
 
         for (var i = 0; i < RunStats.CardRewards; i++)
         {
-            SetupCardChances();
-            var roll = GD.RandRange(0, _cardRewardTotalWeight);
-
-            foreach (var (rarity, weight) in _cardRarityWeights)
-            {
-                if (weight > roll)
-                {
-                    ModifyWeights(rarity);
-                    var pickedCard = GetRandomAvailableCard(availableCards, rarity);
-                    cardRewardList.Add(pickedCard);
-                    availableCards.Remove(pickedCard);
-                    break;
-                }
-            }
+            var rarityRolled = RunStats.CardRarityWeightStats.GetWeightedRarity();
+            RunStats.CardRarityWeightStats.ModifyWeights(rarityRolled);
+            var pickedCard = availableCards.Where(card => card.Rarity == rarityRolled).ToList().PickRandom();
+            cardRewardList.Add(pickedCard);
+            availableCards.Remove(pickedCard);
         }
 
         cardRewards.Rewards = cardRewardList;
         cardRewards.Show();
-    }
-
-    private void SetupCardChances()
-    {
-        _cardRewardTotalWeight = RunStats.CommonWeight + RunStats.UncommonWeight + RunStats.RareWeight;
-        _cardRarityWeights[CardRarity.Common] = RunStats.CommonWeight;
-        _cardRarityWeights[CardRarity.Uncommon] = RunStats.CommonWeight + RunStats.UncommonWeight;
-        _cardRarityWeights[CardRarity.Rare] = _cardRewardTotalWeight;
-    }
-
-    private void ModifyWeights(CardRarity rarityRolled)
-    {
-        RunStats.RareWeight = rarityRolled == CardRarity.Rare
-            ? RunStats.BaseRareWeight
-            : Mathf.Clamp(RunStats.RareWeight + 0.3f, RunStats.BaseRareWeight, 5f);
-    }
-
-    private Card GetRandomAvailableCard(List<Card> availableCards, CardRarity rarity)
-    {
-        var cardsWithThisRarity = availableCards.Where(card => card.Rarity == rarity).ToList();
-        return cardsWithThisRarity.PickRandom();
     }
 
     private void OnCardRewardSelected(Card? card)
