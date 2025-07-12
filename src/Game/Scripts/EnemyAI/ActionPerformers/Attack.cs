@@ -10,6 +10,7 @@ public class Attack(int damage, int times = 1) : ActionPerformer
     private string SoundPath { get; init; } = "res://art/enemy_attack.ogg";
 
     private const int AttackOffset = 32;
+    private const float AttackInterval = 0.35f;
 
     public override async Task PerformActionAsync(CancellationToken cancellationToken)
     {
@@ -26,8 +27,13 @@ public class Attack(int damage, int times = 1) : ActionPerformer
         var damageEffect = new DamageEffect(damage) { Sound = SnekUtility.LoadSound(SoundPath) };
 
         await Enemy.TweenGlobalPosition(endPosition, 0.4f).SetEasing(Easing.OutQuint).PlayAsync(cancellationToken);
-        await damageEffect.ExecuteAllAsync([Target], cancellationToken);
-        await SnekUtility.DelayGd(0.35f, cancellationToken);
+
+        for (var i = 0; i < times; i++)
+        {
+            await damageEffect.ExecuteAllAsync([Target], cancellationToken);
+            await SnekUtility.DelayGd(AttackInterval, cancellationToken);
+        }
+
         await Enemy.TweenGlobalPosition(startPosition, 0.4f).SetEasing(Easing.OutQuint)
             .PlayAsync(cancellationToken);
     }

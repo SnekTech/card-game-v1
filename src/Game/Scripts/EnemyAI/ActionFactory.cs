@@ -10,10 +10,11 @@ public static class ActionFactory
     public static EnemyChanceBasedAction CreateBatAttackAction(Enemy enemy)
     {
         const int batDamage = 4;
+        const int batAttackTimes = 2;
         return new EnemyChanceBasedAction
         {
             Intent = new Intent($"{batDamage}", "res://art/tile_0103.png"),
-            ActionPerformer = new Attack(batDamage) { Enemy = enemy },
+            ActionPerformer = new Attack(batDamage, batAttackTimes) { Enemy = enemy },
             WeightData = new WeightData(3),
         };
     }
