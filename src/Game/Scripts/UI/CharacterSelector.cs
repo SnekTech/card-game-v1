@@ -1,6 +1,5 @@
 ﻿using CardGameV1.Character;
 using CardGameV1.CustomResources;
-using Godot;
 using GodotUtilities;
 
 namespace CardGameV1.UI;
@@ -26,7 +25,7 @@ public partial class CharacterSelector : Control
     [Node]
     private Button assassinButton = null!;
 
-    private static readonly PackedScene RunScene = GD.Load<PackedScene>("res://Scenes/run/Run.tscn");
+    private static readonly PackedScene RunScene = GD.Load<PackedScene>(Run.RunScene.TscnFilePath);
 
     private CharacterStats CurrentCharacter
     {
