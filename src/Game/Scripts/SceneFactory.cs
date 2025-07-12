@@ -18,9 +18,9 @@ public static class SceneFactory
         Register<CardUI>("res://Scenes/UI/card_visual/CardUI.tscn");
         Register<Battle>("res://Scenes/Battle.tscn");
         Register<Enemy>("res://Scenes/Enemy/Enemy.tscn");
-        Register<BattleRewardScene>("res://Scenes/UI/battle_reward/BattleReward.tscn");
-        Register<CardRewards>("res://Scenes/UI/battle_reward/CardRewards.tscn");
-        Register<RewardButton>("res://Scenes/UI/battle_reward/RewardButton.tscn");
+        Register<BattleRewardScene>(BattleRewardScene.TscnFilePath);
+        Register<CardRewards>(CardRewards.TscnFilePath);
+        Register<RewardButton>(RewardButton.TscnFilePath);
         Register<CampfireScene>("res://Scenes/UI/campfire/Campfire.tscn");
         Register<ShopScene>("res://Scenes/UI/shop/Shop.tscn");
         Register<TreasureRoomScene>("res://Scenes/UI/treasure_room/TreasureRoom.tscn");

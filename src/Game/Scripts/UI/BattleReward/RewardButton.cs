@@ -1,24 +1,16 @@
-﻿using Godot;
-using GodotUtilities;
+﻿namespace CardGameV1.UI.BattleReward;
 
-namespace CardGameV1.UI.BattleReward;
-
-[Scene]
+[SceneTree]
 public partial class RewardButton : Button
 {
-    [Node]
-    private TextureRect customIcon = null!;
-    [Node]
-    private Label customText = null!;
-
     public Texture2D RewardIcon
     {
-        set => customIcon.Texture = value;
+        set => CustomIcon.Texture = value;
     }
 
     public string RewardText
     {
-        set => customText.Text = value;
+        set => CustomText.Text = value;
     }
 
     public override void _EnterTree()
@@ -34,13 +26,5 @@ public partial class RewardButton : Button
     private void OnPressed()
     {
         QueueFree();
-    }
-
-    public override void _Notification(int what)
-    {
-        if (what == NotificationSceneInstantiated)
-        {
-            WireNodes();
-        }
     }
 }

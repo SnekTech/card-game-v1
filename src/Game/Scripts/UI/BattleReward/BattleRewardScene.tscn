@@ -1,8 +1,8 @@
 [gd_scene load_steps=6 format=3 uid="uid://bd647tehqj7a"]
 
-[ext_resource type="Script" uid="uid://bj3deuw3s5s0o" path="res://Scripts/UI/BattleReward/BattleRewardScene.cs" id="1_8octo"]
-[ext_resource type="Texture2D" uid="uid://cp4iq5fd6j8be" path="res://art/background.png" id="2_7pc0u"]
-[ext_resource type="PackedScene" uid="uid://dosvm6681w3an" path="res://Scenes/UI/battle_reward/RewardButton.tscn" id="3_8octo"]
+[ext_resource type="Script" uid="uid://bj3deuw3s5s0o" path="res://Scripts/UI/BattleReward/BattleRewardScene.cs" id="1_4lqgc"]
+[ext_resource type="Texture2D" uid="uid://cp4iq5fd6j8be" path="res://art/background.png" id="2_puonw"]
+[ext_resource type="PackedScene" uid="uid://dosvm6681w3an" path="res://Scripts/UI/BattleReward/RewardButton.tscn" id="3_f74ld"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_7pc0u"]
 font_size = 12
@@ -10,7 +10,7 @@ font_size = 12
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7pc0u"]
 bg_color = Color(0, 0, 0, 0.501961)
 
-[node name="BattleReward" type="Control"]
+[node name="BattleRewardScene" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -18,7 +18,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-script = ExtResource("1_8octo")
+script = ExtResource("1_4lqgc")
 
 [node name="Background" type="TextureRect" parent="."]
 layout_mode = 1
@@ -27,7 +27,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("2_7pc0u")
+texture = ExtResource("2_puonw")
 expand_mode = 1
 stretch_mode = 5
 metadata/_edit_lock_ = true
@@ -78,10 +78,10 @@ theme_override_constants/margin_bottom = 5
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="GoldReward" parent="VBoxContainer/RewardContainer/MarginContainer/Rewards" instance=ExtResource("3_8octo")]
+[node name="GoldReward" parent="VBoxContainer/RewardContainer/MarginContainer/Rewards" instance=ExtResource("3_f74ld")]
 layout_mode = 2
 
-[node name="CardReward" parent="VBoxContainer/RewardContainer/MarginContainer/Rewards" instance=ExtResource("3_8octo")]
+[node name="CardReward" parent="VBoxContainer/RewardContainer/MarginContainer/Rewards" instance=ExtResource("3_f74ld")]
 layout_mode = 2
 
 [node name="BackButton" type="Button" parent="VBoxContainer"]

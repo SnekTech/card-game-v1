@@ -3,18 +3,12 @@ using CardGameV1.CustomResources.Cards;
 using CardGameV1.CustomResources.Run;
 using CardGameV1.EventBus;
 using CardGameV1.MyExtensions;
-using GodotUtilities;
 
 namespace CardGameV1.UI.BattleReward;
 
-[Scene]
+[SceneTree]
 public partial class BattleRewardScene : Control
 {
-    [Node]
-    private VBoxContainer rewards = null!;
-    [Node]
-    private Button backButton = null!;
-
     private static readonly Texture2D GoldIcon = SnekUtility.LoadTexture("res://art/gold.png");
     private static readonly Texture2D CardIcon = SnekUtility.LoadTexture("res://art/rarity.png");
 
@@ -23,17 +17,17 @@ public partial class BattleRewardScene : Control
 
     public override void _Ready()
     {
-        rewards.ClearChildren();
+        Rewards.ClearChildren();
     }
 
     public override void _EnterTree()
     {
-        backButton.Pressed += OnBackButtonPressed;
+        BackButton.Pressed += OnBackButtonPressed;
     }
 
     public override void _ExitTree()
     {
-        backButton.Pressed -= OnBackButtonPressed;
+        BackButton.Pressed -= OnBackButtonPressed;
     }
 
     public void AddGoldReward(int amount)
@@ -42,7 +36,7 @@ public partial class BattleRewardScene : Control
         goldRewardButton.RewardIcon = GoldIcon;
         goldRewardButton.RewardText = $"{amount} gold";
         goldRewardButton.Pressed += () => RunStats.Gold += amount;
-        Callable.From(() => rewards.AddChild(goldRewardButton)).CallDeferred();
+        Callable.From(() => Rewards.AddChild(goldRewardButton)).CallDeferred();
     }
 
     public void AddCardReward()
@@ -51,7 +45,7 @@ public partial class BattleRewardScene : Control
         cardRewardButton.RewardIcon = CardIcon;
         cardRewardButton.RewardText = "Add New Card";
         cardRewardButton.Pressed += ShowCardRewards;
-        Callable.From(() => rewards.AddChild(cardRewardButton)).CallDeferred();
+        Callable.From(() => Rewards.AddChild(cardRewardButton)).CallDeferred();
     }
 
     private void ShowCardRewards()
@@ -85,12 +79,4 @@ public partial class BattleRewardScene : Control
     }
 
     private void OnBackButtonPressed() => EventBusOwner.Events.EmitBattleRewardExited();
-
-    public override void _Notification(int what)
-    {
-        if (what == NotificationSceneInstantiated)
-        {
-            WireNodes();
-        }
-    }
 }

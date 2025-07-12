@@ -6,19 +6,10 @@ using GodotUtilities;
 
 namespace CardGameV1.UI.BattleReward;
 
-[Scene]
+[SceneTree]
 public partial class CardRewards : ColorRect
 {
     public event Action<Card?>? CardRewardSelected;
-
-    [Node]
-    private HBoxContainer cards = null!;
-    [Node]
-    private Button skipCardButton = null!;
-    [Node]
-    private Button takeButton = null!;
-    [Node]
-    private CardTooltipPopup cardTooltipPopup = null!;
 
     private readonly List<Card> _rewards = [];
     private Card? _selectedCard;
@@ -35,7 +26,7 @@ public partial class CardRewards : ColorRect
             foreach (var card in _rewards)
             {
                 var newCard = SceneFactory.Instantiate<CardMenuUI>();
-                cards.AddChild(newCard);
+                Cards.AddChild(newCard);
                 newCard.Card = card;
                 newCard.TooltipRequested += OnCardTooltipRequested;
             }
@@ -49,41 +40,41 @@ public partial class CardRewards : ColorRect
 
     public override void _EnterTree()
     {
-        takeButton.Pressed += OnTakeButtonPressed;
-        skipCardButton.Pressed += OnSkipButtonPressed;
+        TakeButton.Pressed += OnTakeButtonPressed;
+        SkipCardButton.Pressed += OnSkipButtonPressed;
     }
 
     public override void _ExitTree()
     {
         ClearRewards();
-        takeButton.Pressed -= OnTakeButtonPressed;
-        skipCardButton.Pressed -= OnSkipButtonPressed;
+        TakeButton.Pressed -= OnTakeButtonPressed;
+        SkipCardButton.Pressed -= OnSkipButtonPressed;
     }
 
     public override void _Input(InputEvent inputEvent)
     {
         if (inputEvent.IsActionPressed(BuiltinInputActions.UICancel))
         {
-            cardTooltipPopup.HideTooltip();
+            CardTooltipPopup.HideTooltip();
         }
     }
 
     private void ClearRewards()
     {
         _rewards.Clear();
-        foreach (var child in cards.GetChildrenOfType<CardMenuUI>())
+        foreach (var child in Cards.GetChildrenOfType<CardMenuUI>())
         {
             child.TooltipRequested -= OnCardTooltipRequested;
         }
-        cards.ClearChildren();
-        cardTooltipPopup.HideTooltip();
+        Cards.ClearChildren();
+        CardTooltipPopup.HideTooltip();
         _selectedCard = null;
     }
 
     private void OnCardTooltipRequested(Card card)
     {
         _selectedCard = card;
-        cardTooltipPopup.ShowTooltip(card);
+        CardTooltipPopup.ShowTooltip(card);
     }
 
     private void OnTakeButtonPressed()
@@ -99,13 +90,5 @@ public partial class CardRewards : ColorRect
     {
         CardRewardSelected?.Invoke(null);
         QueueFree();
-    }
-
-    public override void _Notification(int what)
-    {
-        if (what == NotificationSceneInstantiated)
-        {
-            WireNodes();
-        }
     }
 }
