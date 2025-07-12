@@ -26,7 +26,7 @@ public static class SceneFactory
         Register<TreasureRoomScene>("res://Scenes/UI/treasure_room/TreasureRoom.tscn");
         Register<MapRoomScene>("res://Scenes/map/MapRoom.tscn");
         Register<MapLine>("res://Scenes/map/MapLine.tscn");
-        Register<StatusUI>("res://Scenes/statusHandler/StatusUI.tscn");
+        Register<StatusUI>(StatusUI.TscnFilePath);
         // todo: use source generator
         // add an attribute to the scene scripts to be registered here
         Register<StatusTooltip>(StatusTooltip.TscnFilePath);

@@ -1,11 +1,9 @@
-﻿using System.Threading;
-using CardGameV1.Constants;
+﻿using CardGameV1.Constants;
 using CardGameV1.EffectSystem;
 using CardGameV1.EventBus;
-using CardGameV1.StatusSystem.UI;
 using GodotUtilities;
 
-namespace CardGameV1.StatusSystem;
+namespace CardGameV1.StatusSystem.UI;
 
 public partial class StatusHandler : GridContainer
 {

@@ -1,8 +1,6 @@
-﻿using System.Threading;
-using System.Threading.Tasks;
-using CardGameV1.CustomResources;
+﻿using CardGameV1.CustomResources;
 using CardGameV1.ModifierSystem;
-using CardGameV1.StatusSystem;
+using CardGameV1.StatusSystem.UI;
 
 namespace CardGameV1.EffectSystem;
 

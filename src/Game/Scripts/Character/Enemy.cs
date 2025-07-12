@@ -1,5 +1,4 @@
-﻿using System.Threading;
-using CardGameV1.Constants;
+﻿using CardGameV1.Constants;
 using CardGameV1.CustomResources;
 using CardGameV1.EffectSystem;
 using CardGameV1.EnemyAI;
@@ -7,6 +6,7 @@ using CardGameV1.ModifierSystem;
 using CardGameV1.StatusSystem;
 using CardGameV1.UI.BattleUIComponents;
 using GodotUtilities;
+using StatusHandler = CardGameV1.StatusSystem.UI.StatusHandler;
 
 namespace CardGameV1.Character;
 

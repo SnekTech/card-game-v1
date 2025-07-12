@@ -1,18 +1,8 @@
-﻿using Godot;
-using GodotUtilities;
+﻿namespace CardGameV1.StatusSystem.UI;
 
-namespace CardGameV1.StatusSystem.UI;
-
-[Scene]
+[SceneTree]
 public partial class StatusUI : Control
 {
-    [Node]
-    private TextureRect icon = null!;
-    [Node]
-    private Label duration = null!;
-    [Node]
-    private Label stacks = null!;
-
     private Status? _status;
 
     public Status Status
@@ -59,32 +49,24 @@ public partial class StatusUI : Control
             QueueFree();
         }
 
-        duration.Text = _status.Duration.ToString();
-        stacks.Text = _status.Stacks.ToString();
+        Duration.Text = _status.Duration.ToString();
+        Stacks.Text = _status.Stacks.ToString();
     }
 
     private void UpdateContent(Status status)
     {
-        icon.Texture = status.Icon;
-        duration.Visible = status.StackType == StackType.Duration;
-        stacks.Visible = status.StackType == StackType.Intensity;
-        CustomMinimumSize = icon.Size;
+        Icon.Texture = status.Icon;
+        Duration.Visible = status.StackType == StackType.Duration;
+        Stacks.Visible = status.StackType == StackType.Intensity;
+        CustomMinimumSize = Icon.Size;
 
-        if (duration.Visible)
+        if (Duration.Visible)
         {
-            CustomMinimumSize = duration.Size + duration.Position;
+            CustomMinimumSize = Duration.Size + Duration.Position;
         }
-        else if (stacks.Visible)
+        else if (Stacks.Visible)
         {
-            CustomMinimumSize = stacks.Size + stacks.Position;
-        }
-    }
-
-    public override void _Notification(int what)
-    {
-        if (what == NotificationSceneInstantiated)
-        {
-            WireNodes();
+            CustomMinimumSize = Stacks.Size + Stacks.Position;
         }
     }
 }

@@ -5,7 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://bb3rcs5nqntir" path="res://art/arrow.png" id="2_e0oyi"]
 [ext_resource type="PackedScene" uid="uid://cxy4ik6w7yg57" path="res://Scenes/UI/battle_ui_components/StatsUI.tscn" id="3_02vxf"]
 [ext_resource type="PackedScene" uid="uid://dmu5i71r5vqb" path="res://Scenes/UI/battle_ui_components/IntentUI.tscn" id="6_seemo"]
-[ext_resource type="PackedScene" uid="uid://bt4qmg7o0bqqn" path="res://Scenes/statusHandler/StatusHandler.tscn" id="7_ljmj3"]
+[ext_resource type="PackedScene" uid="uid://bt4qmg7o0bqqn" path="res://Scripts/StatusSystem/UI/StatusHandler.tscn" id="7_ljmj3"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qxnh6"]
 

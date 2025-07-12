@@ -2,7 +2,7 @@
 using CardGameV1.EffectSystem;
 using CardGameV1.EventBus;
 using CardGameV1.ModifierSystem;
-using CardGameV1.StatusSystem;
+using CardGameV1.StatusSystem.UI;
 
 namespace CardGameV1.Character;
 

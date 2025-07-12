@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://bt4qmg7o0bqqn"]
 
-[ext_resource type="Script" uid="uid://c7mddrto2r424" path="res://Scripts/StatusSystem/StatusHandler.cs" id="1_sb85s"]
+[ext_resource type="Script" uid="uid://c7mddrto2r424" path="res://Scripts/StatusSystem/UI/StatusHandler.cs" id="1_sb85s"]
 
 [node name="StatusHandler" type="GridContainer"]
 mouse_filter = 0
