@@ -1,16 +1,10 @@
 ﻿using CardGameV1.CustomResources.Run;
-using GodotUtilities;
 
 namespace CardGameV1.UI.Run;
 
-[Scene]
+[SceneTree]
 public partial class GoldUI : HBoxContainer
 {
-    [Node]
-    private TextureRect icon = null!;
-    [Node]
-    private Label label = null!;
-
     private RunStats? _runStats;
 
     public RunStats RunStats
@@ -34,15 +28,7 @@ public partial class GoldUI : HBoxContainer
         RunStats.GoldChanged -= OnGoldChanged;
     }
 
-    private void UpdateContent() => label.Text = RunStats.Gold.ToString();
+    private void UpdateContent() => _.Label.Text = RunStats.Gold.ToString();
 
     private void OnGoldChanged() => UpdateContent();
-
-    public override void _Notification(int what)
-    {
-        if (what == NotificationSceneInstantiated)
-        {
-            WireNodes();
-        }
-    }
 }

@@ -5,51 +5,21 @@ using CardGameV1.Map;
 using CardGameV1.MyExtensions;
 using CardGameV1.UI.BattleReward;
 using CardGameV1.UI.Campfire;
-using CardGameV1.UI.CardPileDisplay;
 using CardGameV1.UI.Shop;
 using CardGameV1.UI.TreasureRoom;
-using GodotUtilities;
 
 namespace CardGameV1.UI.Run;
 
-[Scene]
+[SceneTree]
 public partial class RunScene : Node
 {
     [Export]
     private RunStartup runStartup = null!;
 
-    [Node]
-    private MapScene map = null!;
-    [Node]
-    private Node currentView = null!;
-    [Node]
-    private HealthUI healthUI = null!;
-    [Node]
-    private GoldUI goldUI = null!;
-    [Node]
-    private CardPileOpener deckButton = null!;
-    [Node]
-    private CardPileView deckView = null!;
-
-    #region debug buttons
-
-    [Node]
-    private Button mapButton = null!;
-    [Node]
-    private Button battleButton = null!;
-    [Node]
-    private Button shopButton = null!;
-    [Node]
-    private Button treasureRoomButton = null!;
-    [Node]
-    private Button battleRewardButton = null!;
-    [Node]
-    private Button campfireButton = null!;
-
-    #endregion
-
     private RunStats _runStats = null!;
     private CharacterStats Character { get; set; } = null!;
+
+    #region lifecycle
 
     public override void _Ready()
     {
@@ -79,47 +49,49 @@ public partial class RunScene : Node
         UnsubscribeEvents();
     }
 
+    #endregion
+
     private void StartRun()
     {
         _runStats = new RunStats();
 
         SetupTopBar();
-        map.GenerateNewMap();
-        map.UnlockFloor(0);
+        Map.GenerateNewMap();
+        Map.UnlockFloor(0);
     }
 
     private void SetupTopBar()
     {
-        healthUI.UpdateStats(Character);
-        goldUI.RunStats = _runStats;
-        deckButton.CardPile = Character.Deck;
-        deckView.CardPile = Character.Deck;
+        HealthUI.UpdateStats(Character);
+        GoldUI.RunStats = _runStats;
+        DeckButton.CardPile = Character.Deck;
+        DeckView.CardPile = Character.Deck;
     }
 
     private T ChangeView<T>() where T : Node
     {
-        if (currentView.HasAnyChild())
+        if (CurrentView.HasAnyChild())
         {
-            currentView.GetChild(0).QueueFree();
+            CurrentView.GetChild(0).QueueFree();
         }
 
         GetTree().Paused = false;
         var newView = SceneFactory.Instantiate<T>();
-        currentView.AddChild(newView);
-        map.HideMap();
+        CurrentView.AddChild(newView);
+        Map.HideMap();
 
         return newView;
     }
 
     private void ShowMap()
     {
-        if (currentView.HasAnyChild())
+        if (CurrentView.HasAnyChild())
         {
-            currentView.GetChild(0).QueueFree();
+            CurrentView.GetChild(0).QueueFree();
         }
 
-        map.ShowMap();
-        map.UnlockNextRooms();
+        Map.ShowMap();
+        Map.UnlockNextRooms();
     }
 
     private void SubscribeEvents()
@@ -133,18 +105,7 @@ public partial class RunScene : Node
         events.ShopExited += OnShopExited;
         events.TreasureRoomExited += OnTreasureRoomExited;
 
-        deckButton.Pressed += OnDeckButtonPressed;
-
-        #region debug buttons
-
-        battleButton.Pressed += OnBattleButtonPressed;
-        campfireButton.Pressed += OnCampfireButtonPressed;
-        mapButton.Pressed += OnMapButtonPressed;
-        battleRewardButton.Pressed += OnBattleRewardButtonPressed;
-        shopButton.Pressed += OnShopButtonPressed;
-        treasureRoomButton.Pressed += OnTreasureRoomButtonPressed;
-
-        #endregion
+        DeckButton.Pressed += OnDeckButtonPressed;
     }
 
     private void UnsubscribeEvents()
@@ -158,24 +119,13 @@ public partial class RunScene : Node
         events.ShopExited -= OnShopExited;
         events.TreasureRoomExited -= OnTreasureRoomExited;
 
-        deckButton.Pressed -= OnDeckButtonPressed;
+        DeckButton.Pressed -= OnDeckButtonPressed;
         Character.StatsChanged -= OnCharacterStatsChanged;
-
-        #region debug buttons
-
-        battleButton.Pressed -= OnBattleButtonPressed;
-        campfireButton.Pressed -= OnCampfireButtonPressed;
-        mapButton.Pressed -= OnMapButtonPressed;
-        battleRewardButton.Pressed -= OnBattleRewardButtonPressed;
-        shopButton.Pressed -= OnShopButtonPressed;
-        treasureRoomButton.Pressed -= OnTreasureRoomButtonPressed;
-
-        #endregion
     }
 
     private void OnCharacterStatsChanged()
     {
-        healthUI.UpdateStats(Character);
+        HealthUI.UpdateStats(Character);
     }
 
     private void OnBattleRoomEntered(Room room)
@@ -198,7 +148,7 @@ public partial class RunScene : Node
         rewardScene.RunStats = _runStats;
         rewardScene.CharacterStats = Character;
 
-        rewardScene.AddGoldReward(map.LastRoom!.BattleStats!.GoldRewardRoll);
+        rewardScene.AddGoldReward(Map.LastRoom!.BattleStats!.GoldRewardRoll);
         rewardScene.AddCardReward();
     }
 
@@ -215,18 +165,7 @@ public partial class RunScene : Node
     private void OnShopExited() => ShowMap();
     private void OnTreasureRoomExited() => ShowMap();
 
-    private void OnDeckButtonPressed() => deckView.ShowCurrentView("Deck");
-
-    #region debug button handlers
-
-    private void OnBattleButtonPressed() => ChangeView<Battle>();
-    private void OnCampfireButtonPressed() => ChangeView<CampfireScene>();
-    private void OnMapButtonPressed() => ShowMap();
-    private void OnBattleRewardButtonPressed() => ChangeView<BattleRewardScene>();
-    private void OnShopButtonPressed() => ChangeView<ShopScene>();
-    private void OnTreasureRoomButtonPressed() => ChangeView<TreasureRoomScene>();
-
-    #endregion
+    private void OnDeckButtonPressed() => DeckView.ShowCurrentView("Deck");
 
     private void OnMapExited(Room room)
     {
@@ -251,14 +190,6 @@ public partial class RunScene : Node
                 break;
             default:
                 throw new ArgumentOutOfRangeException(nameof(room), "room type out of range");
-        }
-    }
-
-    public override void _Notification(int what)
-    {
-        if (what == NotificationSceneInstantiated)
-        {
-            WireNodes();
         }
     }
 }
