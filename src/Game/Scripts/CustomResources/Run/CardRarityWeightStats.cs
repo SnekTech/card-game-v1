@@ -1,7 +1,7 @@
 using CardGameV1.CustomResources.Cards;
 using CardGameV1.WeightedRandom;
 
-namespace CardGameV1.CustomResources;
+namespace CardGameV1.CustomResources.Run;
 
 public class CardRarityWeightStats
 {

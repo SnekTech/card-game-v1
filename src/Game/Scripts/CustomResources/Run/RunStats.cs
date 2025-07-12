@@ -1,7 +1,6 @@
-﻿namespace CardGameV1.CustomResources;
+﻿namespace CardGameV1.CustomResources.Run;
 
-[GlobalClass]
-public partial class RunStats : Resource
+public class RunStats
 {
     public event Action? GoldChanged;
 
@@ -9,6 +8,7 @@ public partial class RunStats : Resource
     private const int BaseCardRewards = 3;
 
     private int _gold = StartingGold;
+
     public CardRarityWeightStats CardRarityWeightStats { get; } = new();
 
     public int Gold
