@@ -5,6 +5,7 @@ namespace CardGameV1.EnemyAI.ActionPerformers;
 public class Block(int blockAmount) : ActionPerformer
 {
     private string SoundPath { get; init; } = "res://art/block.ogg";
+
     public override async Task PerformActionAsync(CancellationToken cancellationToken)
     {
         var blockEffect = new BlockEffect(blockAmount) { Sound = SnekUtility.LoadSound(SoundPath) };
@@ -12,4 +13,6 @@ public class Block(int blockAmount) : ActionPerformer
 
         await SnekUtility.DelayGd(0.6f, cancellationToken);
     }
+
+    public override string DisplayText => "";
 }

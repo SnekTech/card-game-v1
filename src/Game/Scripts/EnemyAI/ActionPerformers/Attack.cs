@@ -1,10 +1,11 @@
 using CardGameV1.EffectSystem;
+using CardGameV1.ModifierSystem;
 using GTweens.Easings;
 using GTweensGodot.Extensions;
 
 namespace CardGameV1.EnemyAI.ActionPerformers;
 
-public class Attack(int damage) : ActionPerformer
+public class Attack(int damage, int times = 1) : ActionPerformer
 {
     private string SoundPath { get; init; } = "res://art/enemy_attack.ogg";
 
@@ -29,5 +30,20 @@ public class Attack(int damage) : ActionPerformer
         await SnekUtility.DelayGd(0.35f, cancellationToken);
         await Enemy.TweenGlobalPosition(startPosition, 0.4f).SetEasing(Easing.OutQuint)
             .PlayAsync(cancellationToken);
+    }
+
+    public override string DisplayText
+    {
+        get
+        {
+            if (Target == null)
+            {
+                return "";
+            }
+
+            var modifiedDamage = Target.ModifierHandler.GetModifiedValue(damage, ModifierType.DamageTaken);
+            var timesText = times > 1 ? $"{times}x" : "";
+            return $"{timesText}{modifiedDamage}";
+        }
     }
 }

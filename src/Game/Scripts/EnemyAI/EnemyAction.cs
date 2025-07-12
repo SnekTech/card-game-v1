@@ -12,9 +12,8 @@ public abstract class EnemyAction
     public Task PerformActionAsync(CancellationToken cancellationToken) =>
         ActionPerformer.PerformActionAsync(cancellationToken);
 
-    // todo: fix dynamic intent text
-    public virtual void UpdateIntentText()
+    public void UpdateIntentText()
     {
-        Intent.CurrentText = Intent.BaseText;
+        Intent.CurrentText = ActionPerformer.DisplayText;
     }
 }

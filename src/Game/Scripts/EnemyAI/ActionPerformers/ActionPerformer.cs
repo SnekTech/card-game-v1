@@ -9,4 +9,5 @@ public abstract class ActionPerformer
     public ITarget? Target { get; set; }
 
     public abstract Task PerformActionAsync(CancellationToken cancellationToken);
+    public abstract string DisplayText { get; }
 }
