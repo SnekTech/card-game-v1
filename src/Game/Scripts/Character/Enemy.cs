@@ -4,26 +4,12 @@ using CardGameV1.EffectSystem;
 using CardGameV1.EnemyAI;
 using CardGameV1.ModifierSystem;
 using CardGameV1.StatusSystem;
-using CardGameV1.StatusSystem.UI;
-using CardGameV1.UI.BattleUIComponents;
-using GodotUtilities;
 
 namespace CardGameV1.Character;
 
-[Scene]
+[SceneTree]
 public partial class Enemy : Area2D, ITarget
 {
-    [Node]
-    private Sprite2D sprite2D = null!;
-    [Node]
-    private Sprite2D arrow = null!;
-    [Node]
-    private StatsUI statsUI = null!;
-    [Node]
-    private IntentUI intentUI = null!;
-    [Node]
-    private StatusContainer statusContainer = null!;
-
     private const int ArrowOffset = 5;
     private static readonly Material WhiteSprite = GD.Load<Material>("res://art/white_sprite_material.tres");
 
@@ -69,7 +55,7 @@ public partial class Enemy : Area2D, ITarget
     public override void _Ready()
     {
         _enemyActionPicker = EnemyActionPickerFactory.CreateCrabBrain(this);
-        StatusHandler = new StatusHandler(this, statusContainer);
+        StatusHandler = new StatusHandler(this, _.StatusContainer);
     }
 
     public override void _EnterTree()
@@ -127,12 +113,12 @@ public partial class Enemy : Area2D, ITarget
         if (Stats.Health <= 0)
             return;
 
-        sprite2D.Material = WhiteSprite;
+        _.Sprite2D.Material = WhiteSprite;
         await this.ShakeAsync(16, 0.15f);
 
         var modifiedDamage = ModifierHandler.GetModifiedValue(damage, whichModifier);
         Stats.TakeDamage(modifiedDamage);
-        sprite2D.Material = null;
+        _.Sprite2D.Material = null;
 
         if (Stats.Health <= 0)
         {
@@ -145,9 +131,9 @@ public partial class Enemy : Area2D, ITarget
         if (IsInsideTree() == false)
             return;
 
-        sprite2D.Texture = Stats.Art;
-        var spriteWidth = sprite2D.GetRect().Size.X;
-        arrow.Position = Vector2.Right * (spriteWidth / 2 + ArrowOffset);
+        _.Sprite2D.Texture = Stats.Art;
+        var spriteWidth = _.Sprite2D.GetRect().Size.X;
+        _.Arrow.Position = Vector2.Right * (spriteWidth / 2 + ArrowOffset);
         UpdateStats();
         UpdateAI();
     }
@@ -159,7 +145,7 @@ public partial class Enemy : Area2D, ITarget
         _enemyActionPicker.SetActionTarget(target);
     }
 
-    private void UpdateStats() => statsUI.UpdateStats(Stats);
+    private void UpdateStats() => _.StatsUI.UpdateStats(Stats);
 
     public void UpdateAction()
     {
@@ -181,25 +167,17 @@ public partial class Enemy : Area2D, ITarget
         if (CurrentAction != null)
         {
             CurrentAction.UpdateIntentText();
-            intentUI.UpdateIntent(CurrentAction.Intent);
+            _.IntentUI.UpdateIntent(CurrentAction.Intent);
         }
     }
 
     private void OnAreaEntered(Area2D area2D)
     {
-        arrow.Show();
+        _.Arrow.Show();
     }
 
     private void OnAreaExited(Area2D area2D)
     {
-        arrow.Hide();
-    }
-
-    public override void _Notification(int what)
-    {
-        if (what == NotificationSceneInstantiated)
-        {
-            WireNodes();
-        }
+        _.Arrow.Hide();
     }
 }
