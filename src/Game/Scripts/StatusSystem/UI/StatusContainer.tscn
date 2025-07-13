@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://bt4qmg7o0bqqn"]
+
+[ext_resource type="Script" uid="uid://6de5l4jydk6n" path="res://Scripts/StatusSystem/UI/StatusContainer.cs" id="1_ikw4a"]
+
+[node name="StatusContainer" type="GridContainer"]
+mouse_filter = 0
+theme_override_constants/h_separation = 0
+theme_override_constants/v_separation = 0
+columns = 6
+script = ExtResource("1_ikw4a")

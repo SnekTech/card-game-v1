@@ -1,36 +1,35 @@
-﻿using CardGameV1.Constants;
-using CardGameV1.EffectSystem;
+﻿using CardGameV1.EffectSystem;
 using CardGameV1.EventBus;
-using GodotUtilities;
+using CardGameV1.StatusSystem.UI;
 
-namespace CardGameV1.StatusSystem.UI;
+namespace CardGameV1.StatusSystem;
 
-public partial class StatusHandler : GridContainer
+public class StatusHandler
 {
-    [Export]
-    private Node2D statusOwner = null!;
+    public StatusHandler(ITarget target, StatusContainer container)
+    {
+        _target = target;
+        _container = container;
+        _container.Clicked += OnContainerClicked;
+    }
 
     private const float StatusApplyInterval = 0.25f;
 
-    private ITarget Target => (ITarget)statusOwner;
+    private readonly ITarget _target;
+    private readonly StatusContainer _container;
 
-    public override void _GuiInput(InputEvent inputEvent)
-    {
-        if (inputEvent.IsActionPressed(InputActions.LeftMouse))
-        {
-            EventBusOwner.Events.EmitStatusTooltipRequested(GetAllStatuses().ToList());
-        }
-    }
+    private readonly List<Status> _statusList = [];
 
     public void AddStatus(Status status)
     {
         var sameStatus = GetStatus(status.Id);
         if (sameStatus == null)
         {
+            _statusList.Add(status);
             var newStatusUI = SceneFactory.Instantiate<StatusUI>();
-            AddChild(newStatusUI);
+            _container.AddChild(newStatusUI);
             newStatusUI.Status = status;
-            newStatusUI.Status.Init(Target);
+            newStatusUI.Status.Init(_target);
             return;
         }
 
@@ -47,26 +46,36 @@ public partial class StatusHandler : GridContainer
         }
     }
 
-    private Status? GetStatus(string statusId) => GetAllStatuses().FirstOrDefault(status => status.Id == statusId);
-
-    private IEnumerable<Status> GetAllStatuses() =>
-        this.GetChildrenOfType<StatusUI>().Select(statusUI => statusUI.Status);
-
     public async Task ApplyStatusesByType(StatusType type, CancellationToken cancellationToken)
     {
         if (type == StatusType.EventBased)
             return;
 
         cancellationToken.ThrowIfCancellationRequested();
-        foreach (var status in GetAllStatuses().Where(sts => sts.Type == type))
+        foreach (var status in _statusList.Where(s => s.Type == type).ToList())
         {
-            await status.ApplyStatusAsync(Target, cancellationToken);
+            await status.ApplyStatusAsync(_target, cancellationToken);
             if (status.StackType == StackType.Duration)
             {
                 status.Duration--;
             }
 
+            if (status.IsExpired())
+            {
+                _container.RemoveStatusUI(status.Id);
+                _statusList.Remove(status);
+            }
+
             await SnekUtility.DelayGd(StatusApplyInterval, cancellationToken);
         }
     }
+
+    public void OnDispose()
+    {
+        _container.Clicked -= OnContainerClicked;
+    }
+
+    private Status? GetStatus(string statusId) => _statusList.FirstOrDefault(status => status.Id == statusId);
+
+    private void OnContainerClicked() => EventBusOwner.Events.EmitStatusTooltipRequested(_statusList);
 }

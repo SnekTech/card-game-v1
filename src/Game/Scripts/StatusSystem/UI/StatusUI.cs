@@ -39,16 +39,6 @@ public partial class StatusUI : Control
         if (_status == null)
             return;
 
-        if (_status.CanExpire && _status.Duration <= 0)
-        {
-            QueueFree();
-        }
-
-        if (_status.StackType == StackType.Intensity && _status.Stacks == 0)
-        {
-            QueueFree();
-        }
-
         Duration.Text = _status.Duration.ToString();
         Stacks.Text = _status.Stacks.ToString();
     }

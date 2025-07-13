@@ -1,5 +1,4 @@
-﻿using System.Threading;
-using CardGameV1.EffectSystem;
+﻿using CardGameV1.EffectSystem;
 
 namespace CardGameV1.StatusSystem;
 
@@ -12,6 +11,21 @@ public abstract class Status
     public StackType StackType { get; init; }
     public bool IsStackable => StackType != StackType.None;
     public bool CanExpire { get; init; }
+
+    public bool IsExpired()
+    {
+        if (CanExpire && Duration <= 0)
+        {
+            return true;
+        }
+
+        if (StackType == StackType.Intensity && Stacks == 0)
+        {
+            return true;
+        }
+
+        return false;
+    }
 
     public required string IconPath { get; init; }
     public Texture2D Icon => SnekUtility.LoadTexture(IconPath);
@@ -26,7 +40,7 @@ public abstract class Status
         set
         {
             _duration = value;
-            Changed?.Invoke();
+            EmitChanged();
         }
     }
 
@@ -36,7 +50,7 @@ public abstract class Status
         set
         {
             _stacks = value;
-            Changed?.Invoke();
+            EmitChanged();
         }
     }
 
@@ -49,4 +63,6 @@ public abstract class Status
     {
         return Task.CompletedTask;
     }
+
+    private void EmitChanged() => Changed?.Invoke();
 }

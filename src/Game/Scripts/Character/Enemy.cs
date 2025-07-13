@@ -4,9 +4,9 @@ using CardGameV1.EffectSystem;
 using CardGameV1.EnemyAI;
 using CardGameV1.ModifierSystem;
 using CardGameV1.StatusSystem;
+using CardGameV1.StatusSystem.UI;
 using CardGameV1.UI.BattleUIComponents;
 using GodotUtilities;
-using StatusHandler = CardGameV1.StatusSystem.UI.StatusHandler;
 
 namespace CardGameV1.Character;
 
@@ -22,7 +22,7 @@ public partial class Enemy : Area2D, ITarget
     [Node]
     private IntentUI intentUI = null!;
     [Node]
-    private StatusHandler statusHandler = null!;
+    private StatusContainer statusContainer = null!;
 
     private const int ArrowOffset = 5;
     private static readonly Material WhiteSprite = GD.Load<Material>("res://art/white_sprite_material.tres");
@@ -58,7 +58,7 @@ public partial class Enemy : Area2D, ITarget
         }
     }
 
-    public StatusHandler StatusHandler => statusHandler;
+    public StatusHandler StatusHandler { get; private set; } = null!;
 
     public ModifierHandler ModifierHandler { get; } = ModifierFactory.CreateEnemyModifierHandler();
 
@@ -69,6 +69,7 @@ public partial class Enemy : Area2D, ITarget
     public override void _Ready()
     {
         _enemyActionPicker = EnemyActionPickerFactory.CreateCrabBrain(this);
+        StatusHandler = new StatusHandler(this, statusContainer);
     }
 
     public override void _EnterTree()
@@ -83,6 +84,7 @@ public partial class Enemy : Area2D, ITarget
         AreaExited -= OnAreaExited;
         _stats.StatsChanged -= UpdateStats;
         _stats.StatsChanged -= UpdateAction;
+        StatusHandler.OnDispose();
     }
 
     public void QFree()
@@ -97,7 +99,7 @@ public partial class Enemy : Area2D, ITarget
     {
         try
         {
-            await statusHandler.ApplyStatusesByType(StatusType.StartOfTurn, CancellationTokenOnQueueFree);
+            await StatusHandler.ApplyStatusesByType(StatusType.StartOfTurn, CancellationTokenOnQueueFree);
 
             Stats.Block = 0;
             if (CurrentAction != null)
@@ -105,7 +107,7 @@ public partial class Enemy : Area2D, ITarget
                 await CurrentAction.PerformActionAsync(CancellationTokenOnQueueFree);
             }
 
-            await statusHandler.ApplyStatusesByType(StatusType.EndOfTurn, CancellationTokenOnQueueFree);
+            await StatusHandler.ApplyStatusesByType(StatusType.EndOfTurn, CancellationTokenOnQueueFree);
         }
         catch (OperationCanceledException e)
         {

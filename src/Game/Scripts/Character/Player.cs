@@ -2,7 +2,7 @@
 using CardGameV1.EffectSystem;
 using CardGameV1.EventBus;
 using CardGameV1.ModifierSystem;
-using CardGameV1.StatusSystem.UI;
+using CardGameV1.StatusSystem;
 
 namespace CardGameV1.Character;
 
@@ -13,7 +13,7 @@ public partial class Player : Node2D, ITarget
     private CharacterStats _stats = null!;
     private readonly CancellationTokenSource ctsOnQueueFree = new();
 
-    public StatusHandler StatusHandler => _.StatusHandler;
+    public StatusHandler StatusHandler { get; private set; } = null!;
     public ModifierHandler ModifierHandler { get; } = ModifierFactory.CreatePlayerModifierHandler();
 
     public CharacterStats CharacterStats
@@ -31,9 +31,15 @@ public partial class Player : Node2D, ITarget
 
     public CancellationToken CancellationTokenOnQueueFree => ctsOnQueueFree.Token;
 
+    public override void _Ready()
+    {
+        StatusHandler = new StatusHandler(this, _.StatusContainer);
+    }
+
     public override void _ExitTree()
     {
         _stats.StatsChanged -= UpdateCharacterStats;
+        StatusHandler.OnDispose();
     }
 
     public void QFree()

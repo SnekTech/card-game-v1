@@ -1,6 +1,6 @@
 ﻿using CardGameV1.CustomResources;
 using CardGameV1.ModifierSystem;
-using CardGameV1.StatusSystem.UI;
+using CardGameV1.StatusSystem;
 
 namespace CardGameV1.EffectSystem;
 
