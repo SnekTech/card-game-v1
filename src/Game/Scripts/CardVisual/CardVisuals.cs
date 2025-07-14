@@ -1,21 +1,11 @@
 ﻿using CardGameV1.CustomResources.Cards;
 using CardGameV1.CustomResources.Cards.Warrior;
-using GodotUtilities;
 
 namespace CardGameV1.CardVisual;
 
-[Scene]
+[SceneTree]
 public partial class CardVisuals : Control
 {
-    [Node]
-    private Panel panel = null!;
-    [Node]
-    private Label cost = null!;
-    [Node]
-    private TextureRect icon = null!;
-    [Node]
-    private TextureRect rarity = null!;
-    
     private static readonly Dictionary<CardRarity, Color> RarityColors = new()
     {
         [CardRarity.Common] = Colors.Gray,
@@ -35,10 +25,6 @@ public partial class CardVisuals : Control
         }
     }
 
-    public Panel Panel => panel;
-    public Label Cost => cost;
-    public TextureRect Icon => icon;
-
     public override void _Ready()
     {
         Card = defaultCard;
@@ -46,16 +32,8 @@ public partial class CardVisuals : Control
 
     private void UpdateContent(Card card)
     {
-        cost.Text = card.Cost.ToString();
-        icon.Texture = card.Icon;
-        rarity.Modulate = RarityColors[card.Rarity];
-    }
-
-    public override void _Notification(int what)
-    {
-        if (what == NotificationSceneInstantiated)
-        {
-            WireNodes();
-        }
+        Cost.Text = card.Cost.ToString();
+        Icon.Texture = card.Icon;
+        Rarity.Modulate = RarityColors[card.Rarity];
     }
 }

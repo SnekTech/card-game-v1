@@ -1,5 +1,4 @@
-﻿using System.Threading;
-using CardGameV1.CardVisual.CardStates;
+﻿using CardGameV1.CardVisual.CardStates;
 using CardGameV1.Character;
 using CardGameV1.CustomResources;
 using CardGameV1.CustomResources.Cards;
@@ -10,15 +9,10 @@ using GodotUtilities;
 
 namespace CardGameV1.CardVisual;
 
-[Scene]
+[SceneTree]
 public partial class CardUI : Control
 {
     public event Action<CardUI>? ReparentRequested;
-
-    [Node]
-    private CardVisuals cardVisuals = null!;
-    [Node]
-    private Area2D dropPointDetector = null!;
 
     public static readonly StyleBoxFlat BaseStyleBox =
         GD.Load<StyleBoxFlat>("res://Scenes/CardVisual/card_base_stylebox.tres");
@@ -43,8 +37,8 @@ public partial class CardUI : Control
 
     public bool MonitoringDrop
     {
-        get => dropPointDetector.Monitoring;
-        set => dropPointDetector.Monitoring = value;
+        get => DropPointDetector.Monitoring;
+        set => DropPointDetector.Monitoring = value;
     }
 
     public ISet<Node> Targets => _targets;
@@ -55,7 +49,7 @@ public partial class CardUI : Control
         set
         {
             _card = value;
-            cardVisuals.Card = _card;
+            _.CardVisuals.Card = _card;
         }
     }
 
@@ -84,13 +78,13 @@ public partial class CardUI : Control
             var fontColorName = new StringName("font_color");
             if (_playable == false)
             {
-                cardVisuals.Cost.AddThemeColorOverride(fontColorName, Colors.Red);
-                cardVisuals.Icon.SetModulateAlpha(0.5f);
+                CardVisuals.Cost.AddThemeColorOverride(fontColorName, Colors.Red);
+                CardVisuals.Icon.SetModulateAlpha(0.5f);
             }
             else
             {
-                cardVisuals.Cost.RemoveThemeColorOverride(fontColorName);
-                cardVisuals.Icon.SetModulateAlpha(1);
+                CardVisuals.Cost.RemoveThemeColorOverride(fontColorName);
+                CardVisuals.Icon.SetModulateAlpha(1);
             }
         }
     }
@@ -112,11 +106,11 @@ public partial class CardUI : Control
         CardEvents.CardAimStarted += OnCardDragOrAimingStarted;
         CardEvents.CardAimEnded += OnCardDragOrAimingEnded;
 
-        dropPointDetector.MouseEntered += OnDropPointDetectorMouseEntered;
-        dropPointDetector.MouseExited += OnDropPointDetectorMouseExited;
+        DropPointDetector.MouseEntered += OnDropPointDetectorMouseEntered;
+        DropPointDetector.MouseExited += OnDropPointDetectorMouseExited;
 
-        dropPointDetector.AreaEntered += OnDropPointDetectorAreaEntered;
-        dropPointDetector.AreaExited += OnDropPointDetectorAreaExited;
+        DropPointDetector.AreaEntered += OnDropPointDetectorAreaEntered;
+        DropPointDetector.AreaExited += OnDropPointDetectorAreaExited;
     }
 
     public override void _ExitTree()
@@ -141,7 +135,7 @@ public partial class CardUI : Control
             _tween.KillIfValid();
     }
 
-    public void SetPanelStyleBox(StyleBox styleBox) => cardVisuals.Panel.SetStyleBox(styleBox);
+    public void SetPanelStyleBox(StyleBox styleBox) => CardVisuals.Panel.SetStyleBox(styleBox);
 
     public async Task PlayAsync(CancellationToken cancellationToken)
     {
@@ -174,11 +168,11 @@ public partial class CardUI : Control
         CardEvents.CardAimStarted -= OnCardDragOrAimingStarted;
         CardEvents.CardAimEnded -= OnCardDragOrAimingEnded;
 
-        dropPointDetector.MouseEntered -= OnDropPointDetectorMouseEntered;
-        dropPointDetector.MouseExited -= OnDropPointDetectorMouseExited;
+        DropPointDetector.MouseEntered -= OnDropPointDetectorMouseEntered;
+        DropPointDetector.MouseExited -= OnDropPointDetectorMouseExited;
 
-        dropPointDetector.AreaEntered -= OnDropPointDetectorAreaEntered;
-        dropPointDetector.AreaExited -= OnDropPointDetectorAreaExited;
+        DropPointDetector.AreaEntered -= OnDropPointDetectorAreaEntered;
+        DropPointDetector.AreaExited -= OnDropPointDetectorAreaExited;
 
         CharacterStats.StatsChanged -= OnCharacterStatsChanged;
     }
@@ -214,13 +208,5 @@ public partial class CardUI : Control
     private void OnCharacterStatsChanged()
     {
         Playable = CharacterStats.CanPlayCard(Card);
-    }
-
-    public override void _Notification(int what)
-    {
-        if (what == NotificationSceneInstantiated)
-        {
-            WireNodes();
-        }
     }
 }

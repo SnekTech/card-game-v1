@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://cioihy11sscr0"]
 
 [ext_resource type="Script" uid="uid://dxrn8bdy43c8m" path="res://Scripts/UI/CardPileDisplay/CardMenuUI.cs" id="1_0d0a2"]
-[ext_resource type="PackedScene" uid="uid://cfsk0tinni3qd" path="res://Scenes/UI/card_visual/CardVisuals.tscn" id="3_yc2wo"]
+[ext_resource type="PackedScene" uid="uid://cfsk0tinni3qd" path="res://Scripts/CardVisual/CardVisuals.tscn" id="3_yc2wo"]
 
 [node name="CardMenuUI" type="CenterContainer"]
 offset_right = 25.0
