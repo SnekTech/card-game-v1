@@ -12,9 +12,7 @@ public class TrueStrengthForm : Status
     {
         GD.Print($"applying {nameof(TrueStrengthForm)}");
 
-        var muscle = StatusFactory.Create<Muscle>();
-        muscle.SetStacks(StacksPerTurn);
-        var addMuscleEffect = new AddStatusEffect(muscle);
+        var addMuscleEffect = new AddStatusEffect(StatusFactory.CreateMuscle(StacksPerTurn));
         await addMuscleEffect.ExecuteAllAsync([target], cancellationToken);
     }
 

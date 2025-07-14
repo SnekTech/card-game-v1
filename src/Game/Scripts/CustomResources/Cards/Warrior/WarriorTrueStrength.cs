@@ -1,8 +1,6 @@
-﻿using System.Threading;
-using CardGameV1.EffectSystem;
+﻿using CardGameV1.EffectSystem;
 using CardGameV1.ModifierSystem;
 using CardGameV1.StatusSystem;
-using CardGameV1.StatusSystem.BuiltinStatuses;
 
 namespace CardGameV1.CustomResources.Cards.Warrior;
 
@@ -25,8 +23,7 @@ public class WarriorTrueStrength : Card
     protected override async Task ApplyEffectsAsync(IEnumerable<ITarget> targets, ModifierHandler _,
         CancellationToken cancellationToken)
     {
-        var trueStrengthStatus = StatusFactory.Create<TrueStrengthForm>();
-        var addTrueStrengthEffect = new AddStatusEffect(trueStrengthStatus);
+        var addTrueStrengthEffect = new AddStatusEffect(StatusFactory.CreateTrueStrengthForm());
         await addTrueStrengthEffect.ExecuteAllAsync(targets, cancellationToken);
     }
 

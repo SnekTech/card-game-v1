@@ -2,7 +2,6 @@
 
 public class NonStackable : IStackAbility
 {
-    public event Action? Changed;
     public int Duration
     {
         get => 0;

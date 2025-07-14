@@ -2,7 +2,6 @@
 
 public class IntensityBased : IStackAbility
 {
-    public event Action? Changed;
     public int Duration
     {
         get => 0;
