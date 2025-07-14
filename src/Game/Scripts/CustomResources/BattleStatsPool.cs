@@ -11,8 +11,7 @@ public class BattleStatsPool
 
     private List<BattleStats> GetAllBattlesForTier(int tier) => _pool.Where(battle => battle.Tier == tier).ToList();
 
-    public BattleStats GetRandomBattleForTier(int tier) =>
-        WeightedRandomCalculator.GetWeighted(GetAllBattlesForTier(tier));
+    public BattleStats GetRandomBattleForTier(int tier) => GetAllBattlesForTier(tier).GetWeighted();
 
     private static List<BattleStats> GenerateDefaultBattles()
     {

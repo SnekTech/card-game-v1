@@ -19,8 +19,7 @@ public class CardRarityWeightStats
             { Rarity = CardRarity.Rare, Weight = BaseRareWeight },
     };
 
-    public CardRarity GetWeightedRarity() =>
-        WeightedRandomCalculator.GetWeighted(_weightStats.Values.ToList()).Rarity;
+    public CardRarity GetWeightedRarity() => _weightStats.Values.ToList().GetWeighted().Rarity;
 
     public void ModifyWeights(CardRarity rarityRolled)
     {

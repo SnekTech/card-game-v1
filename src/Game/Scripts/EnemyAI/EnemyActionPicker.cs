@@ -18,7 +18,7 @@ public class EnemyActionPicker(
             return firstConditionalAction;
         }
 
-        return WeightedRandomCalculator.GetWeighted(_chanceBasedActions)!;
+        return _chanceBasedActions.GetWeighted();
     }
 
     public EnemyConditionalAction? GetFirstConditionalAction()
