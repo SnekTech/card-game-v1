@@ -1,5 +1,4 @@
-﻿using System.Threading;
-using CardGameV1.Constants;
+﻿using CardGameV1.Constants;
 using CardGameV1.EffectSystem;
 using CardGameV1.EventBus;
 using CardGameV1.ModifierSystem;
@@ -21,15 +20,6 @@ public abstract class Card
     public AudioStream Sound => SnekUtility.LoadSound(Attributes.SoundPath);
 
     public bool IsSingleTargeted => Target == CardTarget.SingleEnemy;
-
-    private static readonly System.Collections.Generic.Dictionary<CardRarity, Color> RarityColors = new()
-    {
-        [CardRarity.Common] = Colors.Gray,
-        [CardRarity.Uncommon] = Colors.CornflowerBlue,
-        [CardRarity.Rare] = Colors.Gold
-    };
-
-    public Color RarityColor => RarityColors[Rarity];
 
     private IEnumerable<ITarget> GetTargets(SceneTree tree)
     {

@@ -1,6 +1,5 @@
 ﻿using CardGameV1.CustomResources.Cards;
 using CardGameV1.CustomResources.Cards.Warrior;
-using Godot;
 using GodotUtilities;
 
 namespace CardGameV1.CardVisual;
@@ -16,6 +15,13 @@ public partial class CardVisuals : Control
     private TextureRect icon = null!;
     [Node]
     private TextureRect rarity = null!;
+    
+    private static readonly Dictionary<CardRarity, Color> RarityColors = new()
+    {
+        [CardRarity.Common] = Colors.Gray,
+        [CardRarity.Uncommon] = Colors.CornflowerBlue,
+        [CardRarity.Rare] = Colors.Gold,
+    };
 
     private readonly Card defaultCard = CardPool.Get<WarriorAxeAttack>();
     private Card? _card;
@@ -42,7 +48,7 @@ public partial class CardVisuals : Control
     {
         cost.Text = card.Cost.ToString();
         icon.Texture = card.Icon;
-        rarity.Modulate = card.RarityColor;
+        rarity.Modulate = RarityColors[card.Rarity];
     }
 
     public override void _Notification(int what)
