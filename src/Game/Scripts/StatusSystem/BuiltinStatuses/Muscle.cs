@@ -18,6 +18,8 @@ public class Muscle : Status
         OnStatusChanged();
     }
 
+    public override Task ApplyStatusAsync(ITarget target, CancellationToken cancellationToken) => Task.CompletedTask;
+
     private void OnStatusChanged()
     {
         const string modiferKey = nameof(Muscle);

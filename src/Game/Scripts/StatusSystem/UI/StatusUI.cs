@@ -46,8 +46,8 @@ public partial class StatusUI : Control
     private void UpdateContent(Status status)
     {
         Icon.Texture = status.Icon;
-        Duration.Visible = status.StackType == StackType.Duration;
-        Stacks.Visible = status.StackType == StackType.Intensity;
+        Duration.Visible = status.Duration > 0;
+        Stacks.Visible = status.Stacks != 0;
         CustomMinimumSize = Icon.Size;
 
         if (Duration.Visible)

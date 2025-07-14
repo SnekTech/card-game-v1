@@ -1,5 +1,4 @@
-﻿using System.Threading;
-using CardGameV1.EffectSystem;
+﻿using CardGameV1.EffectSystem;
 using CardGameV1.ModifierSystem;
 using CardGameV1.StatusSystem;
 using CardGameV1.StatusSystem.BuiltinStatuses;
@@ -37,7 +36,7 @@ public class WarriorBigSlam : Card
         await damageEffect.ExecuteAllAsync(targetList, cancellationToken);
 
         var exposedStatus = StatusFactory.Create<Exposed>();
-        exposedStatus.Duration = ExposedDuration;
+        exposedStatus.SetDuration(ExposedDuration);
         var statusEffect = new AddStatusEffect(exposedStatus);
         await statusEffect.ExecuteAllAsync(targetList, cancellationToken);
     }

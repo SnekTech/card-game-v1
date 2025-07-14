@@ -1,4 +1,5 @@
 ﻿using CardGameV1.StatusSystem.BuiltinStatuses;
+using CardGameV1.StatusSystem.StackAbilities;
 
 namespace CardGameV1.StatusSystem;
 
@@ -10,31 +11,22 @@ public static class StatusFactory
         {
             Id = nameof(Exposed),
             Type = StatusType.StartOfTurn,
-            StackType = StackType.Duration,
-            CanExpire = true,
-            Duration = 1,
-            Stacks = 0,
             IconPath = "res://art/expose.png",
+            StackAbility = new DurationBased(),
         },
         [typeof(Muscle)] = () => new Muscle
         {
             Id = nameof(Muscle),
             Type = StatusType.EventBased,
-            StackType = StackType.Intensity,
-            CanExpire = false,
-            Duration = 0,
-            Stacks = 2,
             IconPath = "res://art/muscle.png",
+            StackAbility = new IntensityBased(),
         },
         [typeof(TrueStrengthForm)] = () => new TrueStrengthForm
         {
             Id = nameof(TrueStrengthForm),
             Type = StatusType.StartOfTurn,
-            StackType = StackType.None,
-            CanExpire = false,
-            Duration = 0,
-            Stacks = 0,
             IconPath = "res://art/tile_0127.png",
+            StackAbility = new NonStackable(),
         },
     };
 

@@ -1,0 +1,45 @@
+@startuml
+'https://plantuml.com/class-diagram
+hide empty members
+
+abstract class StackAbility
+{
+    int Stacks
+    int Duration
+    void StackUp(Status other)
+    void Consume()
+}
+
+class NoneStackable
+
+class IntensityBased
+
+class DurationBased
+
+StackAbility <|-- NoneStackable
+StackAbility <|-- IntensityBased
+StackAbility <|-- DurationBased
+
+Status *-- StackAbility
+
+abstract class Status
+
+'class Exposed
+'class Muscle
+'class TrueStrengthForm
+'
+'Status <|-- Exposed
+'Status <|-- Muscle
+'Status <|-- TrueStrengthForm
+'
+'Exposed *-- DurationBased
+'Muscle *-- IntensityBased
+'TrueStrengthForm *-- NoneStackable
+
+class StatusHandler {
+    List<Status> statusList
+}
+
+StatusHandler -> Status
+
+@enduml

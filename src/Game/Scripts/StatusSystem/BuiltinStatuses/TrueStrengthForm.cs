@@ -1,5 +1,4 @@
-﻿using System.Threading;
-using CardGameV1.EffectSystem;
+﻿using CardGameV1.EffectSystem;
 
 namespace CardGameV1.StatusSystem.BuiltinStatuses;
 
@@ -14,7 +13,7 @@ public class TrueStrengthForm : Status
         GD.Print($"applying {nameof(TrueStrengthForm)}");
 
         var muscle = StatusFactory.Create<Muscle>();
-        muscle.Stacks = StacksPerTurn;
+        muscle.SetStacks(StacksPerTurn);
         var addMuscleEffect = new AddStatusEffect(muscle);
         await addMuscleEffect.ExecuteAllAsync([target], cancellationToken);
     }

@@ -15,6 +15,13 @@ public partial class StatusContainer : GridContainer
         }
     }
 
+    public void AddStatusUI(Status status)
+    {
+        var newStatusUI = SceneFactory.Instantiate<StatusUI>();
+        AddChild(newStatusUI);
+        newStatusUI.Status = status;
+    }
+
     public void RemoveStatusUI(string statusId)
     {
         var toRemove = this.GetChildrenOfType<StatusUI>().FirstOrDefault(statusUI => statusUI.Status.Id == statusId);

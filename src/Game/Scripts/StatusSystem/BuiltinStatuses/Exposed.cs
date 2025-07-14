@@ -33,6 +33,8 @@ public class Exposed : Status
         }
     }
 
+    public override Task ApplyStatusAsync(ITarget target, CancellationToken cancellationToken) => Task.CompletedTask;
+
     private static string GenerateTooltip(int duration, float increment = Increment)
     {
         var turnText = duration == 1 ? "turn" : "turns";
