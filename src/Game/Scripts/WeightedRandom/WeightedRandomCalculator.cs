@@ -9,28 +9,28 @@ public static class WeightedRandomCalculator
             throw new ArgumentException("cannot get weighted random from an empty candidate list");
         }
 
-        float totalWeight;
-        SetupAccumulatedWeights();
-
-        var roll = GD.RandRange(0f, totalWeight);
-        foreach (var candidate in candidates)
+        var accumulatedWeights = GetAccumulatedWeights();
+        var roll = GD.RandRange(0f, accumulatedWeights[^1]);
+        for (var i = 0; i < candidates.Count; i++)
         {
-            if (candidate.WeightData.AccumulatedWeight > roll)
+            if (accumulatedWeights[i] > roll)
             {
-                return candidate;
+                return candidates[i];
             }
         }
 
         return candidates[0];
 
-        void SetupAccumulatedWeights()
+        float[] GetAccumulatedWeights()
         {
-            totalWeight = 0;
-            foreach (var candidate in candidates)
+            var accumulated = new float[candidates.Count];
+            accumulated[0] = candidates[0].Weight;
+            for (var i = 1; i < candidates.Count; i++)
             {
-                totalWeight += candidate.WeightData.Weight;
-                candidate.WeightData.AccumulatedWeight = totalWeight;
+                accumulated[i] = accumulated[i - 1] + candidates[i].Weight;
             }
+
+            return accumulated;
         }
     }
 }

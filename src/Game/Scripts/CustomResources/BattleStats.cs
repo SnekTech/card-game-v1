@@ -8,5 +8,5 @@ public record BattleStats : IWeightedCandidate
     public required (int min, int max) GoldReward { get; init; }
     public required List<EnemyStats> Enemies { get; init; }
     public int GoldRewardRoll => GD.RandRange(GoldReward.min, GoldReward.max);
-    public required WeightData WeightData { get; init; }
+    public required float Weight { get; init; }
 }

@@ -12,11 +12,11 @@ public class CardRarityWeightStats
     private readonly Dictionary<CardRarity, WeightedCardRarity> _weightStats = new()
     {
         [CardRarity.Common] = new WeightedCardRarity
-            { Rarity = CardRarity.Common, WeightData = new WeightData(BaseCommonWeight) },
+            { Rarity = CardRarity.Common, Weight = BaseCommonWeight },
         [CardRarity.Uncommon] = new WeightedCardRarity
-            { Rarity = CardRarity.Uncommon, WeightData = new WeightData(BaseUncommonWeight) },
+            { Rarity = CardRarity.Uncommon, Weight = BaseUncommonWeight },
         [CardRarity.Rare] = new WeightedCardRarity
-            { Rarity = CardRarity.Rare, WeightData = new WeightData(BaseRareWeight) },
+            { Rarity = CardRarity.Rare, Weight = BaseRareWeight },
     };
 
     public CardRarity GetWeightedRarity() =>
@@ -27,14 +27,13 @@ public class CardRarityWeightStats
         if (rarityRolled == CardRarity.Rare)
         {
             var rareWeight = _weightStats[CardRarity.Rare];
-            rareWeight.WeightData.Weight =
-                Mathf.Clamp(rareWeight.WeightData.Weight + 0.3f, BaseRareWeight, 5f);
+            rareWeight.Weight = Mathf.Clamp(rareWeight.Weight + 0.3f, BaseRareWeight, 5f);
         }
     }
 
     public record WeightedCardRarity : IWeightedCandidate
     {
         public required CardRarity Rarity { get; init; }
-        public required WeightData WeightData { get; init; }
+        public required float Weight { get; set; }
     }
 }

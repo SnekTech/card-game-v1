@@ -21,35 +21,35 @@ public class BattleStatsPool
             Tier = 0,
             GoldReward = (53, 72),
             Enemies = [EnemyPool.Bat, EnemyPool.Bat],
-            WeightData = new WeightData(2.5f),
+            Weight = 2.5f,
         };
         var tier0Crab = new BattleStats
         {
             Tier = 0,
             GoldReward = (49, 68),
             Enemies = [EnemyPool.Crab],
-            WeightData = new WeightData(3f),
+            Weight = 3f,
         };
         var tier1Bats3 = new BattleStats
         {
             Tier = 1,
             GoldReward = (63, 81),
             Enemies = [EnemyPool.Bat, EnemyPool.Bat, EnemyPool.Bat],
-            WeightData = new WeightData(1f),
+            Weight = 1f,
         };
         var tier1BatCrab = new BattleStats
         {
             Tier = 1,
             GoldReward = (63, 81),
             Enemies = [EnemyPool.Bat, EnemyPool.Crab],
-            WeightData = new WeightData(2f),
+            Weight = 2f,
         };
         var richBoss = new BattleStats
         {
             Tier = 2,
             GoldReward = (630, 810),
             Enemies = [EnemyPool.Crab],
-            WeightData = new WeightData(2f),
+            Weight = 2f,
         };
         var result = new List<BattleStats>
         {

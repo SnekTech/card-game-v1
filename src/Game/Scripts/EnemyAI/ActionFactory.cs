@@ -1,7 +1,6 @@
 ﻿using CardGameV1.Character;
 using CardGameV1.EnemyAI.ActionPerformers;
 using CardGameV1.EnemyAI.Crab;
-using CardGameV1.WeightedRandom;
 
 namespace CardGameV1.EnemyAI;
 
@@ -15,7 +14,7 @@ public static class ActionFactory
         {
             Intent = new Intent($"{batDamage}", "res://art/tile_0103.png"),
             ActionPerformer = new Attack(batDamage, batAttackTimes) { Enemy = enemy },
-            WeightData = new WeightData(3),
+            Weight = 3,
         };
     }
 
@@ -26,7 +25,7 @@ public static class ActionFactory
         {
             Intent = new Intent("", "res://art/tile_0101.png"),
             ActionPerformer = new Block(batBlock) { Enemy = enemy },
-            WeightData = new WeightData(1),
+            Weight = 1,
         };
     }
 
@@ -37,7 +36,7 @@ public static class ActionFactory
         {
             Intent = new Intent($"{crabDamage}", "res://art/tile_0103.png"),
             ActionPerformer = new Attack(crabDamage) { Enemy = enemy },
-            WeightData = new WeightData(1),
+            Weight = 1,
         };
     }
 
@@ -48,7 +47,7 @@ public static class ActionFactory
         {
             Intent = new Intent("", "res://art/tile_0101.png"),
             ActionPerformer = new Block(crabBlock) { Enemy = enemy },
-            WeightData = new WeightData(1),
+            Weight = 1,
         };
     }
 
