@@ -10,10 +10,10 @@ public class Events
 
     public event Action? BattleWon;
     public event Action? BattleLost;
-    public event Action<List<Status>>? StatusTooltipRequested;
+    public event Action<IEnumerable<Status>>? StatusTooltipRequested;
     public void EmitBattleWon() => BattleWon?.Invoke();
     public void EmitBattleLost() => BattleLost?.Invoke();
-    public void EmitStatusTooltipRequested(List<Status> statusList) => StatusTooltipRequested?.Invoke(statusList);
+    public void EmitStatusTooltipRequested(IEnumerable<Status> statuses) => StatusTooltipRequested?.Invoke(statuses);
 
     #endregion
 

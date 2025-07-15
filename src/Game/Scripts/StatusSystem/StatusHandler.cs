@@ -18,14 +18,14 @@ public class StatusHandler
     private readonly ITarget _target;
     private readonly StatusContainer _statusUIContainer;
 
-    private readonly List<Status> _statusList = [];
+    private readonly Dictionary<string, Status> _statusById = new();
 
     public void AddStatus(Status status)
     {
-        var sameStatus = GetStatus(status.Id);
+        _statusById.TryGetValue(status.Id, out var sameStatus);
         if (sameStatus is null)
         {
-            _statusList.Add(status);
+            _statusById.Add(status.Id, status);
             status.Init(_target);
             _statusUIContainer.AddStatusUI(status);
             return;
@@ -40,7 +40,7 @@ public class StatusHandler
             return;
 
         cancellationToken.ThrowIfCancellationRequested();
-        foreach (var status in _statusList.Where(s => s.Type == type).ToList())
+        foreach (var status in _statusById.Values.Where(s => s.Type == type).ToList())
         {
             await status.ApplyStatusAsync(_target, cancellationToken);
             status.Consume();
@@ -48,7 +48,7 @@ public class StatusHandler
             if (status.IsExpired)
             {
                 _statusUIContainer.RemoveStatusUI(status.Id);
-                _statusList.Remove(status);
+                _statusById.Remove(status.Id);
             }
 
             await SnekUtility.DelayGd(StatusApplyInterval, cancellationToken);
@@ -60,7 +60,5 @@ public class StatusHandler
         _statusUIContainer.Clicked -= OnStatusUIContainerClicked;
     }
 
-    private Status? GetStatus(string statusId) => _statusList.FirstOrDefault(status => status.Id == statusId);
-
-    private void OnStatusUIContainerClicked() => EventBusOwner.Events.EmitStatusTooltipRequested(_statusList);
+    private void OnStatusUIContainerClicked() => EventBusOwner.Events.EmitStatusTooltipRequested(_statusById.Values);
 }

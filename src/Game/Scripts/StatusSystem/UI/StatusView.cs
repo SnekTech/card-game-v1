@@ -40,9 +40,9 @@ public partial class StatusView : Control
         }
     }
 
-    private void ShowView(List<Status> statusList)
+    private void ShowView(IEnumerable<Status> statuses)
     {
-        foreach (var status in statusList)
+        foreach (var status in statuses)
         {
             var newStatusTooltip = SceneFactory.Instantiate<StatusTooltip>();
             StatusTooltipContainer.AddChild(newStatusTooltip);
@@ -58,6 +58,6 @@ public partial class StatusView : Control
         Hide();
     }
 
-    private void OnStatusTooltipRequested(List<Status> statusList) => ShowView(statusList);
+    private void OnStatusTooltipRequested(IEnumerable<Status> statuses) => ShowView(statuses);
     private void OnBackButtonPressed() => HideView();
 }
