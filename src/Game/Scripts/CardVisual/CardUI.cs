@@ -3,6 +3,7 @@ using CardGameV1.Character;
 using CardGameV1.CustomResources;
 using CardGameV1.CustomResources.Cards;
 using CardGameV1.CustomResources.Cards.Warrior;
+using CardGameV1.EffectSystem;
 using CardGameV1.EventBus;
 using CardGameV1.ModifierSystem;
 using GodotUtilities;
@@ -26,7 +27,7 @@ public partial class CardUI : Control
     private static readonly CardEvents CardEvents = EventBusOwner.CardEvents;
 
     private CardStateMachine? _stateMachine;
-    private readonly HashSet<Node> _targets = [];
+    private readonly HashSet<ITarget> _targets = [];
     private Tween? _tween;
     private CharacterStats _characterStats = null!;
 
@@ -41,7 +42,9 @@ public partial class CardUI : Control
         set => DropPointDetector.Monitoring = value;
     }
 
-    public ISet<Node> Targets => _targets;
+    public bool IsOverlappingDropArea { get; private set; }
+    public ISet<ITarget> Targets => _targets;
+    private ITarget? AimingTarget => Targets.FirstOrDefault();
 
     public Card Card
     {
@@ -139,7 +142,8 @@ public partial class CardUI : Control
 
     public async Task PlayAsync(CancellationToken cancellationToken)
     {
-        await Card.PlayAsync(Targets, CharacterStats, PlayerModifierHandler, cancellationToken);
+        await Card.PlayAsync(GetViewport().GetTree(), AimingTarget, CharacterStats, PlayerModifierHandler,
+            cancellationToken);
         QueueFree();
     }
 
@@ -152,12 +156,12 @@ public partial class CardUI : Control
 
         ModifierHandler? GetActiveEnemyModifierHandler()
         {
-            if (Targets.Count != 1)
-                return null;
-            if (Targets.First() is not Enemy enemy)
-                return null;
+            if (Targets.Count == 1 && Targets.First() is Enemy enemy)
+            {
+                return enemy.ModifierHandler;
+            }
 
-            return enemy.ModifierHandler;
+            return null;
         }
     }
 
@@ -187,9 +191,8 @@ public partial class CardUI : Control
         _stateMachine?.OnMouseExited();
     }
 
-    private void OnDropPointDetectorAreaEntered(Area2D area) => _targets.Add(area);
-
-    private void OnDropPointDetectorAreaExited(Area2D area) => _targets.Remove(area);
+    private void OnDropPointDetectorAreaEntered(Area2D area) => IsOverlappingDropArea = true;
+    private void OnDropPointDetectorAreaExited(Area2D area) => IsOverlappingDropArea = false;
 
     private void OnCardDragOrAimingStarted(CardUI cardUI)
     {

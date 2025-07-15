@@ -1,5 +1,4 @@
-﻿using System.Threading;
-using CardGameV1.EffectSystem;
+﻿using CardGameV1.EffectSystem;
 using CardGameV1.ModifierSystem;
 
 namespace CardGameV1.CustomResources.Cards.Warrior;
@@ -14,7 +13,6 @@ public class WarriorSlash : Card
         Cost = 2,
         Type = CardType.Attack,
         Rarity = CardRarity.Common,
-        Target = CardTarget.AllEnemies,
         TooltipText = GenerateTooltipText(BaseDamageAmount),
         IconPath = "res://art/tile_0118.png",
         SoundPath = "res://art/slash.ogg",

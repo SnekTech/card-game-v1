@@ -1,4 +1,3 @@
-using System.Threading;
 using CardGameV1.EffectSystem;
 using CardGameV1.ModifierSystem;
 
@@ -14,7 +13,6 @@ public class WarriorAxeAttack : Card
         Cost = 1,
         Type = CardType.Attack,
         Rarity = CardRarity.Common,
-        Target = CardTarget.SingleEnemy,
         TooltipText = GenerateTooltipText(BaseDamageAmount),
         IconPath = "res://art/tile_0119.png",
         SoundPath = "res://art/axe.ogg",

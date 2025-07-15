@@ -1,5 +1,4 @@
-﻿using System.Threading;
-using CardGameV1.EffectSystem;
+﻿using CardGameV1.EffectSystem;
 using CardGameV1.ModifierSystem;
 
 namespace CardGameV1.CustomResources.Cards.Warrior;
@@ -14,7 +13,6 @@ public class WarriorBlock : Card
         Cost = 1,
         Type = CardType.Skill,
         Rarity = CardRarity.Common,
-        Target = CardTarget.Self,
         TooltipText = GenerateTooltipText(BlockAmount),
         IconPath = "res://art/tile_0102.png",
         SoundPath = "res://art/block.ogg",

@@ -1,6 +1,5 @@
 ﻿using CardGameV1.Constants;
 using CardGameV1.EventBus;
-using Godot;
 
 namespace CardGameV1.CardVisual.CardStates;
 
@@ -36,7 +35,7 @@ public class DraggingState(CardStateMachine cardStateMachine) : CardState(cardSt
         var playConfirmed = inputEvent.IsActionPressed(InputActions.LeftMouse) ||
                             inputEvent.IsActionReleased(InputActions.LeftMouse);
 
-        if (isCardSingleTargeted && mouseMoved && CardUI.Targets.Count > 0)
+        if (isCardSingleTargeted && mouseMoved && CardUI.IsOverlappingDropArea)
         {
             ChangeState<AimingState>();
             return;

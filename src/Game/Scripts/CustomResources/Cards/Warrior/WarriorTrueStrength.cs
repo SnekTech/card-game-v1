@@ -14,7 +14,6 @@ public class WarriorTrueStrength : Card
         Cost = 3,
         Type = CardType.Power,
         Rarity = CardRarity.Rare,
-        Target = CardTarget.Self,
         TooltipText = GenerateTooltipText(MusclePerTurn),
         IconPath = "res://art/tile_0127.png",
         SoundPath = "res://art/true_strength.ogg",

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using CardGameV1.CustomResources.Cards.Warrior;
+﻿using CardGameV1.CustomResources.Cards.Warrior;
 
 namespace CardGameV1.CustomResources.Cards;
 

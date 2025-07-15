@@ -13,11 +13,3 @@ public enum CardRarity
     Uncommon,
     Rare
 }
-
-public enum CardTarget
-{
-    Self,
-    SingleEnemy,
-    AllEnemies,
-    Everyone
-}

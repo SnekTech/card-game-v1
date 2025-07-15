@@ -12,7 +12,6 @@ public class WarriorBigSlam : Card
         Cost = 2,
         Type = CardType.Attack,
         Rarity = CardRarity.Uncommon,
-        Target = CardTarget.SingleEnemy,
         ShouldExhaust = true,
         TooltipText = GenerateTooltipText(BaseDamageAmount, ExposedDuration),
         IconPath = "res://art/tile_0117.png",

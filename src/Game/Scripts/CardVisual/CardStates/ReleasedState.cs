@@ -1,5 +1,4 @@
-﻿using System.Threading;
-using Godot;
+﻿using CardGameV1.EventBus;
 
 namespace CardGameV1.CardVisual.CardStates;
 
@@ -11,9 +10,9 @@ public class ReleasedState(CardStateMachine cardStateMachine) : CardState(cardSt
     {
         _played = false;
 
-        if (CardUI.Targets.Count > 0)
+        if (CardUI.IsOverlappingDropArea || CardUI.Targets.Count > 0)
         {
-            EventBus.EventBusOwner.CardEvents.EmitTooltipHideRequested();
+            EventBusOwner.CardEvents.EmitTooltipHideRequested();
             _played = true;
             CardUI.PlayAsync(CancellationToken.None).Fire();
         }
