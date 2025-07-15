@@ -6,5 +6,10 @@ namespace CardGameV1.CustomResources.Cards.CardTargetGetters;
 public class Everyone : ICardTargetGetter
 {
     public IEnumerable<ITarget> GetTargets(SceneTree tree, ITarget? aimingTarget)
-        => tree.GetNodesInGroup(GroupNames.Player).Concat(tree.GetNodesInGroup(GroupNames.Enemy)).OfType<ITarget>();
+    {
+        var players = tree.GetNodesInGroup(GroupNames.Player);
+        var enemies = tree.GetNodesInGroup(GroupNames.Enemy);
+        IEnumerable<Node> everyone = [..players, ..enemies];
+        return everyone.OfType<ITarget>();
+    }
 }
