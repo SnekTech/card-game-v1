@@ -1,19 +1,12 @@
 ﻿using CardGameV1.EffectSystem;
 using CardGameV1.EventBus;
-using GodotUtilities;
 
 namespace CardGameV1.CardVisual;
 
-[Scene]
+[SceneTree]
 public partial class CardTargetSelector : Node2D
 {
     private const int ArcPoints = 8;
-
-    [Node]
-    private Area2D area2D = null!;
-
-    [Node]
-    private Line2D cardArc = null!;
 
     private static readonly CardEvents CardEvents = EventBusOwner.CardEvents;
     private CardUI? _currentCardUI;
@@ -23,8 +16,8 @@ public partial class CardTargetSelector : Node2D
         CardEvents.CardAimStarted += OnCardAimStarted;
         CardEvents.CardAimEnded += OnCardAimEnded;
 
-        area2D.AreaEntered += OnAreaEntered;
-        area2D.AreaExited += OnAreaExited;
+        Area2D.AreaEntered += OnAreaEntered;
+        Area2D.AreaExited += OnAreaExited;
     }
 
     public override void _ExitTree()
@@ -32,8 +25,8 @@ public partial class CardTargetSelector : Node2D
         CardEvents.CardAimStarted -= OnCardAimStarted;
         CardEvents.CardAimEnded -= OnCardAimEnded;
 
-        area2D.AreaEntered -= OnAreaEntered;
-        area2D.AreaExited -= OnAreaExited;
+        Area2D.AreaEntered -= OnAreaEntered;
+        Area2D.AreaExited -= OnAreaExited;
     }
 
     public override void _Process(double delta)
@@ -41,8 +34,8 @@ public partial class CardTargetSelector : Node2D
         if (_currentCardUI == null)
             return;
 
-        area2D.Position = GetLocalMousePosition();
-        cardArc.Points = GetPoints(_currentCardUI);
+        Area2D.Position = GetLocalMousePosition();
+        CardArc.Points = GetPoints(_currentCardUI);
     }
 
     private Vector2[] GetPoints(CardUI cardUI)
@@ -69,17 +62,17 @@ public partial class CardTargetSelector : Node2D
     private void OnCardAimStarted(CardUI cardUI)
     {
         _currentCardUI = cardUI;
-        area2D.Monitoring = true;
-        area2D.Monitorable = true;
+        Area2D.Monitoring = true;
+        Area2D.Monitorable = true;
     }
 
     private void OnCardAimEnded(CardUI cardUI)
     {
         _currentCardUI = null;
-        cardArc.Points = [];
-        area2D.Position = Vector2.Zero;
-        area2D.Monitoring = false; // warning: set Area2D.Monitoring will trigger area exited event
-        area2D.Monitorable = false;
+        CardArc.Points = [];
+        Area2D.Position = Vector2.Zero;
+        Area2D.Monitoring = false; // warning: set Area2D.Monitoring will trigger area exited event
+        Area2D.Monitorable = false;
     }
 
     private void OnAreaEntered(Area2D otherArea2D)
@@ -103,14 +96,6 @@ public partial class CardTargetSelector : Node2D
         {
             _currentCardUI.Targets.Remove(target);
             _currentCardUI.RequestTooltip();
-        }
-    }
-
-    public override void _Notification(int what)
-    {
-        if (what == NotificationSceneInstantiated)
-        {
-            WireNodes();
         }
     }
 }

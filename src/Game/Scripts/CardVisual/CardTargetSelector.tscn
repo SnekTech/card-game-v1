@@ -1,10 +1,14 @@
 [gd_scene load_steps=4 format=3 uid="uid://b1af48bdyphyk"]
 
 [ext_resource type="Script" uid="uid://dc8amu25h7br7" path="res://Scripts/CardVisual/CardTargetSelector.cs" id="1_1pq8w"]
-[ext_resource type="PackedScene" uid="uid://dsqo4vvcgare3" path="res://Scenes/CardTargetSelector/CardArc.tscn" id="1_325kt"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vunhw"]
 size = Vector2(4, 4)
+
+[sub_resource type="Curve" id="Curve_td63e"]
+_limits = [0.2, 1.0, 0.0, 1.0]
+_data = [Vector2(0, 0.2), 0.0, 0.0, 0, 0, Vector2(0.938596, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.2), 0.0, 0.0, 0, 0]
+point_count = 3
 
 [node name="CardTargetSelector" type="Node2D"]
 script = ExtResource("1_1pq8w")
@@ -21,5 +25,7 @@ shape = SubResource("RectangleShape2D_vunhw")
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 layer = 2
 
-[node name="CardArc" parent="CanvasLayer" instance=ExtResource("1_325kt")]
+[node name="CardArc" type="Line2D" parent="CanvasLayer"]
 unique_name_in_owner = true
+width = 4.0
+width_curve = SubResource("Curve_td63e")

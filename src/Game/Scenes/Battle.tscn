@@ -5,7 +5,7 @@
 [ext_resource type="AudioStream" uid="uid://dpdenqqbovwfq" path="res://art/8_bit_iced_village_lofi.mp3" id="2_262jj"]
 [ext_resource type="PackedScene" uid="uid://bgdfe002lxib5" path="res://Scenes/UI/battle_ui_components/EnemyHandler.tscn" id="4_262jj"]
 [ext_resource type="PackedScene" uid="uid://dhri3662tt0n7" path="res://Scripts/Character/Player.tscn" id="4_qxnh6"]
-[ext_resource type="PackedScene" uid="uid://b1af48bdyphyk" path="res://Scenes/CardTargetSelector/CardTargetSelector.tscn" id="4_u22qb"]
+[ext_resource type="PackedScene" uid="uid://b1af48bdyphyk" path="res://Scripts/CardVisual/CardTargetSelector.tscn" id="4_u22qb"]
 [ext_resource type="PackedScene" uid="uid://bxdkorsjy5k6g" path="res://Scenes/UI/battle_ui_components/BattleUI.tscn" id="6_8teo4"]
 [ext_resource type="Script" uid="uid://ldj8l4cpecn1" path="res://Scripts/TurnManagement/PlayerHandler.cs" id="7_u22qb"]
 [ext_resource type="PackedScene" uid="uid://dix6o2poewlna" path="res://Scripts/UI/BattleUIComponents/RedFlash.tscn" id="10_qxnh6"]
